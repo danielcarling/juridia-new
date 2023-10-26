@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  min-height: 100vh;
   position: relative;
-  /* padding-bottom: 4rem; */
+  background-color: ${({ theme }) => theme.color.primary_100};
+  padding-bottom: 5rem;
 `;
 
 export const Main = styled.main`
@@ -14,15 +14,16 @@ export const Main = styled.main`
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-  padding-bottom: 8rem;
 
-  @media (min-width: 1200px) {
-    flex-direction: row;
+  @media (min-width: 1024px) {
+    flex-direction: row-reverse;
     gap: 0;
   }
 `;
 
 export const LoginForm = styled.div`
+  min-height: 100vh;
+
   padding: 0 8%;
   width: 95%;
 
@@ -30,7 +31,7 @@ export const LoginForm = styled.div`
     width: 80%;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1024px) {
     width: 50vw;
   }
 `;
@@ -40,7 +41,7 @@ export const JuridiaLogo = styled.div`
   justify-content: center;
   padding: 2rem 0 3rem;
   img {
-    object-fit: cover;
+    object-fit: fill;
     width: 100%;
     height: auto;
   }
@@ -142,20 +143,14 @@ export const LoginButton = styled.button`
 `;
 
 export const ArtSection = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
-  img {
-    width: 100%;
-  }
+  background-image: url("https://picsum.photos/1500/1500");
+  background-repeat: no-repeat;
+  background-size: fill;
+  width: 100%;
+  height: 100vh;
 
-  @media (min-width: 1200px) {
-    height: 100vh;
-
+  @media (min-width: 1024px) {
     width: 50vw;
-
-    img {
-      height: 100vh;
-    }
+    height: 100vh;
   }
 `;

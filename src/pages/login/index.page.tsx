@@ -1,5 +1,5 @@
 import Theme from "@/styles/themes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArtSection,
   Container,
@@ -22,6 +22,9 @@ import { Footer } from "@/components/register-account/Footer";
 export default function Login() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   function toggleShowPassword() {
     if (showPassword === "password") {
@@ -30,9 +33,17 @@ export default function Login() {
       setShowPassword("password");
     }
   }
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [disabled, setDisabled] = useState<boolean>(false);
+
+  function scrollToForm() {
+    const element = document.getElementById("loginForm");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  useEffect(() => {
+    scrollToForm();
+  }, []);
 
   async function handleLogin() {
     setDisabled(true);
@@ -54,7 +65,8 @@ export default function Login() {
   return (
     <Container>
       <Main>
-        <LoginForm>
+        <ArtSection />
+        <LoginForm id="loginForm">
           <JuridiaLogo>
             <img src="/login/juridiaTextLogo.svg" alt="" />
           </JuridiaLogo>
@@ -141,11 +153,6 @@ export default function Login() {
             </span>
           </p>
         </LoginForm>
-        <ArtSection>
-          <div
-          // style={{ backgroundColor: "red", width: "100%", height: "100vh" }}
-          ></div>
-        </ArtSection>
       </Main>
       <Footer />
     </Container>

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArtSection,
   BackButton,
@@ -26,6 +26,17 @@ export default function RegisterAccount() {
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
   const router = useRouter();
+
+  function scrollToForm() {
+    const element = document.getElementById("registerForm");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  useEffect(() => {
+    scrollToForm();
+  }, []);
 
   async function handleRegister() {
     setDisabled(true);
@@ -62,7 +73,8 @@ export default function RegisterAccount() {
         <RegisterAccountHeader />
         <Main>
           <ProgressBar step={step} />
-          <FormContainer>
+          <ArtSection />
+          <FormContainer id="registerForm">
             {step === 1 ? (
               <>
                 <BasicDataForm
@@ -111,8 +123,6 @@ export default function RegisterAccount() {
               </div>
             )}
           </FormContainer>
-
-          <ArtSection>{/* <img src="/4.svg" alt="" /> */}</ArtSection>
         </Main>
       </>
       <Footer />
