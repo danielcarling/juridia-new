@@ -17,7 +17,7 @@ import {
 import { PostAPI, refreshToken, token } from "@/lib/axios";
 import { useRouter } from "next/router";
 import { EyeSlashSVG } from "../../../public/login/EyeSlash";
-import { Footer } from "../../../public/Global/Footer";
+import { Footer } from "@/components/register-account/Footer";
 
 export default function Login() {
   const router = useRouter();
@@ -143,7 +143,7 @@ export default function Login() {
         </LoginForm>
         <ArtSection>
           <div
-            // style={{ backgroundColor: "red", width: "100%", height: "100vh" }}
+          // style={{ backgroundColor: "red", width: "100%", height: "100vh" }}
           ></div>
         </ArtSection>
       </Main>

@@ -66,18 +66,24 @@ export const RegisterFormHeader = styled.div`
 export const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 4vh;
+  margin-bottom: 2vh;
 
   & label {
     font-size: 0.9rem;
-    font-weight: bold;
+    font-weight: 500;
   }
 
   & input {
-    padding: 0.5rem;
-    border: 1px solid lightgray;
+    padding: 1rem;
+    border: 1px solid #d7d9dd;
+    background-color: transparent;
     border-radius: 5px;
     transition: 0.3s;
+    color: ${({ theme }) => theme.color.gray_20};
+
+    &::placeholder {
+      color: ${({ theme }) => theme.color.gray_80};
+    }
   }
 `;
 
@@ -87,7 +93,6 @@ export const PasswordRecovery = styled.div`
 
   button {
     border: 0;
-    color: ${({ theme }) => theme.color.brand_blue};
   }
 `;
 
@@ -101,12 +106,10 @@ export const TermsContainer = styled.div`
   }
 
   span {
-    color: ${({ theme }) => theme.color.brand_blue};
     cursor: pointer;
     transition: 0.3s;
 
     &:hover {
-      color: ${({ theme }) => theme.color.purpleAxion};
     }
   }
 `;
@@ -117,15 +120,27 @@ export const NextButton = styled.button`
   border-radius: 5px;
   margin: 3vh 0;
   border: 0;
+  outline: 0;
   background-color: ${({ theme }) => theme.color.secondary_100};
-  border: 2px solid white;
   color: white;
   font-weight: bold;
+
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #ad905a;
+  }
 `;
 
 export const BackButton = styled(NextButton)`
   background-color: transparent;
   color: ${({ theme }) => theme.color.secondary_100};
+  border: 1px solid ${({ theme }) => theme.color.secondary_100};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.secondary_100};
+    color: ${({ theme }) => theme.color.primary_100};
+  }
 `;
 
 export const ArtSection = styled.div`
