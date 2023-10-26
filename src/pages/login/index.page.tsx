@@ -142,7 +142,9 @@ export default function Login() {
           </p>
         </LoginForm>
         <ArtSection>
-          <img src="/4.svg" alt="" />
+          <div
+            // style={{ backgroundColor: "red", width: "100%", height: "100vh" }}
+          ></div>
         </ArtSection>
       </Main>
       <Footer />
