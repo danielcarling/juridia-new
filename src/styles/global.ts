@@ -8,6 +8,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Archivo', sans-serif;
   }
 
+  p, h1, h2 {
+    padding: 0;
+    margin: 0;
+  }
+
   label {
     color: white;
   }

@@ -14,14 +14,33 @@ export const StyledFooter = styled.footer`
   gap: 1rem;
 
   p:first-child {
-    margin: 0 0 0 0.1rem;
+    margin-left: 0.2rem;
   }
 
   p:last-child {
-    margin: 0 0.1rem 0 0;
+    margin-right: 0.2rem;
   }
 
   @media (min-width: 768px) {
+    font-size: 0.675rem;
     height: 4rem;
+
+    p:first-child {
+      margin-left: 2rem;
+    }
+
+    p:last-child {
+      margin-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    p:first-child {
+      margin-left: 5rem;
+    }
+
+    p:last-child {
+      margin-right: 5rem;
+    }
   }
 `;

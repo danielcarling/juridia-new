@@ -13,9 +13,10 @@ interface ProgressBarProps {
 
 export const ProgressBar = styled.div<ProgressBarProps>`
   position: absolute;
-  top: 3.7rem;
+  top: -0.125rem;
+  left: 0;
   background-color: ${({ theme }) => theme.color.secondary_100};
-  height: 5px;
+  height: 4px;
   transition: 0.5s ease-in-out;
 
   width: ${({ step }) =>
@@ -23,6 +24,7 @@ export const ProgressBar = styled.div<ProgressBarProps>`
 `;
 
 export const Main = styled.main`
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -127,8 +129,13 @@ export const NextButton = styled.button`
 
   transition: 0.3s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #ad905a;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `;
 

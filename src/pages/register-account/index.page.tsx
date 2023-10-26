@@ -60,8 +60,8 @@ export default function RegisterAccount() {
     <Container>
       <>
         <RegisterAccountHeader />
-        <ProgressBar step={step} />
         <Main>
+          <ProgressBar step={step} />
           <FormContainer>
             {step === 1 ? (
               <>
@@ -112,9 +112,7 @@ export default function RegisterAccount() {
             )}
           </FormContainer>
 
-          <ArtSection>
-            <img src="/4.svg" alt="" />
-          </ArtSection>
+          <ArtSection>{/* <img src="/4.svg" alt="" /> */}</ArtSection>
         </Main>
       </>
       <Footer />
