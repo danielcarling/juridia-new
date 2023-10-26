@@ -5,7 +5,7 @@ export const RegisterHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.color.primary_100};
-  border-bottom: 2px solid ${({ theme }) => theme.color.gray_20};
+  border-bottom: 2px solid #D9D9D9;
   padding: 0.25rem;
 
   img {

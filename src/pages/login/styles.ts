@@ -145,9 +145,9 @@ export const LoginButton = styled.button`
 export const ArtSection = styled.div`
   background-image: url("https://picsum.photos/1500/1500");
   background-repeat: no-repeat;
-  background-size: fill;
+  background-size: cover;
   width: 100%;
-  height: 100vh;
+  height: 30rem;
 
   @media (min-width: 1024px) {
     width: 50vw;
