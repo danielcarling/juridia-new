@@ -4,6 +4,7 @@ export const Container = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.color.primary_100};
   padding-bottom: 5rem;
+  font-family: 'Archivo', sans-serif;
 `;
 
 interface ProgressBarProps {

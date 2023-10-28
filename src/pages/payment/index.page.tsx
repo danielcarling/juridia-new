@@ -47,7 +47,13 @@ export default function Payment() {
         </PayOptionsContainer>
 
         {payOption === "pix" && <div>URUBU DO PIX</div>}
-        {payOption === "creditCard" && <CreditCard />}
+        {payOption === "creditCard" && (
+          <>
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
+              <CreditCard />
+            </div>
+          </>
+        )}
       </Main>
       <Footer />
     </Container>

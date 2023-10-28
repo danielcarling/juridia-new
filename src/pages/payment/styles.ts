@@ -5,11 +5,10 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.color.primary_100};
   padding-bottom: 5rem;
   min-height: 100vh;
+  font-family: "Archivo", sans-serif;
 `;
 
-export const Main = styled.main`
-  padding: 0.75rem;
-`;
+export const Main = styled.main``;
 
 interface ProgressBarProps {
   step: number;
@@ -32,6 +31,8 @@ export const ProgressBar = styled.div<ProgressBarProps>`
 `;
 
 export const SalesArtContainer = styled.div`
+  padding: 0.75rem;
+
   img {
     width: 100%;
   }
