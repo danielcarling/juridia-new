@@ -38,7 +38,11 @@ export function PersonalDataForm({ cpf, onCpfChange }: Props) {
       </FormGroup>
       <FormGroup>
         <label htmlFor="bithDate">Data de Nascimento</label>
-        <input type="date" placeholder="Sua Data de Nascimento" />
+        <input
+          type="date"
+          placeholder="Sua Data de Nascimento"
+          style={{ width: "100%" }}
+        />
       </FormGroup>
 
       <div>

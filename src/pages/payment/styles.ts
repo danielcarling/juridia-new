@@ -4,6 +4,7 @@ export const Container = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.color.primary_100};
   padding-bottom: 5rem;
+  min-height: 100vh;
 `;
 
 export const Main = styled.main`
@@ -53,14 +54,39 @@ export const PaymentHeader = styled.div`
   }
 `;
 
-export const PayOptionCard = styled.div`
+export const PayOptionsContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 1.25rem;
+
+  @media (min-width: 360px) {
+    flex-direction: row;
+  }
+`;
+
+interface PayOptionCardProps {
+  selected: boolean;
+}
+
+export const PayOptionCard = styled.div<PayOptionCardProps>`
+  display: flex;
   align-items: center;
   gap: 0.75rem;
   width: 10rem;
   height: 4.8rem;
   border-radius: 10px;
+  transition: 0.3s;
   border: 1px solid ${({ theme }) => theme.color.secondary_100};
-  color: ${({ theme }) => theme.color.secondary_100};
+  background-color: ${({ theme, selected }) =>
+    selected ? theme.color.secondary_100 : theme.color.primary_100};
+  color: ${({ theme, selected }) =>
+    selected ? theme.color.primary_100 : theme.color.secondary_100};
+
+  svg {
+    margin-left: 1rem;
+    width: 3.5rem;
+    height: auto;
+  }
 `;
