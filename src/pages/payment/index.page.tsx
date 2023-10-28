@@ -2,13 +2,17 @@ import { RegisterAccountHeader } from "@/components/register-account/Header";
 import { CreditCardSvg } from "../../../public/payment/CreditCardIcon";
 import {
   Container,
-  FormContainer,
+  CopyPastePix,
+  CreditCardForm,
+  FinishPix,
   FormGroup,
   Main,
   PayOptionCard,
   PayOptionsContainer,
   PaymentContainer,
   PaymentHeader,
+  PixContainer,
+  QrCode,
   SalesArtContainer,
 } from "./styles";
 import { PixSvg } from "../../../public/payment/PixCardIcon";
@@ -48,7 +52,27 @@ export default function Payment() {
               <strong>Cartão</strong>
             </PayOptionCard>
           </PayOptionsContainer>
-          {payOption === "pix" && <div>URUBU DO PIX</div>}
+          {payOption === "pix" && (
+            <PixContainer>
+              <QrCode>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png"
+                  alt=""
+                />
+              </QrCode>
+
+              <CopyPastePix>
+                <span>Clique aqui para</span>
+                <strong>Copiar Pix Copia e Cola</strong>
+              </CopyPastePix>
+
+              <FinishPix>
+                <span>Após efetuar o Pagamento</span>
+                <strong>Clique aqui e Prossiga</strong>
+              </FinishPix>
+            </PixContainer>
+          )}
+
           {payOption === "creditCard" && (
             <>
               <div
@@ -60,7 +84,7 @@ export default function Payment() {
               >
                 <CreditCard />
               </div>
-              <FormContainer>
+              <CreditCardForm>
                 <FormGroup>
                   <label htmlFor="name">Nome do Cartão</label>
                   <input
@@ -99,7 +123,7 @@ export default function Payment() {
                     />
                   </FormGroup>
                 </div>
-              </FormContainer>
+              </CreditCardForm>
             </>
           )}
         </PaymentContainer>

@@ -120,12 +120,63 @@ export const PayOptionCard = styled.div<PayOptionCardProps>`
   }
 `;
 
-export const FormContainer = styled.div`
+export const PixContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const QrCode = styled.div`
+  width: 13rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  margin: 1rem 0 1.9rem;
+
+  img {
+    width: 11rem;
+    height: auto;
+  }
+`;
+
+export const CopyPastePix = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: #20b038;
+  color: white;
+  padding: 0 2rem;
+
+  span {
+    font-size: 0.75rem;
+  }
+
+  strong {
+    font-size: 1.125rem;
+  }
+`;
+
+export const FinishPix = styled(CopyPastePix)`
+  background: ${({theme}) => theme.color.secondary_100};
+  color: black;
+
+  span {
+    font-size: .625rem;
+  }
+
+  strong {
+    font-size: .875rem;
+  }
+`;
+
+export const CreditCardForm = styled.div`
   padding: 0 2rem;
   max-width: 26.25rem;
   margin: auto;
 
-  @media(min-width: 1024px) {
+  @media (min-width: 1024px) {
     padding: 0;
   }
 `;
@@ -159,7 +210,8 @@ export const FormGroup = styled.div`
   }
 
   @media (min-width: 1024px) {
-    .validity, .securityCode {
+    .validity,
+    .securityCode {
       width: 10rem;
     }
   }
