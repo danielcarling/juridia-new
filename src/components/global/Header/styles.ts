@@ -67,7 +67,7 @@ export const Body = styled(Offcanvas.Body)`
 `;
 
 export const Nav = styled.nav`
-  margin-top: 10vh;
+  margin-top: 7vh;
   display: flex;
   flex-direction: column;
   gap: 1rem;

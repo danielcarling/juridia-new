@@ -41,7 +41,7 @@ export function Header() {
                   alignItems: "center",
                   justifyContent: "center",
                   width: "100%",
-                  gap: "2.5rem",
+                  gap: "2rem",
                 }}
               >
                 <img src="/juridiaLogo.svg" alt="" />
@@ -51,7 +51,7 @@ export function Header() {
             <Body>
               <Nav>
                 <Link content="Tela Inicial" href="/" />
-                <Link content="Como usar a plataforma?" href="/tutorial" />
+                <Link content="Como usar a Plataforma?" href="/tutorial" />
               </Nav>
             </Body>
           </Container>

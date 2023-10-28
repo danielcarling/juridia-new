@@ -15,7 +15,7 @@ export const Container = styled.div<Props>`
   padding: 0.5rem 0;
   cursor: pointer;
   text-align: center;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-style: italic;
   font-weight: 800;
   text-align: center;
