@@ -107,12 +107,27 @@ export const PayOptionCard = styled.div<PayOptionCardProps>`
     width: 3.5rem;
     height: auto;
   }
+
+  @media (min-width: 1024px) {
+    width: 14.25rem;
+    height: 6.8rem;
+    gap: 1rem;
+    font-size: 2rem;
+
+    svg {
+      width: 4.8rem;
+    }
+  }
 `;
 
 export const FormContainer = styled.div`
   padding: 0 2rem;
   max-width: 26.25rem;
   margin: auto;
+
+  @media(min-width: 1024px) {
+    padding: 0;
+  }
 `;
 
 export const FormGroup = styled.div`
@@ -141,5 +156,11 @@ export const FormGroup = styled.div`
   .validity,
   .securityCode {
     width: 8rem;
+  }
+
+  @media (min-width: 1024px) {
+    .validity, .securityCode {
+      width: 10rem;
+    }
   }
 `;

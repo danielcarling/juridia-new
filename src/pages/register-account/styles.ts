@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   background-color: ${({ theme }) => theme.color.primary_100};
   padding-bottom: 5rem;
-  font-family: 'Archivo', sans-serif;
+  font-family: "Archivo", sans-serif;
 `;
 
 interface ProgressBarProps {
@@ -12,19 +12,15 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar = styled.div<ProgressBarProps>`
-  position: absolute;
+  position: fixed;
+  top: 5.6rem;
   left: 0;
+  z-index: 9999;
   background-color: ${({ theme }) => theme.color.secondary_100};
   height: 4px;
   transition: 0.5s ease-in-out;
-  top: 30rem;
-
   width: ${({ step }) =>
     step === 1 ? "10%" : step === 2 ? "50%" : step === 3 ? "90%" : "100%"};
-
-  @media (min-width: 1024px) {
-    top: -0.125rem;
-  }
 `;
 
 export const Main = styled.main`

@@ -22,7 +22,40 @@ export const Container = styled.div`
   .textLogo {
     svg {
       width: 8.125rem;
+      height: auto;
     }
+  }
+
+  @media (min-width: 1024px) {
+    width: 26.5rem;
+
+    .logoContainer {
+      top: 1.5rem;
+      left: 1.625rem;
+      img {
+        width: 5.625rem;
+      }
+    }
+
+    .textLogo {
+      svg {
+        width: 10.875rem;
+      }
+    }
+  }
+`;
+
+export const Content = styled.div`
+  color: white;
+  margin-left: 4rem;
+  padding: 2.75rem 0 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media(min-width: 1024px) {
+    padding: 3.75rem 0 2rem;
   }
 `;
 
@@ -35,5 +68,11 @@ export const CreditCardInfo = styled.div`
     font-weight: 400;
     font-family: monospace;
     font-size: 0.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    & * {
+      font-size: 0.875rem;
+    }
   }
 `;
