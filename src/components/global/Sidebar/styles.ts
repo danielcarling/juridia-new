@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: sticky;
   top: 0;
   height: 100vh;
-  width: 16rem;
+  width: 18rem;
   padding: 1.5rem;
   background-color: ${({theme}) => theme.color.secondary_100};
 `;
