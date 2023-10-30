@@ -32,10 +32,26 @@ export const FormGroup = styled.div`
       color: ${({ theme }) => theme.color.gray_80};
     }
   }
+`;
+
+export const ValidityAndCvc = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
   .validity,
   .securityCode {
-    width: 8rem;
+    width: 100%;
+  }
+
+  @media (min-width: 400px) {
+    flex-direction: row;
+    justify-content: space-between;
+
+    .validity,
+    .securityCode {
+      width: 8rem;
+    }
   }
 
   @media (min-width: 1024px) {

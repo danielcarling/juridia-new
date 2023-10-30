@@ -121,6 +121,36 @@ export const PayOptionCard = styled.div<PayOptionCardProps>`
   }
 `;
 
+export const GeneratePix = styled.button`
+  margin: 7rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0;
+  border-radius: 10px;
+  background: #37b5aa;
+  color: white;
+  padding: 0 0.5rem;
+
+  span {
+    font-size: 1rem;
+  }
+
+  strong {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    span {
+      font-size: 1.125rem;
+    }
+
+    strong {
+      font-size: 1.75rem;
+    }
+  }
+`;
+
 export const PixContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -148,12 +178,8 @@ export const QrCode = styled.div`
   }
 `;
 
-export const CopyPastePix = styled.button`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 0;
-  border-radius: 10px;
+export const CopyPastePix = styled(GeneratePix)`
+  margin: 0;
   background: #20b038;
   color: white;
   padding: 0 2rem;
@@ -220,6 +246,17 @@ export const NextStep = styled.div`
 
     &:hover {
       background-color: ${({ theme }) => theme.color.secondary_100_hover};
+    }
+  }
+`;
+
+export const EndPurchase = styled(NextStep)`
+  button {
+    background-color: #20b038;
+    color: black;
+
+    &:hover {
+      background-color: #1b922f;
     }
   }
 `;

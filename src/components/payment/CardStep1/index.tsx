@@ -1,5 +1,5 @@
 import { CreditCard } from "../CreditCard";
-import { CreditCardForm, FormGroup } from "./styles";
+import { CreditCardForm, FormGroup, ValidityAndCvc } from "./styles";
 
 export function CardStep1() {
   return (
@@ -30,12 +30,7 @@ export function CardStep1() {
             placeholder="Digite o número do cartao"
           />
         </FormGroup>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <ValidityAndCvc>
           <FormGroup className="validityAndCVC">
             <label htmlFor="validity">Data de vencimento</label>
             <input
@@ -54,7 +49,7 @@ export function CardStep1() {
               className="securityCode"
             />
           </FormGroup>
-        </div>
+        </ValidityAndCvc>
       </CreditCardForm>
     </>
   );

@@ -3,7 +3,9 @@ import { CreditCardSvg } from "../../../public/payment/CreditCardIcon";
 import {
   Container,
   CopyPastePix,
+  EndPurchase,
   FinishPix,
+  GeneratePix,
   Main,
   NextStep,
   PayOptionCard,
@@ -20,9 +22,11 @@ import { Footer } from "@/components/register-account/Footer";
 import { CreditCard } from "@/components/payment/CreditCard";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { CardStep1 } from "@/components/payment/CardStep1";
+import { CardStep2 } from "@/components/payment/CardStep2";
 
 export default function Payment() {
   const [payOption, setPayOption] = useState("pix");
+  const [pixStep, setPixStep] = useState(1);
   const [cardStep, setCardStep] = useState(1);
 
   useEffect(() => {
@@ -59,24 +63,33 @@ export default function Payment() {
             </PayOptionCard>
           </PayOptionsContainer>
           {payOption === "pix" && (
-            <PixContainer>
-              <QrCode>
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png"
-                  alt=""
-                />
-              </QrCode>
+            <>
+              {pixStep === 1 ? (
+                <GeneratePix onClick={() => setPixStep(2)}>
+                  <span>Clique aqui para</span>
+                  <strong>Gerar o Pix Copia e Cola</strong>
+                </GeneratePix>
+              ) : (
+                <PixContainer>
+                  <QrCode>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png"
+                      alt=""
+                    />
+                  </QrCode>
 
-              <CopyPastePix>
-                <span>Clique aqui para</span>
-                <strong>Copiar Pix Copia e Cola</strong>
-              </CopyPastePix>
+                  <CopyPastePix>
+                    <span>Clique aqui para</span>
+                    <strong>Copiar Pix Copia e Cola</strong>
+                  </CopyPastePix>
 
-              <FinishPix>
-                <span>Após efetuar o Pagamento</span>
-                <strong>Clique aqui e Prossiga</strong>
-              </FinishPix>
-            </PixContainer>
+                  <FinishPix>
+                    <span>Após efetuar o Pagamento</span>
+                    <strong>Clique aqui e Prossiga</strong>
+                  </FinishPix>
+                </PixContainer>
+              )}
+            </>
           )}
 
           {payOption === "creditCard" && (
@@ -84,12 +97,17 @@ export default function Payment() {
               {cardStep === 1 ? (
                 <>
                   <CardStep1 />
-                  <NextStep>
+                  <NextStep onClick={() => setCardStep(2)}>
                     <button>Próximo</button>
                   </NextStep>
                 </>
               ) : (
-                <div>teste</div>
+                <>
+                  <CardStep2 />
+                  <EndPurchase>
+                    <button>Finalizar Compra</button>
+                  </EndPurchase>
+                </>
               )}
             </>
           )}
