@@ -3,10 +3,9 @@ import { CreditCardSvg } from "../../../public/payment/CreditCardIcon";
 import {
   Container,
   CopyPastePix,
-  CreditCardForm,
   FinishPix,
-  FormGroup,
   Main,
+  NextStep,
   PayOptionCard,
   PayOptionsContainer,
   PaymentContainer,
@@ -16,12 +15,19 @@ import {
   SalesArtContainer,
 } from "./styles";
 import { PixSvg } from "../../../public/payment/PixCardIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Footer } from "@/components/register-account/Footer";
 import { CreditCard } from "@/components/payment/CreditCard";
+import { scrollToElement } from "@/utils/scrollToElement";
+import { CardStep1 } from "@/components/payment/CardStep1";
 
 export default function Payment() {
   const [payOption, setPayOption] = useState("pix");
+  const [cardStep, setCardStep] = useState(1);
+
+  useEffect(() => {
+    scrollToElement("payment");
+  }, []);
 
   return (
     <Container>
@@ -31,7 +37,7 @@ export default function Payment() {
           <img src="/payment/salesArt.png" alt="" />
         </SalesArtContainer>
 
-        <PaymentContainer>
+        <PaymentContainer id="payment">
           <PaymentHeader>
             <strong>Realizar Assinatura</strong>
             <span>Finalize sua Assinatura e comece a usar</span>
@@ -75,55 +81,16 @@ export default function Payment() {
 
           {payOption === "creditCard" && (
             <>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "1rem 0",
-                }}
-              >
-                <CreditCard />
-              </div>
-              <CreditCardForm>
-                <FormGroup>
-                  <label htmlFor="name">Nome do Cartão</label>
-                  <input
-                    type="text"
-                    id="cardName"
-                    placeholder="Digite o nome do cartão"
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <label htmlFor="cardNumber">Número do Cartao</label>
-                  <input
-                    type="text"
-                    id="cardNumber"
-                    placeholder="Digite o número do cartao"
-                  />
-                </FormGroup>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <FormGroup className="validityAndCVC">
-                    <label htmlFor="validity">Data de vencimento</label>
-                    <input
-                      type="text"
-                      id="validity"
-                      placeholder="MM/AA"
-                      className="validity"
-                    />
-                  </FormGroup>
-                  <FormGroup className="validityAndCVC">
-                    <label htmlFor="securityCode">CVC</label>
-                    <input
-                      type="text"
-                      id="securityCode"
-                      placeholder="XXX"
-                      className="securityCode"
-                    />
-                  </FormGroup>
-                </div>
-              </CreditCardForm>
+              {cardStep === 1 ? (
+                <>
+                  <CardStep1 />
+                  <NextStep>
+                    <button>Próximo</button>
+                  </NextStep>
+                </>
+              ) : (
+                <div>teste</div>
+              )}
             </>
           )}
         </PaymentContainer>

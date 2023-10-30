@@ -11,6 +11,7 @@ const Theme = {
     secondary_60: "#",
     secondary_80: "#",
     secondary_100: "#D2AE6D",
+    secondary_100_hover: "#ad905a",
 
     gray_10: "#F5F6FA",
     gray_20: "#E5E8F2",

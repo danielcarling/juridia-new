@@ -44,6 +44,8 @@ export const FormContainer = styled.div`
 
   padding: 0 8%;
   width: 95%;
+  margin-top: 0;
+
 
   @media (min-width: 768px) {
     width: 80%;
@@ -51,6 +53,7 @@ export const FormContainer = styled.div`
 
   @media (min-width: 1024px) {
     width: 50vw;
+    margin-top: 5rem;
   }
 `;
 
@@ -135,7 +138,7 @@ export const NextButton = styled.button`
   transition: 0.3s;
 
   &:hover:not(:disabled) {
-    background-color: #ad905a;
+    background-color: ${({theme}) => theme.color.secondary_100_hover};
   }
 
   &:disabled {

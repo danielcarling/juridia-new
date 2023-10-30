@@ -15,6 +15,7 @@ import { RegisterAccountHeader } from "@/components/register-account/Header";
 import { BasicDataForm } from "@/components/register-account/BasicDataForm";
 import { PersonalDataForm } from "@/components/register-account/PersonalDataForm";
 import { CompanyDataForm } from "@/components/register-account/CompanyDataForm";
+import { scrollToElement } from "@/utils/scrollToElement";
 
 export default function RegisterAccount() {
   const [step, setStep] = useState(1);
@@ -27,15 +28,8 @@ export default function RegisterAccount() {
   const [disabled, setDisabled] = useState<boolean>(false);
   const router = useRouter();
 
-  function scrollToForm() {
-    const element = document.getElementById("registerForm");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   useEffect(() => {
-    scrollToForm();
+    scrollToElement("registerForm");
   }, []);
 
   async function handleRegister() {

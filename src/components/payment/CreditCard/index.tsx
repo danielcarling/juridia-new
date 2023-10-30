@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 import { Container, Content, CreditCardInfo } from "./styles";
 

@@ -18,6 +18,7 @@ import { PostAPI, refreshToken, token } from "@/lib/axios";
 import { useRouter } from "next/router";
 import { EyeSlashSVG } from "../../../public/login/EyeSlash";
 import { Footer } from "@/components/register-account/Footer";
+import { scrollToElement } from "@/utils/scrollToElement";
 
 export default function Login() {
   const router = useRouter();
@@ -34,15 +35,8 @@ export default function Login() {
     }
   }
 
-  function scrollToForm() {
-    const element = document.getElementById("loginForm");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
   useEffect(() => {
-    scrollToForm();
+    scrollToElement("loginForm");
   }, []);
 
   async function handleLogin() {

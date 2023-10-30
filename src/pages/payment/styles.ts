@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const Main = styled.main`
   display: flex;
   flex-direction: column;
+  min-height: 82vh;
 
   @media (min-width: 1024px) {
     flex-direction: row-reverse;
@@ -137,6 +138,14 @@ export const QrCode = styled.div`
     width: 11rem;
     height: auto;
   }
+
+  @media (min-width: 1024px) {
+    width: 17rem;
+
+    img {
+      width: 15rem;
+    }
+  }
 `;
 
 export const CopyPastePix = styled.button`
@@ -156,63 +165,61 @@ export const CopyPastePix = styled.button`
   strong {
     font-size: 1.125rem;
   }
+
+  @media (min-width: 768px) {
+    span {
+      font-size: 1.125rem;
+    }
+
+    strong {
+      font-size: 1.75rem;
+    }
+  }
 `;
 
 export const FinishPix = styled(CopyPastePix)`
-  background: ${({theme}) => theme.color.secondary_100};
+  background: ${({ theme }) => theme.color.secondary_100};
   color: black;
+  margin-top: 1rem;
 
   span {
-    font-size: .625rem;
+    font-size: 0.625rem;
   }
 
   strong {
-    font-size: .875rem;
-  }
-`;
-
-export const CreditCardForm = styled.div`
-  padding: 0 2rem;
-  max-width: 26.25rem;
-  margin: auto;
-
-  @media (min-width: 1024px) {
-    padding: 0;
-  }
-`;
-
-export const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 2vh;
-
-  & label {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.875rem;
   }
 
-  & input {
-    padding: 1rem;
-    border: 1px solid #d7d9dd;
-    background-color: transparent;
-    border-radius: 5px;
-    transition: 0.3s;
-    color: ${({ theme }) => theme.color.gray_20};
+  @media (min-width: 768px) {
+    margin-top: 2rem;
 
-    &::placeholder {
-      color: ${({ theme }) => theme.color.gray_80};
+    span {
+      font-size: 0.875rem;
+    }
+
+    strong {
+      font-size: 1.375rem;
     }
   }
+`;
 
-  .validity,
-  .securityCode {
-    width: 8rem;
-  }
+export const NextStep = styled.div`
+  display: flex;
+  justify-content: center;
 
-  @media (min-width: 1024px) {
-    .validity,
-    .securityCode {
-      width: 10rem;
+  button {
+    background-color: ${({ theme }) => theme.color.secondary_100};
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    border: 0;
+    border-radius: 8px;
+    color: black;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.secondary_100_hover};
     }
   }
 `;
