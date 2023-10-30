@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { Link } from "./Link";
 import { Body, Container, HeaderContainer, Nav, Title } from "./styles";
+import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 
 export function Header() {
   const [show, setShow] = useState(false);
@@ -45,7 +46,7 @@ export function Header() {
                 }}
               >
                 <img src="/juridiaLogo.svg" alt="" />
-                <img src="juridiaTextLogo.svg" alt="" />
+                <JuridiaTextSvg />
               </div>
             </Offcanvas.Header>
             <Body>

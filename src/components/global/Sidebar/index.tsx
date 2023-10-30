@@ -1,17 +1,23 @@
+import { windowDimension } from "@/utils/windowDimensions";
 import { Link } from "./Link";
 import { Container, Nav, SidebarHeader } from "./styles";
+import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 
 export function Sidebar() {
   return (
-    <Container>
-      <SidebarHeader>
-        <img src="/juridiaLogo.svg" alt="" />
-        <img src="juridiaTextLogo.svg" alt="" />
-      </SidebarHeader>
-      <Nav>
-        <Link content="Tela Inicial" href="/" />
-        <Link content="Como usar a Plataforma?" href="/tutorial" />
-      </Nav>
-    </Container>
+    <>
+      {!windowDimension(1024) && (
+        <Container>
+          <SidebarHeader>
+            <img src="/juridiaLogo.svg" alt="" />
+            <JuridiaTextSvg />
+          </SidebarHeader>
+          <Nav>
+            <Link content="Tela Inicial" href="/" />
+            <Link content="Como usar a Plataforma?" href="/tutorial" />
+          </Nav>
+        </Container>
+      )}
+    </>
   );
 }
