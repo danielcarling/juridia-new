@@ -71,6 +71,10 @@ interface InstallmentsProps {
 }
 
 export const InstallmentsContainer = styled.div<InstallmentsProps>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   cursor: pointer;
   border-radius: 5px;
   border: 1px solid #d7d9dd;
@@ -78,6 +82,13 @@ export const InstallmentsContainer = styled.div<InstallmentsProps>`
   padding: 0.75rem 0.625rem 0.75rem 3rem;
   font-size: 1.125rem;
   position: relative;
+
+  img {
+    width: 1.5rem;
+    transition: 0.2s;
+
+    transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+  }
 
   .installments {
     position: absolute;

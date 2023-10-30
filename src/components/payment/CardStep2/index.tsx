@@ -16,17 +16,6 @@ export function CardStep2() {
     setIsFocused(false);
   };
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  function handleInstallmentsClick() {
-    if (!isFocused) {
-      const saveCard = document.getElementById("saveCard");
-      saveCard?.focus();
-    }
-  }
-
   function handleSelect(value: string) {
     setInstallments(value + "x");
     setIsFocused(false);
@@ -76,19 +65,19 @@ export function CardStep2() {
 
       <InstallmentsContainer
         tabIndex={0}
-        onFocus={handleFocus}
+        onClick={() => setIsFocused(!isFocused)}
         onBlur={handleBlur}
         isOpen={isFocused}
-        onClick={handleInstallmentsClick}
       >
-        <strong>{installments}</strong>
+        <strong>{installments} </strong>
+        <img src="/dropdownIcon.svg" alt="" />
         <div className="installments">
           {installmentsValues.map((value) => (
             <div
               className="option"
               onClick={() => handleSelect(value.toString())}
             >
-              {value}x
+              {value}x - R$ 1250,00
             </div>
           ))}
         </div>
