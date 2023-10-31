@@ -14,6 +14,7 @@ export const Main = styled.main`
   min-height: 100vh;
   width: 100%;
   padding-bottom: 3rem;
+  overflow: hidden;
 `;
 
 export const PrincipalBanner = styled.div`
@@ -62,4 +63,6 @@ export const SecondaryBanners = styled.div`
   }
 `;
 
-export const SliderContainer = styled.div``;
+export const SliderContainer = styled.div`
+  display: flex;
+`;
