@@ -1,3 +1,4 @@
+import { BackIconSvg } from "../../../../public/BackIcon";
 import { ModalTitle } from "../ModalTitle";
 import {
   BackButton,
@@ -22,7 +23,7 @@ export function TutorialModal({ show, onHide }: ModalProps) {
     <StyledModal show={show} onHide={onHide} size="xl">
       <Content>
         <CloseButton onClick={onHide}>
-          <img src="/how-to-use/back.svg" alt="" />
+          <BackIconSvg />
         </CloseButton>
         <ModalTitle
           content="Ferramenta de Construção"

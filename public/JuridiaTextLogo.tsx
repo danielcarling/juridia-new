@@ -1,9 +1,13 @@
-export function JuridiaTextSvg() {
+interface Props {
+  width?: string;
+}
+
+export function JuridiaTextSvg({ width = "176px" }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="176"
-      height="17"
+      width={width}
+      height="auto"
       viewBox="0 0 176 17"
       fill="none"
 

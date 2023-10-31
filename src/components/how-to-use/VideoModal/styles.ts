@@ -13,6 +13,7 @@ export const CloseButton = styled.button`
   left: 1rem;
   border: 0;
   background: transparent;
+  color: ${({ theme }) => theme.color.primary_100};
 `;
 
 export const Content = styled.div`
