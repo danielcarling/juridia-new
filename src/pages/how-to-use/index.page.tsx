@@ -5,6 +5,8 @@ import { WhatsApp } from "@/components/global/Whatsapp";
 import { Container, Main, PrincipalBanner, SliderContainer } from "./styles";
 import { useKeenSlider } from "keen-slider/react";
 import { VideoCard } from "@/components/how-to-use/Cards";
+import { TutorialModal } from "@/components/how-to-use/VideoModal";
+import { useState } from "react";
 
 export default function HowToUse() {
   const [sliderRef] = useKeenSlider({
@@ -16,6 +18,8 @@ export default function HowToUse() {
   });
 
   const cardsInfo = [1, 2, 3, 4, 5, 6, 7];
+
+  const [showTutorialModal, setShowTutorialModal] = useState(false);
   return (
     <Container>
       <Sidebar />
@@ -32,12 +36,19 @@ export default function HowToUse() {
         <SliderContainer ref={sliderRef}>
           {cardsInfo.map((card) => (
             <div className="keen-slider__slide">
-              <VideoCard imgSrc="/home/solutionCardImg1.svg" />
+              <VideoCard
+                imgSrc="/home/solutionCardImg1.svg"
+                onClick={() => setShowTutorialModal(true)}
+              />
             </div>
           ))}
         </SliderContainer>
         <WhatsApp />
       </Main>
+      <TutorialModal
+        show={showTutorialModal}
+        onHide={() => setShowTutorialModal(false)}
+      />
     </Container>
   );
 }

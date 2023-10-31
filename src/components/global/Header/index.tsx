@@ -31,7 +31,7 @@ export function Header() {
           <button onClick={handleShow}>
             <img src="/menuIcon.svg" alt="" />
           </button>
-          <img src="/juridiaTextLogo.svg" alt="" />
+          <JuridiaTextSvg />
 
           <Container show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>

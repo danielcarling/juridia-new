@@ -1,12 +1,13 @@
 import { CardHeader, Container, TextContainer } from "./styles";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   imgSrc: string;
+  rest?: any;
 }
 
-export function VideoCard({ imgSrc }: Props) {
+export function VideoCard({ imgSrc, ...rest }: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <CardHeader>
         <div className="title">
           <div className="imgContainer">
