@@ -15,7 +15,7 @@ export function ContractHeader() {
       </div>
       {!windowDimension(1024) && (
         <UserInfo>
-          <Image width={50} height={50} src="/userPhoto.png" alt={""} />
+          <Image width={200} height={200} src="/userPhoto.png" alt={""} />
           <div className="nameAndEmail">
             <strong>Gabriel Antonio</strong>
             <span>email@example.com</span>

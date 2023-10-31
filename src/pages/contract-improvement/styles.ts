@@ -5,15 +5,11 @@ export const Container = styled.div`
 `;
 
 export const Main = styled.main`
+  position: relative;
   background-color: ${({ theme }) => theme.color.primary_100};
   min-height: 100vh;
   width: 100%;
   padding-bottom: 4rem;
   overflow: hidden;
+  padding: 0.75rem 1.125rem;
 `;
-
-export const UserInfo = styled.div`
-  position: absolute;
-  top: 0.5rem;
-  right: 2%;
-`

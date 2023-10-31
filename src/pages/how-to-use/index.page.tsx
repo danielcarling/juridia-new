@@ -1,6 +1,6 @@
 import { Header } from "@/components/global/Header";
 import { Sidebar } from "@/components/global/Sidebar";
-import { TitleComponent } from "@/components/global/Title";
+import { TitleComponent } from "@/components/contract-improvement/Title";
 import { WhatsApp } from "@/components/global/Whatsapp";
 import { Container, Main, PrincipalBanner, SliderContainer } from "./styles";
 import { useKeenSlider } from "keen-slider/react";

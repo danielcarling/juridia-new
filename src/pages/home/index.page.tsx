@@ -7,7 +7,7 @@ import {
   SliderContainer,
 } from "./styles";
 import { Sidebar } from "@/components/global/Sidebar";
-import { TitleComponent } from "@/components/global/Title";
+import { TitleComponent } from "@/components/contract-improvement/Title";
 import { SolutionsCard } from "@/components/home/SolutionsCard";
 import { useKeenSlider } from "keen-slider/react";
 import { WhatsApp } from "@/components/global/Whatsapp";

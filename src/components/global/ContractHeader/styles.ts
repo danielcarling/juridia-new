@@ -30,6 +30,11 @@ export const UserInfo = styled.div`
   align-items: center;
   gap: 0.625rem;
 
+  img {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
+
   .nameAndEmail {
     display: flex;
     flex-direction: column;
