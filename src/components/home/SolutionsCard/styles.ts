@@ -45,3 +45,30 @@ export const TextContainer = styled.div`
   color: white;
   text-align: justify;
 `;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+
+  button {
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    background: #a88d61;
+    font-weight: 800;
+    font-style: italic;
+    color: white;
+    padding: 0.4rem 0;
+    transition: 0.3s;
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:last-child {
+      background-color: white;
+      text-shadow: 1px 1px 1px black;
+      font-size: 0.75rem;
+    }
+  }
+`;

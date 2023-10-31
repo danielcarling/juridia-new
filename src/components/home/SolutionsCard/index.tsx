@@ -1,4 +1,9 @@
-import { CardHeader, Container, TextContainer } from "./styles";
+import {
+  ButtonsContainer,
+  CardHeader,
+  Container,
+  TextContainer,
+} from "./styles";
 
 interface Props {
   imgSrc: string;
@@ -22,6 +27,11 @@ export function SolutionsCard({ imgSrc }: Props) {
           Você, após melhorar seu contrato ela passará um resumo das alterações.
         </p>
       </TextContainer>
+
+      <ButtonsContainer>
+        <button>Utilizar Solução</button>
+        <button><img src="/home/youtubeLogo.svg" alt="" /> Assistir Vídeo Explicativo</button>
+      </ButtonsContainer>
     </Container>
   );
 }
