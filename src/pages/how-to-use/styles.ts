@@ -39,6 +39,6 @@ export const PrincipalBanner = styled.div`
 
 export const SliderContainer = styled.div`
   display: flex;
-  overflow: hidden;
   padding: 0.5rem 0;
+  margin-left: 1rem;
 `;

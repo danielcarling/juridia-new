@@ -16,6 +16,7 @@ export default function Home() {
   const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {
+      // origin: "center",
       perView: "auto",
       spacing: 38,
     },

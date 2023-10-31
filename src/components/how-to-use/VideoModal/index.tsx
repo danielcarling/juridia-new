@@ -1,6 +1,7 @@
 import { ModalTitle } from "../ModalTitle";
 import {
   BackButton,
+  CloseButton,
   Contact,
   Content,
   DislikeButton,
@@ -18,11 +19,11 @@ interface ModalProps {
 
 export function TutorialModal({ show, onHide }: ModalProps) {
   return (
-    <StyledModal show={show} onHide={onHide} size="lg">
+    <StyledModal show={show} onHide={onHide} size="xl">
       <Content>
-        <BackButton onClick={onHide}>
+        <CloseButton onClick={onHide}>
           <img src="/how-to-use/back.svg" alt="" />
-        </BackButton>
+        </CloseButton>
         <ModalTitle
           content="Ferramenta de Construção"
           style={{ marginLeft: "3rem" }}
@@ -58,8 +59,15 @@ export function TutorialModal({ show, onHide }: ModalProps) {
               content="Ficou com alguma dúvida?"
               priority="secondary"
             />
+            <button>
+              <img src="/whatsLogo.svg" alt="" />
+              <strong>Fale com nosso Time</strong>
+            </button>
           </Contact>
         </FeedbackAndContact>
+        <BackButton onClick={onHide}>
+          <button>Voltar</button>
+        </BackButton>
       </Content>
     </StyledModal>
   );

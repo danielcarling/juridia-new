@@ -65,5 +65,5 @@ export const SecondaryBanners = styled.div`
 
 export const SliderContainer = styled.div`
   display: flex;
-  overflow: hidden;
+  margin-left: 1rem;
 `;
