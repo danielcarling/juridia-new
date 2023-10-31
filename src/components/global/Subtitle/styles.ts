@@ -6,7 +6,7 @@ export const Title = styled.div`
   font-style: italic;
 
   h2 {
-    font-size: 1.125  rem;
+    font-size: 1.125rem;
   }
 
   .line {
@@ -19,8 +19,8 @@ export const Title = styled.div`
   }
 
   @media (min-width: 1024px) {
-    h1 {
-      font-size: 1rem
+    h2 {
+      font-size: 1.5rem
     }
 
     .line {

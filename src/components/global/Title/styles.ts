@@ -11,7 +11,7 @@ export const Title = styled.div<Props>`
   font-style: italic;
 
   h1 {
-    font-size: ${({ fontSizeSm }) => (fontSizeSm ? fontSizeSm : "1.125rem")};
+    font-size: ${({ fontSizeSm }) => (fontSizeSm ? fontSizeSm : "1.5rem")};
   }
 
   .line {
