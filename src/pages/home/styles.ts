@@ -13,7 +13,7 @@ export const Main = styled.main`
   background-color: ${({ theme }) => theme.color.primary_100};
   min-height: 100vh;
   width: 100%;
-  padding-bottom: 3rem;
+  padding-bottom: 4rem;
   overflow: hidden;
 `;
 
@@ -65,4 +65,5 @@ export const SecondaryBanners = styled.div`
 
 export const SliderContainer = styled.div`
   display: flex;
+  overflow: hidden;
 `;

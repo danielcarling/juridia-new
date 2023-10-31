@@ -10,9 +10,11 @@ import { Sidebar } from "@/components/global/Sidebar";
 import { TitleComponent } from "@/components/global/Title";
 import { SolutionsCard } from "@/components/home/SolutionsCard";
 import { useKeenSlider } from "keen-slider/react";
+import { WhatsApp } from "@/components/global/Whatsapp";
 
 export default function Home() {
   const [sliderRef] = useKeenSlider({
+    loop: true,
     slides: {
       perView: "auto",
       spacing: 38,
@@ -37,22 +39,18 @@ export default function Home() {
           </div>
         </SecondaryBanners>
 
-        <div>
-          {/* <div style={{ width: "1rem", height: "100%", background: 'red' }} /> */}
-          <div>
-            <TitleComponent
-              content="Soluções Frequentes:"
-              style={{ marginLeft: "1rem" }}
-            />
-            <SliderContainer ref={sliderRef}>
-              {slides.map((slide) => (
-                <div className="keen-slider__slide">
-                  <SolutionsCard imgSrc="/home/solutionCardImg1.svg" />
-                </div>
-              ))}
-            </SliderContainer>
-          </div>
-        </div>
+        <TitleComponent
+          content="Soluções Frequentes:"
+          style={{ marginLeft: "1rem" }}
+        />
+        <SliderContainer ref={sliderRef}>
+          {slides.map((slide) => (
+            <div className="keen-slider__slide">
+              <SolutionsCard imgSrc="/home/solutionCardImg1.svg" />
+            </div>
+          ))}
+        </SliderContainer>
+        <WhatsApp />
       </Main>
     </Container>
   );
