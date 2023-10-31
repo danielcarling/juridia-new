@@ -14,7 +14,7 @@ export function Sidebar() {
           </SidebarHeader>
           <Nav>
             <Link content="Tela Inicial" href="/" />
-            <Link content="Como usar a Plataforma?" href="/tutorial" />
+            <Link content="Como usar a Plataforma?" href="/how-to-use" />
           </Nav>
         </Container>
       )}

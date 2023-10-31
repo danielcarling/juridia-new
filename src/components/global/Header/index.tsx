@@ -52,7 +52,7 @@ export function Header() {
             <Body>
               <Nav>
                 <Link content="Tela Inicial" href="/" />
-                <Link content="Como usar a Plataforma?" href="/tutorial" />
+                <Link content="Como usar a Plataforma?" href="/how-to-use" />
               </Nav>
             </Body>
           </Container>
