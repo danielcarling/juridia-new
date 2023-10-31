@@ -9,8 +9,17 @@ import {
 import { Sidebar } from "@/components/global/Sidebar";
 import { TitleComponent } from "@/components/global/Title";
 import { SolutionsCard } from "@/components/home/SolutionsCard";
+import { useKeenSlider } from "keen-slider/react";
 
 export default function Home() {
+  const [sliderRef] = useKeenSlider({
+    slides: {
+      perView: "auto",
+      spacing: 38,
+    },
+  });
+
+  const slides = [1, 2, 3, 4, 5, 6, 7];
   return (
     <Container>
       <Sidebar />
@@ -28,11 +37,21 @@ export default function Home() {
           </div>
         </SecondaryBanners>
 
-        <div style={{ marginLeft: "1rem" }}>
-          <TitleComponent content="Soluções Frequentes:" />
-          <SliderContainer>
-            <SolutionsCard imgSrc="/home/solutionCardImg1.svg" />
-          </SliderContainer>
+        <div>
+          {/* <div style={{ width: "1rem", height: "100%", background: 'red' }} /> */}
+          <div>
+            <TitleComponent
+              content="Soluções Frequentes:"
+              style={{ marginLeft: "1rem" }}
+            />
+            <SliderContainer ref={sliderRef}>
+              {slides.map((slide) => (
+                <div className="keen-slider__slide">
+                  <SolutionsCard imgSrc="/home/solutionCardImg1.svg" />
+                </div>
+              ))}
+            </SliderContainer>
+          </div>
         </div>
       </Main>
     </Container>
