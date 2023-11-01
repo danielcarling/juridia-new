@@ -11,9 +11,30 @@ export const Main = styled.main`
   padding: 0.75rem 1.125rem 4rem;
 `;
 
+export const PageTitle = styled.div`
+  padding: 1rem 0 2rem;
+  @media (min-width: 1024px) {
+    padding: 1rem 0 4.75rem;
+  }
+`;
+
+export const Content = styled.div`
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+`;
+
 export const ContractForm = styled.div`
-  margin: auto;
+  margin: 0 auto;
   max-width: 39rem;
+
+  @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
 `;
 
 export const ContractDetails = styled.div`
@@ -93,6 +114,10 @@ export const SubmitContract = styled.div`
 export const ExtraInfo = styled.div`
   max-width: 39rem;
   margin: auto;
+
+  @media (min-width: 1024px) {
+    width: 95%;
+  }
 `;
 
 export const SolutionInfo = styled.div`
@@ -101,4 +126,28 @@ export const SolutionInfo = styled.div`
   height: 20rem;
   margin: 0 auto;
   border-radius: 20px;
+`;
+
+export const VideoContainer = styled.div`
+  margin: auto;
+  .iframe-container {
+    position: relative;
+    overflow: hidden;
+    width: 95%;
+    margin: auto;
+    padding-bottom: 56.25%;
+  }
+
+  iframe {
+    border-radius: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    width: 26.25rem;
+  }
 `;

@@ -45,11 +45,15 @@ export const SelectContainer = styled.div<Props>`
   .option {
     padding: 0.2rem 2rem;
     transition: 0.2s;
-
     cursor: pointer;
+
     &:hover {
-      background-color: ${({ theme }) => theme.color.secondary_100_hover};
+      background-color: #d5d2d2;
       scale: 1.01;
     }
+  }
+
+  @media (min-width: 1024px) {
+    width: 22rem;
   }
 `;
