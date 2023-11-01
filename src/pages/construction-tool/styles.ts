@@ -104,7 +104,7 @@ export const ChatContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.color.secondary_100};
   overflow: hidden;
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 0.5rem;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -165,7 +165,7 @@ export const ChatBody = styled.div`
   gap: 0.5rem;
   margin-top: 0.2rem;
   overflow: auto;
-  height: 13rem;
+  height: 16rem;
   padding: 0 0.2rem;
 
   @media (min-width: 1024px) {

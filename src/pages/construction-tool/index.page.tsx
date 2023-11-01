@@ -19,8 +19,12 @@ import {
   SelectGroup,
 } from "./styles";
 import { UserMessage } from "@/components/construction-tool/UserMessage";
+import { useState } from "react";
+import { ClientInfoModal } from "@/components/construction-tool/ClientInfoModal";
 
 export default function ConstructionTool() {
+  const [modalShow, setModalShow] = useState(false);
+
   const selectValues = ["Contrato", "Contrato", "Contrato"];
 
   return (
@@ -46,7 +50,7 @@ export default function ConstructionTool() {
           <SelectGroup>
             <Subtitle content="4 - Informe os Dados do Cliente:" />
 
-            <ClientDataButton>
+            <ClientDataButton onClick={() => setModalShow(true)}>
               <img src="/construction-tool/formPaper.svg" alt="" />
               <strong>Preencher Dados do Cliente</strong>
             </ClientDataButton>
@@ -108,6 +112,7 @@ export default function ConstructionTool() {
         </BuildContract>
       </Main>
       <WhatsApp />
+      <ClientInfoModal show={modalShow} onHide={() => setModalShow(false)} />
     </Container>
   );
 }
