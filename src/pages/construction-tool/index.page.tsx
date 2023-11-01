@@ -1,10 +1,16 @@
+import { IaMessage } from "@/components/construction-tool/IaMessage";
 import { ContractHeader } from "@/components/global/ContractHeader";
+import { Select } from "@/components/global/Select";
+import { Subtitle } from "@/components/global/Subtitle";
 import { TitleComponent } from "@/components/global/Title";
 import { WhatsApp } from "@/components/global/Whatsapp";
 import {
+  BuildContract,
   CaseDescription,
   CaseOptions,
+  ChatBody,
   ChatContainer,
+  ChatFooter,
   ChatHeader,
   ClientDataButton,
   Container,
@@ -12,8 +18,7 @@ import {
   PageTitle,
   SelectGroup,
 } from "./styles";
-import { Subtitle } from "@/components/global/Subtitle";
-import { Select } from "@/components/global/Select";
+import { UserMessage } from "@/components/construction-tool/UserMessage";
 
 export default function ConstructionTool() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
@@ -62,8 +67,45 @@ export default function ConstructionTool() {
                 para termos um resultado excelente”
               </p>
             </ChatHeader>
+            <ChatBody>
+              <IaMessage
+                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Necessitatibus nostrum debitis ullam ex sapiente corporis
+                quibusdam ad placeat exercitationem facilis porro inventore
+                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
+              />
+
+              <UserMessage
+                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Necessitatibus nostrum debitis ullam ex sapiente corporis
+                quibusdam ad placeat exercitationem facilis porro inventore
+                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
+              />
+              <IaMessage
+                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Necessitatibus nostrum debitis ullam ex sapiente corporis
+                quibusdam ad placeat exercitationem facilis porro inventore
+                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
+              />
+
+              <UserMessage
+                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Necessitatibus nostrum debitis ullam ex sapiente corporis
+                quibusdam ad placeat exercitationem facilis porro inventore
+                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
+              />
+            </ChatBody>
+            <ChatFooter>
+              <input type="text" />
+              <button>
+                <img src="/sendIcon.svg" alt="" />
+              </button>
+            </ChatFooter>
           </ChatContainer>
         </CaseDescription>
+        <BuildContract>
+          <button>Começar Construção</button>
+        </BuildContract>
       </Main>
       <WhatsApp />
     </Container>

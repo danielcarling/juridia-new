@@ -97,10 +97,33 @@ export const CaseDescription = styled.div`
 `;
 
 export const ChatContainer = styled.div`
-  height: 18rem;
+  margin: 0 auto;
+  max-width: 47rem;
   border-radius: 23px;
   margin-top: 2rem;
   border: 1px solid ${({ theme }) => theme.color.secondary_100};
+  overflow: hidden;
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 6px; 
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: ${({ theme }) =>
+      theme.color
+        .secondary_100}; 
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #323654;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 51rem;
+  }
 `;
 
 export const ChatHeader = styled.header`
@@ -118,10 +141,105 @@ export const ChatHeader = styled.header`
   p {
     color: #fff;
     text-align: justify;
-    font-size: 14.741px;
+    font-size: 0.93rem;
     font-style: italic;
     font-weight: 600;
     line-height: normal;
     padding: 0.5rem 0.75rem 0.5rem 0;
+  }
+
+  @media (min-width: 1024px) {
+    img {
+      margin-left: 2rem;
+    }
+
+    p {
+      padding: 1.3rem;
+    }
+  }
+`;
+
+export const ChatBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+  overflow: auto;
+  height: 13rem;
+  padding: 0 0.2rem;
+
+  @media (min-width: 1024px) {
+    height: 20rem;
+  }
+`;
+
+export const ChatFooter = styled.footer`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-grow: 0;
+  background-color: ${({ theme }) => theme.color.secondary_100};
+  margin-top: 0.2rem;
+  padding: 0.5rem;
+
+  input {
+    font-weight: 700;
+    width: 90%;
+    border: 0;
+    border-radius: 10px 0px 10px 10px;
+    background: #8c7552;
+    padding: 0.5rem;
+
+    &:focus {
+      outline: 1px solid ${({ theme }) => theme.color.primary_100};
+    }
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #323654;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: 0;
+    transition: 0.2s;
+    margin-right: 0.5rem;
+
+    img {
+      width: 2rem;
+      height: auto;
+    }
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+`;
+
+export const BuildContract = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1.625rem;
+
+  button {
+    background-color: ${({ theme }) => theme.color.secondary_100};
+    color: #1d1f2e;
+    text-align: center;
+    font-size: 21.788px;
+    font-style: italic;
+    font-weight: 900;
+    line-height: normal;
+    padding: 0.875rem;
+    border: 0;
+    border-radius: 7px;
+
+    transition: 0.3s;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.color.secondary_100_hover};
+    }
   }
 `;
