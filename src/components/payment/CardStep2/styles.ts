@@ -84,7 +84,7 @@ export const InstallmentsContainer = styled.div<InstallmentsProps>`
   position: relative;
   transition: 0.2s;
 
-  img {
+  svg {
     width: 1.5rem;
     transition: 0.2s;
     transform: ${({ isOpen }) => (isOpen ? "rotate(0deg)" : "rotate(180deg)")};

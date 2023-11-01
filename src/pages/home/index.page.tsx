@@ -7,10 +7,10 @@ import {
   SliderContainer,
 } from "./styles";
 import { Sidebar } from "@/components/global/Sidebar";
-import { TitleComponent } from "@/components/global/Subtitle";
 import { SolutionsCard } from "@/components/home/SolutionsCard";
 import { useKeenSlider } from "keen-slider/react";
 import { WhatsApp } from "@/components/global/Whatsapp";
+import { TitleComponent } from "@/components/global/Title";
 
 export default function Home() {
   const [sliderRef] = useKeenSlider({

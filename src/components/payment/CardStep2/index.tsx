@@ -5,6 +5,7 @@ import {
   FormGroup,
   InstallmentsContainer,
 } from "./styles";
+import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 
 export function CardStep2() {
   const [isFocused, setIsFocused] = useState(false);
@@ -70,7 +71,7 @@ export function CardStep2() {
         isOpen={isFocused}
       >
         <strong>{installments} </strong>
-        <img src="/dropdownIcon.svg" alt="" />
+        <DropdownIconSvg width="1.6rem" />
         <div className="installments">
           {installmentsValues.map((value) => (
             <div

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { SelectContainer } from "./styles";
+import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 
 interface Props {
   values: string[];
@@ -20,25 +21,27 @@ export function Select({ values }: Props) {
     saveCard?.focus();
   }
 
-  return(
+  return (
     <SelectContainer
-        tabIndex={0}
-        onClick={() => setIsFocused(!isFocused)}
-        onBlur={handleBlur}
-        isOpen={isFocused}
-      >
-        <strong>{selectedValue}</strong>
-        <img src="/dropdownIcon.svg" alt="" />
-        <div className="options-container">
-          {values.map((value) => (
-            <div
-              className="option"
-              onClick={() => handleSelect(value.toString())}
-            >
-              {value}x - R$ 1250,00
-            </div>
-          ))}
-        </div>
-      </SelectContainer>
-  )
+      tabIndex={0}
+      onClick={() => setIsFocused(!isFocused)}
+      onBlur={handleBlur}
+      isOpen={isFocused}
+    >
+      <strong>{selectedValue}</strong>
+      <div className="icon">
+        <DropdownIconSvg width="1.5rem" />
+      </div>
+      <div className="options-container">
+        {values.map((value) => (
+          <div
+            className="option"
+            onClick={() => handleSelect(value.toString())}
+          >
+            {value}
+          </div>
+        ))}
+      </div>
+    </SelectContainer>
+  );
 }

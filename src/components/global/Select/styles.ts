@@ -6,33 +6,40 @@ interface Props {
 
 export const SelectContainer = styled.div<Props>`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid #d7d9dd;
-  background: ${({ theme }) => theme.color.secondary_100};
-  padding: 0.75rem 0.625rem 0.75rem 3rem;
-  font-size: 1.125rem;
+  background: #f5f5f5;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-style: italic;
   position: relative;
   transition: 0.2s;
+  border-radius: ${({ isOpen }) => (isOpen ? "10px 10px 0 0" : "10px")};
+  color: ${({ theme }) => theme.color.secondary_100};
+  width: 16.75rem;
+  margin: auto;
 
-  img {
-    width: 1.5rem;
+  svg {
+    position: absolute;
+    top: 0;
+    right: 1rem;
     transition: 0.2s;
-    transform: ${({ isOpen }) => (isOpen ? "rotate(0deg)" : "rotate(180deg)")};
+    transform: ${({ isOpen }) => (isOpen ? "rotate(180deg)" : "rotate(0deg)")};
   }
 
   .options-container {
     position: absolute;
-    bottom: 3.1rem;
+    z-index: 10;
+    top: 2.5rem;
     border: 1px solid #d7d9dd;
-    border-radius: 5px 5px 0 0;
+    border-radius: 0 0 5px 5px;
     left: 0;
     width: 100%;
     display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-    background: ${({ theme }) => theme.color.secondary_100};
+    background: #f5f5f5;
   }
 
   .option {
