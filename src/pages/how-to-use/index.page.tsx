@@ -1,12 +1,12 @@
 import { Header } from "@/components/global/Header";
 import { Sidebar } from "@/components/global/Sidebar";
-import { TitleComponent } from "@/components/global/Subtitle";
 import { WhatsApp } from "@/components/global/Whatsapp";
 import { Container, Main, PrincipalBanner, SliderContainer } from "./styles";
 import { useKeenSlider } from "keen-slider/react";
 import { VideoCard } from "@/components/how-to-use/Cards";
 import { TutorialModal } from "@/components/how-to-use/VideoModal";
 import { useState } from "react";
+import { TitleComponent } from "@/components/global/Title";
 
 export default function HowToUse() {
   const [sliderRef] = useKeenSlider({

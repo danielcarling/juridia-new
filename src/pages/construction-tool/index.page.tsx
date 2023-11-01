@@ -4,6 +4,8 @@ import { WhatsApp } from "@/components/global/Whatsapp";
 import {
   CaseDescription,
   CaseOptions,
+  ChatContainer,
+  ChatHeader,
   ClientDataButton,
   Container,
   Main,
@@ -50,6 +52,17 @@ export default function ConstructionTool() {
           <div className="subtitle">
             <Subtitle content="5 - Informe Detalhes do caso do seu Cliente:" />
           </div>
+          <ChatContainer>
+            <ChatHeader>
+              <img src="/juridiaLogo.svg" alt="" />
+              <p>
+                “Fale comigo como se estivesse falando com um colega Advogado,
+                pode ser bem detalhista, coloque os anseios da petição,
+                lembre-se que quanto mais informações eu tiver, mais fácil é
+                para termos um resultado excelente”
+              </p>
+            </ChatHeader>
+          </ChatContainer>
         </CaseDescription>
       </Main>
       <WhatsApp />

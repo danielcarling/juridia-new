@@ -1,6 +1,10 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  & * {
+    font-family: "Lato", sans-serif;
+  }
+`;
 
 export const Main = styled.main`
   position: relative;
@@ -95,6 +99,7 @@ export const SubmitContract = styled.div`
   display: flex;
   justify-content: center;
   margin: 1.125rem 0 1.5rem;
+
   button {
     font-size: 1.625rem;
     font-weight: 800;
@@ -104,6 +109,7 @@ export const SubmitContract = styled.div`
     padding: 1rem 5%;
     border-radius: 20px;
     background: ${({ theme }) => theme.color.secondary_100};
+    transition: 0.3s;
 
     &:hover {
       background: ${({ theme }) => theme.color.secondary_100_hover};

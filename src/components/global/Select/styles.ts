@@ -5,6 +5,10 @@ interface Props {
 }
 
 export const SelectContainer = styled.div<Props>`
+  & * {
+    font-family: "Lato", sans-serif;
+  }
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,6 +17,7 @@ export const SelectContainer = styled.div<Props>`
   border-radius: 5px;
   background: #f5f5f5;
   padding: 0.5rem 0;
+  font-family: "Lato", sans-serif;
   font-size: 1rem;
   font-style: italic;
   position: relative;

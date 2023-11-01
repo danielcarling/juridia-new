@@ -1,6 +1,10 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  & * {
+    font-family: "Lato", sans-serif;
+  }
+`;
 
 export const Main = styled.main`
   position: relative;
@@ -89,5 +93,35 @@ export const CaseDescription = styled.div`
     @media (min-width: 1024px) {
       grid-template-columns: 62rem;
     }
+  }
+`;
+
+export const ChatContainer = styled.div`
+  height: 18rem;
+  border-radius: 23px;
+  margin-top: 2rem;
+  border: 1px solid ${({ theme }) => theme.color.secondary_100};
+`;
+
+export const ChatHeader = styled.header`
+  border-radius: 23px 23px 0 0;
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  background-color: #323654;
+
+  img {
+    margin-left: 0.25rem;
+    width: 2rem;
+  }
+
+  p {
+    color: #fff;
+    text-align: justify;
+    font-size: 14.741px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: normal;
+    padding: 0.5rem 0.75rem 0.5rem 0;
   }
 `;
