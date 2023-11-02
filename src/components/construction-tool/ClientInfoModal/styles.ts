@@ -97,6 +97,7 @@ export const FormGroup = styled.div`
     padding: 0.5rem;
     font-weight: 700;
     width: 18rem;
+    color: white;
   }
 `;
 
