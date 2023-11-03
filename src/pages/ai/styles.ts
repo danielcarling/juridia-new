@@ -40,7 +40,7 @@ export const ChatContainer = styled.div`
 
   @media (min-width: 1024px) {
     max-width: 51rem;
-    height: calc(100vh - 9.4rem);
+    height: calc(100vh - 10.78rem);
   }
 `;
 
@@ -147,6 +147,7 @@ export const ChatFooter = styled.div`
       width: 80%;
       margin: auto;
       height: 100%;
+      padding: 0.5rem 0.5rem 0.5rem 9rem;
 
       input {
         padding: 0.7rem;

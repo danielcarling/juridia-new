@@ -11,10 +11,10 @@ import {
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
+import { WelcomeModal } from "@/components/ai/WelcomeModal";
 
 export default function ContractImprovement() {
-  const selectValues = ["Contrato", "Contrato", "Contrato"];
-  const [fileName, setFileName] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <Container>
@@ -107,17 +107,16 @@ export default function ContractImprovement() {
           <ChatFooter>
             <div className="send-message">
               <input type="text" placeholder="Escreva sua mensagem" />
-              <button>
+              <button onClick={() => setShowModal(true)}>
                 <img src="/sendIcon.svg" alt="" />
               </button>
             </div>
-            {windowDimension(1024) && (
-              <div className="bottom-bar" />
-            )}
+            {windowDimension(1024) && <div className="bottom-bar" />}
           </ChatFooter>
         </ChatContainer>
       </Main>
       <WhatsApp />
+      <WelcomeModal show={showModal} onHide={() => setShowModal(false)} />
     </Container>
   );
 }
