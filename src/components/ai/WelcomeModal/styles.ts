@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const StyledModal = styled(Modal)`
   .modal-content {
-    border-radius: 15px;
+    border-radius: 20px;
   }
 
   * {
@@ -14,9 +14,12 @@ export const StyledModal = styled(Modal)`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.color.secondary_100};
   padding: 1.5rem;
-  border-radius: 15px;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.color.secondary_100};
+  background-image: url("/ai/modalBackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 export const Header = styled.header`
@@ -33,10 +36,14 @@ export const Header = styled.header`
   .svg {
     width: 8.125rem;
   }
+
+  @media (min-width: 991px) {
+    margin-left: 40%;
+  }
 `;
 
 export const TextAndVideo = styled.div`
-  display: flex;
+  /* display: flex; */
   color: white;
   font-style: italic;
   font-size: 1.25rem;
@@ -46,14 +53,22 @@ export const TextAndVideo = styled.div`
   text-align: justify;
 
   .text {
-    width: 5rem;
+    /* width: 5rem; */
+  }
+
+  @media (min-width: 991px) {
+    display: flex;
+
+    .text {
+      font-size: 1.5rem;
+      align-self: center;
+      width: 40%;
+    }
   }
 `;
 
 export const VideoContainer = styled.div`
-  width: 80%;
-  margin-top: 1rem;
-
+  margin: 1rem auto 0;
   .iframe-container {
     position: relative;
     overflow: hidden;
@@ -67,5 +82,59 @@ export const VideoContainer = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  @media (min-width: 991px) {
+    margin: 0 auto;
+    width: 55%;
+  }
+`;
+
+export const CheckBoxGroup = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0 3rem;
+
+  label {
+    font-size: 1.3rem;
+  }
+`;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  gap: 1rem;
+
+  @media (min-width: 991px) {
+    flex-direction: row;
+    gap: 3rem;
+  }
+`;
+
+export const Button1 = styled.button`
+  width: 16rem;
+  padding: 0.5rem 0;
+  background-color: white;
+  border: 1px solid #1d1f2e;
+  color: #1d1f2e;
+  font-style: italic;
+  font-weight: 900;
+  border-radius: 75px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: lightgray;
+  }
+`;
+
+export const Button2 = styled(Button1)`
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(173, 143, 88, 0.7);
   }
 `;

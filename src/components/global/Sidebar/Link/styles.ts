@@ -17,7 +17,7 @@ export const Container = styled.div<Props>`
   text-align: center;
   font-size: 0.9rem;
   font-style: italic;
-  font-weight: 800;
+  font-weight: 900;
   text-align: center;
   color: ${({ theme, isActive }) =>
     isActive ? theme.color.primary_100 : theme.color.secondary_100};

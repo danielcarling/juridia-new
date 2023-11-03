@@ -40,7 +40,7 @@ export const UserInfo = styled.div`
     flex-direction: column;
 
     strong {
-      font-weight: 800;
+      font-weight: 900;
       font-style: italic;
     }
 

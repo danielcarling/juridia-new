@@ -81,7 +81,7 @@ export const SelectContract = styled.div`
     padding: 0.75rem 0.5rem;
     color: ${({ theme }) => theme.color.secondary_100};
     font-size: 0.875rem;
-    font-weight: 800;
+    font-weight: 900;
     font-style: italic;
   }
 
@@ -102,7 +102,7 @@ export const SubmitContract = styled.div`
 
   button {
     font-size: 1.625rem;
-    font-weight: 800;
+    font-weight: 900;
     font-style: italic;
     color: #1d1f2e;
     border: 0;

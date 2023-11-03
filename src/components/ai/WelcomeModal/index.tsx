@@ -1,5 +1,9 @@
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 import {
+  Button1,
+  Button2,
+  ButtonsContainer,
+  CheckBoxGroup,
   Content,
   Header,
   StyledModal,
@@ -29,20 +33,33 @@ export function WelcomeModal({ show, onHide }: ModalProps) {
               para Aprimorarmos cada vez mais a Plataforma
             </p>
           </div>
-        <VideoContainer>
-          <div className="iframe-container">
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/2J7xlDH4QkA?si=-eOeTCPtH7Rq4S2A"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </VideoContainer>
+          <VideoContainer>
+            <div className="iframe-container">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/2J7xlDH4QkA?si=-eOeTCPtH7Rq4S2A"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </VideoContainer>
         </TextAndVideo>
+        <CheckBoxGroup>
+          <input type="checkbox" name="dontShowAgain" id="dontShowAgain" />
+          <label htmlFor="dontShowAgain">Não ver novamente</label>
+        </CheckBoxGroup>
 
+        <ButtonsContainer>
+          <Button1>
+            Aprenda como usar
+          </Button1>
+
+          <Button2>
+            Começar a utilizar
+          </Button2>
+        </ButtonsContainer>
       </Content>
     </StyledModal>
   );

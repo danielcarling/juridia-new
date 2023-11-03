@@ -10,7 +10,7 @@ export const Title = styled.div<Props>`
   font-style: italic;
 
   h1 {
-    font-weight: 800;
+    font-weight: 900;
     font-size: ${({ priority }) =>
       priority === "primary" ? "1.3rem" : "1rem"};
   }
