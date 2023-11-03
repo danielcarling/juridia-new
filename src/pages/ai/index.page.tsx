@@ -1,0 +1,70 @@
+import { ContractHeader } from "@/components/global/ContractHeader";
+import { WhatsApp } from "@/components/global/Whatsapp";
+import { useState } from "react";
+import {
+  ChatBody,
+  ChatContainer,
+  ChatFooter,
+  Container,
+  IaMessage,
+  Main,
+  UserMessage,
+} from "./styles";
+
+export default function ContractImprovement() {
+  const selectValues = ["Contrato", "Contrato", "Contrato"];
+  const [fileName, setFileName] = useState("");
+
+  return (
+    <Container>
+      <ContractHeader />
+      <Main>
+        <ChatContainer>
+          <ChatBody>
+            <IaMessage>
+              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
+              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
+              nome completo e dados de identificação] (doravante denominado
+              "Sócio A"), e [Nome completo e dados de identificação do outro
+              sócio] (doravante denominado "Sócio B"). OBJETO 1.1 O Sócio A
+              concorda em vender e transferir suas [porcentagem]% de quotas
+              (doravante denominadas "Quotas") na empresa [nome completo da
+              empresa] (doravante denominada "Empresa") para o Sócio B. 1.2 A
+              venda e transferência das Quotas serão realizadas mediante o
+              pagamento de R$300.000,00 (trezentos mil reais), conforme acordado
+              entre as partes. RETIRADA DO NOME FANTASIA 2.1 O Sócio A concorda
+              em renunciar a qualquer direito ou interesse relacionado ao nome
+              fantasia atualmente utilizado pela Empresa.
+            </IaMessage>
+            <UserMessage>
+              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
+              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
+              nome completo e dados de identificação] (doravante denominado
+              "Sócio A"), e [Nome completo e dados de identificação do outro
+              sócio] (doravante denominado "Sócio B"). OBJETO
+            </UserMessage>
+            <IaMessage>
+              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
+              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
+              nome completo e dados de identificação] (doravante denominado
+              "Sócio A"), e [Nome completo e dados de identificação do outro
+              sócio] (doravante denominado "Sócio B"). OBJETO 1.1 O Sócio A
+              concorda em vender e transferir suas [porcentagem]% de quotas
+              (doravante denominadas "Quotas") na empresa [nome completo da
+              empresa] (doravante denominada "Empresa") para o Sócio B. 1.2 A
+              venda e transferência das Quotas serão realizadas mediante o
+              pagamento de R$300.000,00 (trezentos mil reais), conforme acordado
+              entre as partes. RETIRADA DO NOME FANTASIA 2.1 O Sócio A concorda
+              em renunciar a qualquer direito ou interesse relacionado ao nome
+              fantasia atualmente utilizado pela Empresa.
+            </IaMessage>
+          </ChatBody>
+          <ChatFooter>
+            <button>teste</button>
+          </ChatFooter>
+        </ChatContainer>
+      </Main>
+      <WhatsApp />
+    </Container>
+  );
+}
