@@ -6,8 +6,8 @@ interface Props {
   values: string[];
 }
 
-export function Select({ values }: Props) {
-  const [selectedValue, setSelectedValue] = useState("Clique Aqui e Escolha");
+export function RoleSelect({ values }: Props) {
+  const [selectedValue, setSelectedValue] = useState("Selecione seu cargo");
   const [isFocused, setIsFocused] = useState(false);
 
   const handleBlur = () => {
