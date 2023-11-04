@@ -5,22 +5,17 @@ interface Props {
 }
 
 export const SelectContainer = styled.div<Props>`
-  display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   cursor: pointer;
-  border-radius: 5px;
-  background: #f5f5f5;
-  padding: 0.5rem 0;
-  font-family: "Lato", sans-serif;
+  background: ${({ theme }) => theme.color.primary_100};
+  padding: 1rem;
   font-size: 1rem;
-  font-style: italic;
   position: relative;
   transition: 0.2s;
-  border-radius: ${({ isOpen }) => (isOpen ? "10px 10px 0 0" : "10px")};
-  color: ${({ theme }) => theme.color.secondary_100};
-  /* width: 16.75rem; */
+  border-radius: ${({ isOpen }) => (isOpen ? "5px 5px 0 0" : "5px")};
+  color: #b6b7bc;
+  border: 1px solid #d7d9dd;
   margin: auto;
 
   svg {
@@ -34,27 +29,25 @@ export const SelectContainer = styled.div<Props>`
   .options-container {
     position: absolute;
     z-index: 10;
-    top: 2.5rem;
-    border: 1px solid #d7d9dd;
+    top: 3.6rem;
+    outline: 1px solid #d7d9dd;
     border-radius: 0 0 5px 5px;
     left: 0;
     width: 100%;
     display: ${({ isOpen }) => (isOpen ? "block" : "none")};
-    background: #f5f5f5;
+    background: ${({ theme }) => theme.color.primary_100};
   }
 
   .option {
-    padding: 0.2rem 2rem;
+    padding: 1rem;
     transition: 0.2s;
     cursor: pointer;
 
     &:hover {
-      background-color: #d5d2d2;
-      scale: 1.01;
+      background-color: #31344d;
     }
   }
 
   @media (min-width: 1024px) {
-    /* width: 22rem; */
   }
 `;
