@@ -94,3 +94,39 @@ export const Social = styled.div`
     font-size: 0.8rem;
   }
 `;
+
+export const UserInfo = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.7rem 0 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #8c7552;
+
+  .user-picture {
+    img {
+      width: 2.3125rem;
+      height: auto;
+    }
+  }
+
+  .name-and-email {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-style: italic;
+
+    strong {
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    span {
+      font-size: 0.625rem;
+      font-weight: 500;
+    }
+  }
+`;

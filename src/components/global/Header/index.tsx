@@ -3,7 +3,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Offcanvas } from "react-bootstrap";
 import { Link } from "./Link";
-import { Body, Container, HeaderContainer, Nav, Title } from "./styles";
+import {
+  Body,
+  Container,
+  HeaderContainer,
+  Nav,
+  Title,
+  UserInfo,
+} from "./styles";
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 
 export function Header() {
@@ -54,6 +61,15 @@ export function Header() {
                 <Link content="Tela Inicial" href="/" />
                 <Link content="Como usar a Plataforma?" href="/how-to-use" />
               </Nav>
+              <UserInfo>
+                <div className="user-picture">
+                  <img src="/userPhoto.png" alt="" />
+                </div>
+                <div className="name-and-email">
+                  <strong>Gabriel Antonio</strong>
+                  <span>email@example.com</span>
+                </div>
+              </UserInfo>
             </Body>
           </Container>
         </HeaderContainer>
