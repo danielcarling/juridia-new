@@ -4,10 +4,11 @@ import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 
 interface Props {
   values: string[];
+  selectedValue: string;
+  setSelectedValue: (value: string) => void;
 }
 
-export function Select({ values }: Props) {
-  const [selectedValue, setSelectedValue] = useState("Clique Aqui e Escolha");
+export function Select({ values, selectedValue, setSelectedValue }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleBlur = () => {
@@ -17,8 +18,7 @@ export function Select({ values }: Props) {
   function handleSelect(value: string) {
     setSelectedValue(value);
     setIsFocused(false);
-    const saveCard = document.getElementById("saveCard");
-    saveCard?.focus();
+    handleBlur();
   }
 
   return (

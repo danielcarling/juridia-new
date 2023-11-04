@@ -25,7 +25,8 @@ import { ClientInfoModal } from "@/components/construction-tool/ClientInfoModal"
 export default function ConstructionTool() {
   const [modalShow, setModalShow] = useState(false);
 
-  const selectValues = ["Contrato", "Contrato", "Contrato"];
+  const selectValues = ["1", "2", "3"];
+  const [selectedValue1, setSelectedValue1] = useState("Clique aqui e escolha");
 
   return (
     <Container>
@@ -37,15 +38,27 @@ export default function ConstructionTool() {
         <CaseOptions>
           <SelectGroup>
             <Subtitle content="1 - Escolha a área do Direito:" />
-            <Select values={selectValues} />
+            <Select
+              values={selectValues}
+              selectedValue={selectedValue1}
+              setSelectedValue={setSelectedValue1}
+            />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="2 - Escolha o Tema a ser Trabalhado:" />
-            <Select values={selectValues} />
+            <Select
+              values={selectValues}
+              selectedValue={selectedValue1}
+              setSelectedValue={setSelectedValue1}
+            />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="3 - Escolha o interesse:" />
-            <Select values={selectValues} />
+            <Select
+              values={selectValues}
+              selectedValue={selectedValue1}
+              setSelectedValue={setSelectedValue1}
+            />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="4 - Informe os Dados do Cliente:" />

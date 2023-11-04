@@ -1,6 +1,6 @@
 import { ContractHeader } from "@/components/global/ContractHeader";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChatBody,
   ChatContainer,
@@ -8,18 +8,34 @@ import {
   Container,
   IaMessage,
   Main,
+  PageTitle,
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
+import { TitleComponent } from "@/components/global/Title";
 
 export default function ContractImprovement() {
   const [showModal, setShowModal] = useState(false);
+  
+
+  useEffect(() => {
+    // Verifica se a chave 'FirstUse' já está no localStorage
+    const isFirstUse = localStorage.getItem("FirstUse");
+    if (isFirstUse) {
+      setShowModal(true);
+    }
+  }, []);
 
   return (
     <Container>
       <ContractHeader />
       <Main>
+        {!windowDimension(1024) && (
+          <PageTitle>
+            <TitleComponent content="Inteligência Artificial" />
+          </PageTitle>
+        )}
         <ChatContainer>
           <ChatBody>
             <IaMessage>

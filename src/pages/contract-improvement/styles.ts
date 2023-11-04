@@ -92,6 +92,7 @@ export const SelectContract = styled.div`
   }
 
   #select-document {
+    cursor: pointer;
     position: absolute;
     left: 0;
     top: 0;
