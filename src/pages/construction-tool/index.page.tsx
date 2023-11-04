@@ -37,7 +37,7 @@ export default function ConstructionTool() {
   const [messages, setMessages] = useState([...StartMessage]);
   const [userMessage, setUserMessage] = useState("");
   const selectValues = ["Contrato", "Contrato", "Contrato"];
-
+  const [selectedValue, setSelectedValue] = useState("selecione uma opção")
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
       event.preventDefault(); // Evita quebra de linha no input
@@ -54,18 +54,27 @@ export default function ConstructionTool() {
         <CaseOptions>
           <SelectGroup>
             <Subtitle content="1 - Escolha a área do Direito:" />
-            <Select  values={AreaOptions} />
+            <Select  
+              values={AreaOptions}
+              selectedValue={areaResponse}
+              setSelectedValue={setAreaResponse}
+            />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="2 - Escolha o Tema a ser Trabalhado:" />
-            <Select values={
-                  ThemesOptions[areaResponse as keyof typeof ThemesOptions] ||
-                  []
-                } />
+            <Select 
+              values={ThemesOptions[areaResponse as keyof typeof ThemesOptions] ||[]}
+              selectedValue={themeResponse}
+              setSelectedValue={setThemeResponse} 
+            />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="3 - Escolha o interesse:" />
-            <Select values={InterestOptions} />
+            <Select 
+              values={InterestOptions} 
+              selectedValue={interestResponse}
+              setSelectedValue={setInterestResponse} 
+            />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="4 - Informe os Dados do Cliente:" />

@@ -56,7 +56,7 @@ export const ButtonsContainer = styled.div`
     border-radius: 20px;
     border: 1px solid #fff;
     background: #a88d61;
-    font-weight: 800;
+    font-weight: 900;
     font-style: italic;
     color: white;
     padding: 0.4rem 0;

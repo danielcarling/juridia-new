@@ -9,6 +9,7 @@ export const Container = styled.div`
 `;
 
 export const Main = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 82vh;
@@ -41,7 +42,8 @@ interface ProgressBarProps {
 }
 
 export const ProgressBar = styled.div<ProgressBarProps>`
-  position: absolute;
+  position: fixed;
+  z-index: 9999;
   left: 0;
   background-color: ${({ theme }) => theme.color.secondary_100};
   height: 4px;
@@ -49,10 +51,10 @@ export const ProgressBar = styled.div<ProgressBarProps>`
   top: 30rem;
 
   width: ${({ step }) =>
-    step === 1 ? "10%" : step === 2 ? "50%" : step === 3 ? "90%" : "100%"};
+    step === 1 ? "20%" : step === 2 ? "80%" : "100%"};
 
   @media (min-width: 1024px) {
-    top: -0.125rem;
+    top: 5.6rem;
   }
 `;
 

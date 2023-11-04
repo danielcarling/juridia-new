@@ -59,6 +59,7 @@ export const ContractDetails = styled.div`
 `;
 
 export const SelectContract = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,7 +82,7 @@ export const SelectContract = styled.div`
     padding: 0.75rem 0.5rem;
     color: ${({ theme }) => theme.color.secondary_100};
     font-size: 0.875rem;
-    font-weight: 800;
+    font-weight: 900;
     font-style: italic;
   }
 
@@ -91,7 +92,14 @@ export const SelectContract = styled.div`
   }
 
   #select-document {
-    display: none;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    /* display: none; */
   }
 `;
 
@@ -102,7 +110,7 @@ export const SubmitContract = styled.div`
 
   button {
     font-size: 1.625rem;
-    font-weight: 800;
+    font-weight: 900;
     font-style: italic;
     color: #1d1f2e;
     border: 0;

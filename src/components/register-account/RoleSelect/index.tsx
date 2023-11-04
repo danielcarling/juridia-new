@@ -4,11 +4,10 @@ import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 
 interface Props {
   values: string[];
-  selectedValue: string;
-  setSelectedValue: (value: string) => void;
 }
 
-export function Select({ values, selectedValue, setSelectedValue }: Props) {
+export function RoleSelect({ values }: Props) {
+  const [selectedValue, setSelectedValue] = useState("Selecione seu cargo");
   const [isFocused, setIsFocused] = useState(false);
 
   const handleBlur = () => {
@@ -18,7 +17,8 @@ export function Select({ values, selectedValue, setSelectedValue }: Props) {
   function handleSelect(value: string) {
     setSelectedValue(value);
     setIsFocused(false);
-    handleBlur();
+    const saveCard = document.getElementById("saveCard");
+    saveCard?.focus();
   }
 
   return (

@@ -29,6 +29,11 @@ export const Main = styled.main`
   }
 `;
 
+export const PageTitle = styled.div`
+  padding: 1.5rem 0 2rem 3rem;
+  border-bottom: 3px solid #7F5619;
+`
+
 export const ChatContainer = styled.div`
   position: relative;
   height: calc(100vh - 11rem);
@@ -40,7 +45,7 @@ export const ChatContainer = styled.div`
 
   @media (min-width: 1024px) {
     max-width: 51rem;
-    height: calc(100vh - 9.4rem);
+    height: calc(100vh - 16.7175rem);
   }
 `;
 
@@ -53,7 +58,7 @@ export const ChatBody = styled.div`
 `;
 
 export const IaMessage = styled.div`
-  border-radius: 0px 30px 30px 30px;
+  border-radius: 0px 15px 15px 15px;
   background: #282c49;
   color: ${({ theme }) => theme.color.secondary_100};
   font-size: 0.8rem;
@@ -63,16 +68,22 @@ export const IaMessage = styled.div`
   margin-right: 1rem;
 
   @media (min-width: 1024px) {
+    border-radius: 0px 30px 30px 30px;
     font-size: 1rem;
   }
 `;
 
 export const UserMessage = styled(IaMessage)`
-  border-radius: 30px 0 30px 30px;
+  border-radius: 15px 0 15px 15px;
   margin-right: 0;
   margin-left: 1rem;
   color: #2d1d2e;
   background: ${({ theme }) => theme.color.secondary_100};
+
+  @media (min-width: 1024px) {
+    border-radius: 30px 0 30px 30px;
+    font-size: 1rem;
+  }
 `;
 
 export const ChatFooter = styled.div`
@@ -147,6 +158,7 @@ export const ChatFooter = styled.div`
       width: 80%;
       margin: auto;
       height: 100%;
+      padding: 0.5rem 0.5rem 0.5rem 9rem;
 
       input {
         padding: 0.7rem;

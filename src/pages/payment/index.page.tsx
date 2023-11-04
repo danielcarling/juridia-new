@@ -13,6 +13,7 @@ import {
   PaymentContainer,
   PaymentHeader,
   PixContainer,
+  ProgressBar,
   QrCode,
   SalesArtContainer,
 } from "./styles";
@@ -28,15 +29,25 @@ export default function Payment() {
   const [payOption, setPayOption] = useState("pix");
   const [pixStep, setPixStep] = useState(1);
   const [cardStep, setCardStep] = useState(1);
+  const [progressBarStep, setProgressBarStep] = useState(1);
 
   useEffect(() => {
     scrollToElement("payment");
   }, []);
 
+  useEffect(() => {
+    if (payOption === "pix") {
+      setProgressBarStep(pixStep);
+    } else if (payOption === "creditCard") {
+      setProgressBarStep(cardStep);
+    }
+  }, [payOption, pixStep, cardStep]);
+
   return (
     <Container>
       <RegisterAccountHeader />
       <Main>
+        <ProgressBar step={progressBarStep} />
         <SalesArtContainer>
           <img src="/payment/salesArt.png" alt="" />
         </SalesArtContainer>

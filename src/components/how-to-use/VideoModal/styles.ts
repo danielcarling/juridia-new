@@ -93,7 +93,7 @@ export const Contact = styled.div`
     gap: 1rem;
     font-size: 1.125rem;
     font-style: italic;
-    font-weight: 800;
+    font-weight: 900;
     border-radius: 7.263px;
     border: 0.726px solid #1d1f2e;
     background: #49c958;
@@ -125,7 +125,7 @@ export const BackButton = styled.div`
     color: ${({ theme }) => theme.color.secondary_100};
     font-size: 1.375rem;
     border: 0;
-    font-weight: 800;
+    font-weight: 900;
     width: 16rem;
     padding: 0.5rem 0;
     transition: 0.3s;

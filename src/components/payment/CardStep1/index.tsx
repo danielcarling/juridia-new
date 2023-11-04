@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { CreditCard } from "../CreditCard";
 import { CreditCardForm, FormGroup, ValidityAndCvc } from "./styles";
 
 export function CardStep1() {
+  const [cardNumber, setCardNumber] = useState("");
+
   return (
     <>
       <div
@@ -11,7 +14,7 @@ export function CardStep1() {
           margin: "1rem 0",
         }}
       >
-        <CreditCard />
+        <CreditCard cardNumber={cardNumber} setCardNumber={setCardNumber} />
       </div>
       <CreditCardForm>
         <FormGroup>
@@ -28,6 +31,7 @@ export function CardStep1() {
             type="text"
             id="cardNumber"
             placeholder="Digite o número do cartao"
+            onChange={(e) => setCardNumber(e.target.value)}
           />
         </FormGroup>
         <ValidityAndCvc>

@@ -1,3 +1,4 @@
+import { RoleSelect } from "../RoleSelect";
 import {
   FormGroup,
   RegisterForm,
@@ -28,14 +29,7 @@ export function CompanyDataForm() {
 
       <FormGroup>
         <label htmlFor="role">Seu Cargo</label>
-        <select name="role" id="role">
-          <option value="" selected disabled hidden>
-            Selecione o seu cargo
-          </option>
-          <option value="Administrado">Advogado</option>
-          <option value="Administrado">Estagiário</option>
-          <option value="Administrado">Empresário</option>
-        </select>
+        <RoleSelect values={["Advogado", "Advogada"]} />
       </FormGroup>
     </RegisterForm>
   );

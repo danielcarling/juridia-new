@@ -1,6 +1,6 @@
 import { ContractHeader } from "@/components/global/ContractHeader";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChatBody,
   ChatContainer,
@@ -8,11 +8,13 @@ import {
   Container,
   IaMessage,
   Main,
+  PageTitle,
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
 import { useChatFunctions } from "./ia";
-
+import { WelcomeModal } from "@/components/ai/WelcomeModal";
+import { TitleComponent } from "@/components/global/Title";
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
@@ -25,11 +27,26 @@ export default function ContractImprovement() {
     handleTypingComplete,
     handleKeyDown
   } = useChatFunctions();
+  const [showModal, setShowModal] = useState(false);
+  
+
+  useEffect(() => {
+    // Verifica se a chave 'FirstUse' já está no localStorage
+    const isFirstUse = localStorage.getItem("FirstUse");
+    if (isFirstUse) {
+      setShowModal(true);
+    }
+  }, []);
 
   return (
     <Container>
       <ContractHeader />
       <Main>
+        {!windowDimension(1024) && (
+          <PageTitle>
+            <TitleComponent content="Inteligência Artificial" />
+          </PageTitle>
+        )}
         <ChatContainer>
           <ChatBody>
           {messages
@@ -67,13 +84,12 @@ export default function ContractImprovement() {
                 <img src="/sendIcon.svg" alt="" />
               </button>
             </div>
-            {windowDimension(1024) && (
-              <div className="bottom-bar" />
-            )}
+            {windowDimension(1024) && <div className="bottom-bar" />}
           </ChatFooter>
         </ChatContainer>
       </Main>
       <WhatsApp />
+      <WelcomeModal show={showModal} onHide={() => setShowModal(false)} />
     </Container>
   );
 }

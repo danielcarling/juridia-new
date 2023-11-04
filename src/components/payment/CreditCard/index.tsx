@@ -1,8 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 import { Container, Content, CreditCardInfo } from "./styles";
 
-export function CreditCard() {
+interface Props {
+  cardNumber: string;
+  setCardNumber: (value: string) => void;
+}
+
+export function CreditCard({ cardNumber, setCardNumber }: Props) {
+  const handleCardNumberChange = (value: string) => {
+    const inputCardNumber = value.replace(/\D/g, ""); // Remove non-digit characters
+
+    // Mask the input card number with 'X'
+    const maskedCardNumber = inputCardNumber
+      .padEnd(16, "X")
+      .split("")
+      .map((char, index) => (index % 4 === 0 && index > 0 ? ` ${char}` : char))
+      .join("")
+      .trim();
+
+    setCardNumber(maskedCardNumber);
+  };
+
+  useEffect(() => {
+    handleCardNumberChange(cardNumber);
+  }, [cardNumber]);
+
   return (
     <Container>
       <div className="logoContainer">
@@ -13,7 +36,7 @@ export function CreditCard() {
           <JuridiaTextSvg />
         </div>
         <CreditCardInfo>
-          <strong>XXXX XXXX XXXX XXXX</strong>
+          <strong>{cardNumber}</strong>
           <span>Cartão de Crédito Jurid IA</span>
         </CreditCardInfo>
       </Content>

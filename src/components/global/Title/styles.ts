@@ -12,6 +12,7 @@ export const Title = styled.div<Props>`
 
   h1 {
     font-size: ${({ fontSizeSm }) => (fontSizeSm ? fontSizeSm : "1.5rem")};
+    font-weight: 900;
   }
 
   .line {
