@@ -21,12 +21,29 @@ import {
 import { UserMessage } from "@/components/construction-tool/UserMessage";
 import { useState } from "react";
 import { ClientInfoModal } from "@/components/construction-tool/ClientInfoModal";
-
+import { AreaOptions, InterestOptions, ThemesOptions } from "@/utils/constants";
+import { useRouter } from "next/router";
+import { 
+  handleClientDataSubmit,handleApiCall, handleStartConversation, handleUserMessageSubmit,StartMessage, handleReloadData, handleCreatePetition, handleTypingComplete  } from './ia';
 export default function ConstructionTool() {
   const [modalShow, setModalShow] = useState(false);
-
+  const router = useRouter();
+  const [reload, setReload] = useState(false);
+  const [areaResponse, setAreaResponse] = useState("");
+  const [interestResponse, setInterestResponse] = useState("");
+  const [themeResponse, setThemeResponse] = useState("");
+  const [client_data, setClient_data] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState([...StartMessage]);
+  const [userMessage, setUserMessage] = useState("");
   const selectValues = ["Contrato", "Contrato", "Contrato"];
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Evita quebra de linha no input
+      handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading); // Chama a função de envio de mensagem
+    }
+  }
   return (
     <Container>
       <ContractHeader />
@@ -37,15 +54,18 @@ export default function ConstructionTool() {
         <CaseOptions>
           <SelectGroup>
             <Subtitle content="1 - Escolha a área do Direito:" />
-            <Select values={selectValues} />
+            <Select  values={AreaOptions} />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="2 - Escolha o Tema a ser Trabalhado:" />
-            <Select values={selectValues} />
+            <Select values={
+                  ThemesOptions[areaResponse as keyof typeof ThemesOptions] ||
+                  []
+                } />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="3 - Escolha o interesse:" />
-            <Select values={selectValues} />
+            <Select values={InterestOptions} />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="4 - Informe os Dados do Cliente:" />
@@ -72,36 +92,28 @@ export default function ConstructionTool() {
               </p>
             </ChatHeader>
             <ChatBody>
-              <IaMessage
-                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Necessitatibus nostrum debitis ullam ex sapiente corporis
-                quibusdam ad placeat exercitationem facilis porro inventore
-                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
-              />
-
-              <UserMessage
-                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Necessitatibus nostrum debitis ullam ex sapiente corporis
-                quibusdam ad placeat exercitationem facilis porro inventore
-                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
-              />
-              <IaMessage
-                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Necessitatibus nostrum debitis ullam ex sapiente corporis
-                quibusdam ad placeat exercitationem facilis porro inventore
-                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
-              />
-
-              <UserMessage
-                message="Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Necessitatibus nostrum debitis ullam ex sapiente corporis
-                quibusdam ad placeat exercitationem facilis porro inventore
-                perspiciatis ut rem, reiciendis sit incidunt esse sint!"
-              />
+            {messages
+                    // .filter((item: any) => item.role !== "system")
+                    // .filter((item: any, index) => index >= 3) 
+                    .map((item: any, index: any) => (
+                      <>
+                      {item.role === "assistant" ? (
+                        <>
+                          <IaMessage message={item.content}/>
+                        </>
+                      ) : (
+                        <>
+                          <UserMessage message={item.content}/>
+                        </>
+                      )}
+                      </>
+                        ))}
             </ChatBody>
             <ChatFooter>
               <input type="text" />
-              <button>
+              <button 
+                onClick={() => handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading)}
+              >
                 <img src="/sendIcon.svg" alt="" />
               </button>
             </ChatFooter>
@@ -112,7 +124,20 @@ export default function ConstructionTool() {
         </BuildContract>
       </Main>
       <WhatsApp />
-      <ClientInfoModal show={modalShow} onHide={() => setModalShow(false)} />
+      <ClientInfoModal show={modalShow} onHide={() => setModalShow(false)}
+        onClientDataSubmit={(data: any) =>
+          handleClientDataSubmit(
+            data,
+            areaResponse,
+            interestResponse,
+            themeResponse,
+            client_data,
+            setReload,
+            setClient_data,
+            setMessages
+          )
+        }
+      />
     </Container>
   );
 }

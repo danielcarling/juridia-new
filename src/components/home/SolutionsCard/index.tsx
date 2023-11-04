@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
   ButtonsContainer,
   CardHeader,
@@ -7,9 +8,12 @@ import {
 
 interface Props {
   imgSrc: string;
+  routerPath: string;
+  videoSrc?: string
 }
 
-export function SolutionsCard({ imgSrc }: Props) {
+export function SolutionsCard({ imgSrc, routerPath, videoSrc }: Props) {
+  const router = useRouter();
   return (
     <Container>
       <CardHeader>
@@ -29,8 +33,8 @@ export function SolutionsCard({ imgSrc }: Props) {
       </TextContainer>
 
       <ButtonsContainer>
-        <button>Utilizar Solução</button>
-        <button><img src="/home/youtubeLogo.svg" alt="" /> Assistir Vídeo Explicativo</button>
+        <button onClick={()=> router.push(`${routerPath}`)}>Utilizar Solução</button>
+        <button onClick={()=> router.push(`${videoSrc}`)}><img src="/home/youtubeLogo.svg" alt="" /> Assistir Vídeo Explicativo</button>
       </ButtonsContainer>
     </Container>
   );

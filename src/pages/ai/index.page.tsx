@@ -11,10 +11,20 @@ import {
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
+import { useChatFunctions } from "./ia";
 
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
+  const {
+    messages,
+    userMessage,
+    isLoading,
+    setUserMessage,
+    handleUserMessageSubmit,
+    handleTypingComplete,
+    handleKeyDown
+  } = useChatFunctions();
 
   return (
     <Container>
@@ -22,92 +32,38 @@ export default function ContractImprovement() {
       <Main>
         <ChatContainer>
           <ChatBody>
-            <IaMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO 1.1 O Sócio A
-              concorda em vender e transferir suas [porcentagem]% de quotas
-              (doravante denominadas "Quotas") na empresa [nome completo da
-              empresa] (doravante denominada "Empresa") para o Sócio B. 1.2 A
-              venda e transferência das Quotas serão realizadas mediante o
-              pagamento de R$300.000,00 (trezentos mil reais), conforme acordado
-              entre as partes. RETIRADA DO NOME FANTASIA 2.1 O Sócio A concorda
-              em renunciar a qualquer direito ou interesse relacionado ao nome
-              fantasia atualmente utilizado pela Empresa.
-            </IaMessage>
-            <UserMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO
-            </UserMessage>
-            <IaMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO 1.1 O Sócio A
-              concorda em vender e transferir suas [porcentagem]% de quotas
-              (doravante denominadas "Quotas") na empresa [nome completo da
-              empresa] (doravante denominada "Empresa") para o Sócio B. 1.2 A
-              venda e transferência das Quotas serão realizadas mediante o
-              pagamento de R$300.000,00 (trezentos mil reais), conforme acordado
-              entre as partes. RETIRADA DO NOME FANTASIA 2.1 O Sócio A concorda
-              em renunciar a qualquer direito ou interesse relacionado ao nome
-              fantasia atualmente utilizado pela Empresa.
-            </IaMessage>
-            <UserMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO
-            </UserMessage>
-            <IaMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO 1.1 O Sócio A
-              concorda em vender e transferir suas [porcentagem]% de quotas
-              (doravante denominadas "Quotas") na empresa [nome completo da
-              empresa] (doravante denominada "Empresa") para o Sócio B. 1.2 A
-              venda e transferência das Quotas serão realizadas mediante o
-              pagamento de R$300.000,00 (trezentos mil reais), conforme acordado
-              entre as partes. RETIRADA DO NOME FANTASIA 2.1 O Sócio A concorda
-              em renunciar a qualquer direito ou interesse relacionado ao nome
-              fantasia atualmente utilizado pela Empresa.
-            </IaMessage>
-            <UserMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO
-            </UserMessage>
-            <IaMessage>
-              CONTRATO DE DISSOLUÇÃO DE QUOTAS Este contrato de dissolução de
-              quotas (doravante denominado "Contrato") é celebrado entre: [Seu
-              nome completo e dados de identificação] (doravante denominado
-              "Sócio A"), e [Nome completo e dados de identificação do outro
-              sócio] (doravante denominado "Sócio B"). OBJETO 1.1 O Sócio A
-              concorda em vender e transferir suas [porcentagem]% de quotas
-              (doravante denominadas "Quotas") na empresa [nome completo da
-              empresa] (doravante denominada "Empresa") para o Sócio B. 1.2 A
-              venda e transferência das Quotas serão realizadas mediante o
-              pagamento de R$300.000,00 (trezentos mil reais), conforme acordado
-              entre as partes. RETIRADA DO NOME FANTASIA 2.1 O Sócio A concorda
-              em renunciar a qualquer direito ou interesse relacionado ao nome
-              fantasia atualmente utilizado pela Empresa.
-            </IaMessage>
+          {messages
+                    .filter((item: any, index: any) => index >= 2) // Filtrar mensagens com role diferente de "system"
+                    .map((item: any, index: any) => (
+                      <>
+                      {item.role === "assistant" ? (
+                        <>
+                          <IaMessage>
+                            {item.content}
+                          </IaMessage>
+                        </>
+                      ) : (
+                        <>
+                          <UserMessage>
+                            {item.content}
+                          </UserMessage>
+                        </>
+                      )}
+                      </>
+                        ))}
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-              <input type="text" placeholder="Escreva sua mensagem" />
-              <button>
+              <input type="text" 
+                value={userMessage}
+                onChange={(e: any) => setUserMessage(e.target.value)}
+                placeholder={
+                  isLoading ? "Gerando Resposta..." : "Digite sua mensagem..."
+                }
+                onKeyDown={isLoading ? undefined : handleKeyDown} // Desabilita o evento onKeyDown quando isLoading é verdadeiro
+                disabled={isLoading}
+              />
+              <button onClick={handleUserMessageSubmit}>
                 <img src="/sendIcon.svg" alt="" />
               </button>
             </div>

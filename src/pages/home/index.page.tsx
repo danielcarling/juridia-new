@@ -21,7 +21,14 @@ export default function Home() {
     },
   });
 
-  const slides = [1, 2, 3, 4, 5, 6, 7];
+  const SliderCards = [
+    { index: 0, name: 'Componente 1', routerSrc: '/ai' },
+    { index: 1, name: 'Componente 2', routerSrc: '/construction-tool' },
+    { index: 2, name: 'Componente 3', routerSrc: '/contract-improvement' },
+    { index: 3, name: 'Componente 4', routerSrc: '/componente4' },
+    { index: 4, name: 'Componente 5', routerSrc: '/componente5' },
+  ];
+    
   return (
     <Container>
       <Sidebar />
@@ -44,9 +51,9 @@ export default function Home() {
           style={{ marginLeft: "1rem" }}
         />
         <SliderContainer ref={sliderRef}>
-          {slides.map((slide) => (
-            <div className="keen-slider__slide">
-              <SolutionsCard imgSrc="/home/solutionCardImg1.svg" />
+          {SliderCards.map((item) => (
+            <div className="keen-slider__slide" key={item.index}>
+              <SolutionsCard imgSrc="/home/solutionCardImg1.svg" routerPath={item.routerSrc}/>
             </div>
           ))}
         </SliderContainer>
