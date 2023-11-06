@@ -29,9 +29,9 @@ export default function ConstructionTool() {
   const [modalShow, setModalShow] = useState(false);
   const router = useRouter();
   const [reload, setReload] = useState(false);
-  const [areaResponse, setAreaResponse] = useState("");
-  const [interestResponse, setInterestResponse] = useState("");
-  const [themeResponse, setThemeResponse] = useState("");
+  const [areaResponse, setAreaResponse] = useState("Clique aqui e escolha");
+  const [interestResponse, setInterestResponse] = useState("Clique aqui e escolha");
+  const [themeResponse, setThemeResponse] = useState("Clique aqui e escolha");
   const [client_data, setClient_data] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([...StartMessage]);

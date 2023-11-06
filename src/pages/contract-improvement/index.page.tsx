@@ -21,6 +21,7 @@ import {
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
+  const [selectedValue, setSelectedValue] = useState("Clique aqui e escolha");
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -46,7 +47,11 @@ export default function ContractImprovement() {
                 content="1 - Sobre qual área do Direito é o contrato?"
                 style={{ marginBottom: "2rem" }}
               />
-              <Select values={selectValues} />
+              <Select
+                selectedValue={selectedValue}
+                setSelectedValue={setSelectedValue}
+                values={selectValues}
+              />
             </div>
 
             <div>
