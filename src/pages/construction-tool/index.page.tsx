@@ -24,29 +24,42 @@ import { ClientInfoModal } from "@/components/construction-tool/ClientInfoModal"
 import { AreaOptions, InterestOptions, ThemesOptions } from "@/utils/constants";
 import { useRouter } from "next/router";
 import { 
-  handleClientDataSubmit,handleApiCall, handleStartConversation, handleUserMessageSubmit,StartMessage, handleReloadData, handleCreatePetition, handleTypingComplete  } from './ia';
+  handleClientDataSubmit,
+  handleApiCall,
+  handleStartConversation,
+  handleUserMessageSubmit,StartMessage,
+  handleReloadData,
+} from './ia';
 export default function ConstructionTool() {
   const [modalShow, setModalShow] = useState(false);
   const router = useRouter();
   const [reload, setReload] = useState(false);
-  const [areaResponse, setAreaResponse] = useState("");
-  const [interestResponse, setInterestResponse] = useState("");
-  const [themeResponse, setThemeResponse] = useState("");
+  const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
+  const [interestResponse, setInterestResponse] = useState("Selecione uma opção");
+  const [themeResponse, setThemeResponse] = useState("Selecione uma opção");
   const [client_data, setClient_data] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([...StartMessage]);
   const [userMessage, setUserMessage] = useState("");
   const selectValues = ["Contrato", "Contrato", "Contrato"];
-  const [selectedValue, setSelectedValue] = useState("selecione uma opção")
+  const [selectedValue, setSelectedValue] = useState("Selecione uma opção")
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
-      event.preventDefault(); // Evita quebra de linha no input
-      handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading); // Chama a função de envio de mensagem
+      event.preventDefault();
+      handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading);
+    }
+  }
+  function handleCreatePetition() {
+    try {
+      localStorage.setItem("savedMessages", JSON.stringify(messages));
+      router.push("/construction-tool-ai");
+    } catch (err) {
+      console.error("Error: " + err);
     }
   }
   return (
     <Container>
-      <ContractHeader />
+      <ContractHeader routerPath="home" />
       <Main>
         <PageTitle>
           <TitleComponent content="Ferramenta de Construção" />
@@ -119,7 +132,17 @@ export default function ConstructionTool() {
                         ))}
             </ChatBody>
             <ChatFooter>
-              <input type="text" />
+              <input type="text" 
+                 value={userMessage}
+                 onChange={(e: any) => setUserMessage(e.target.value)}
+                 placeholder={
+                   isLoading
+                     ? "Gerando Resposta..."
+                     : "Digite sua mensagem..."
+                 }
+                 onKeyDown={handleKeyDown}
+                 disabled={isLoading}
+              />
               <button 
                 onClick={() => handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading)}
               >
@@ -129,7 +152,7 @@ export default function ConstructionTool() {
           </ChatContainer>
         </CaseDescription>
         <BuildContract>
-          <button>Começar Construção</button>
+          <button onClick={()=>handleCreatePetition()}>Começar Construção</button>
         </BuildContract>
       </Main>
       <WhatsApp />

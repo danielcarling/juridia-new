@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import OpenAI from "openai";
 
 type Message = {
@@ -34,7 +35,7 @@ type Message = {
 
   export async function handleApiCall(messages: any[],setMessages:any): Promise<string | null> {
     const openai = new OpenAI({
-      apiKey: "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",
+      apiKey: "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",
       dangerouslyAllowBrowser: true,
     });
   
@@ -172,7 +173,8 @@ export function handleReloadData(
   setMessages([...StartMessage]);
 }
 
-export function handleCreatePetition(router: any, messages: Message[]) {
+export function handleCreatePetition( messages: Message[]) {
+  const router = useRouter()
   try {
     localStorage.setItem("savedMessages", JSON.stringify(messages));
     router.push("/criar-ia");

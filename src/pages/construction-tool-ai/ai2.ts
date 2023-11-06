@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const StartMessage = [
     {
@@ -41,10 +41,63 @@ export async function handleApiCall(messages: any[]): Promise<string | null> {
   }
 }
 export function useChatFunctions() {
-    const [messages, setMessages] = useState<any>([...StartMessage]);
+    
     const [userMessage, setUserMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-  
+    const [clientData, setClientData] = useState("");
+    const [startIndex, setStartIndex] = useState(0);
+    const [StartMessage, setStartMessage] = useState<any>([]);
+    const [messages, setMessages] = useState<any>([...StartMessage]);
+      
+    useEffect(() => {
+        const savedMessages = localStorage.getItem("savedMessages");
+        const ClientDataStorage: any = localStorage.getItem("clientDataStorage");
+        setClientData(JSON.parse(ClientDataStorage));
+        const clientDataSeparate = JSON.parse(
+          localStorage.getItem("clientDataSeparate") || "{}"
+        );
+        const createClientData = {
+          role: "user",
+          content: `Lembre-se, esses são os dados do cliente, 
+            Nome do Cliente: ${clientDataSeparate.name}, 
+            Cpf do cliente: ${clientDataSeparate.cpf},
+            RG do cliente: ${clientDataSeparate.rg},
+            Idade do cliente: ${clientDataSeparate.age},
+            Data de Nascimento do cliente: ${clientDataSeparate.birthDate},
+            Estado Civil do cliente: ${clientDataSeparate.maritalStatus},
+            
+            Por favor, substitua os campos [Nome do Cliente], [CPF do cliente], [RG do cliente] pelos dados reais do cliente: ${clientDataSeparate.name}, CPF ${clientDataSeparate.cpf}, RG ${clientDataSeparate.rg} e assim por diante. 
+    
+          `,
+        };
+        const message1 = {
+          role: "user",
+          content:
+            "Apartir de agora voce esta no segundo ponto, Criar a petição com os dados informados,Voce esta falando com um advogado entao nao se preocupe com as correçoes, ele fará, entao recaptule os dados do cliente",
+        };
+        if (savedMessages) {
+          const savedMessagesArray: any = JSON.parse(savedMessages);
+          setStartMessage([...savedMessagesArray, createClientData, message1]);
+          setMessages([...savedMessagesArray, createClientData, message1]);
+          setStartIndex(savedMessagesArray.length);
+          callAPI()
+        }
+      }, []);
+      async function callAPI() {
+        try {
+          // Chame a função para lidar com a API
+          await handleApiCall([...messages,{
+            role: "system",
+            content: `
+             crie a petição, colocando todos dados dos clientes na petição
+        `,
+          },])
+        } catch (err) {
+          console.error("Error: " + err);
+        }
+      }
+
+
     async function handleUserMessageSubmit() {
       if (userMessage.trim() !== "") {
         setIsLoading(true);
@@ -80,5 +133,5 @@ export function useChatFunctions() {
       }
     }
   
-    return { messages, userMessage, isLoading, setMessages, setUserMessage, setIsLoading, handleUserMessageSubmit, handleTypingComplete, handleKeyDown };
+    return { messages, userMessage, isLoading,callAPI, setMessages,startIndex, setUserMessage, setIsLoading, handleUserMessageSubmit, handleTypingComplete, handleKeyDown };
   }

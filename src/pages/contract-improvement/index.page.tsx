@@ -17,10 +17,12 @@ import {
   SubmitContract,
   VideoContainer,
 } from "./styles";
+import { AreaOptions } from "@/utils/constants";
 
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
+  const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -34,7 +36,7 @@ export default function ContractImprovement() {
 
   return (
     <Container>
-      <ContractHeader />
+      <ContractHeader routerPath="home"/>
       <Main>
         <PageTitle>
           <TitleComponent content="Melhoria de Contratos" />
@@ -46,7 +48,11 @@ export default function ContractImprovement() {
                 content="1 - Sobre qual área do Direito é o contrato?"
                 style={{ marginBottom: "2rem" }}
               />
-              <Select values={selectValues} />
+              <Select 
+                values={AreaOptions}
+                selectedValue={areaResponse}
+                setSelectedValue={setAreaResponse}
+              />
             </div>
 
             <div>

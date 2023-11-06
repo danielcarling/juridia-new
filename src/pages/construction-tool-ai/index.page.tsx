@@ -12,7 +12,7 @@ import {
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
-import { useChatFunctions } from "./ia";
+import { handleApiCall, useChatFunctions } from "./ai2";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
 export default function ContractImprovement() {
@@ -25,19 +25,16 @@ export default function ContractImprovement() {
     setUserMessage,
     handleUserMessageSubmit,
     handleTypingComplete,
-    handleKeyDown
+    handleKeyDown,
+    startIndex,
+    callAPI,
   } = useChatFunctions();
-  const [showModal, setShowModal] = useState(false);
-  
 
   useEffect(() => {
-    // Verifica se a chave 'FirstUse' já está no localStorage
-    const isFirstUse = localStorage.getItem("FirstUse");
-    if (isFirstUse) {
-      setShowModal(true);
-    }
+    callAPI();
+    console.log('chamandoapi')
   }, []);
-
+ 
   return (
     <Container>
       <ContractHeader routerPath="home" />
@@ -50,7 +47,7 @@ export default function ContractImprovement() {
         <ChatContainer>
           <ChatBody>
           {messages
-                    .filter((item: any, index: any) => index >= 2) // Filtrar mensagens com role diferente de "system"
+                    .filter((item: any, index: any) => index >= startIndex+1) // Filtrar mensagens com role diferente de "system"
                     .map((item: any, index: any) => (
                       <>
                       {item.role === "assistant" ? (
@@ -89,7 +86,6 @@ export default function ContractImprovement() {
         </ChatContainer>
       </Main>
       <WhatsApp />
-      <WelcomeModal show={showModal} onHide={() => setShowModal(false)} />
     </Container>
   );
 }

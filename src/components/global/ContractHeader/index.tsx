@@ -3,11 +3,17 @@ import { BackIconSvg } from "../../../../public/BackIcon";
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 import { BackButton, HeaderContainer, UserInfo } from "./styles";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-export function ContractHeader() {
+
+interface Props {
+  routerPath: string;
+}
+export function ContractHeader({routerPath}:Props) {
+  const router = useRouter()
   return (
     <HeaderContainer>
-      <BackButton>
+      <BackButton onClick={()=> router.push(`${routerPath}`)}>
         <BackIconSvg />
       </BackButton>
       <div className="logo">

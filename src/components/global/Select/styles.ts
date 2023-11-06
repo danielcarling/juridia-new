@@ -27,6 +27,14 @@ export const SelectContainer = styled.div<Props>`
   width: 16.75rem;
   margin: auto;
 
+  strong{
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: start;
+    margin-left: 10px;
+    margin-right: 2.5rem;
+    text-overflow: ellipsis;
+  }
   svg {
     position: absolute;
     top: 0;
