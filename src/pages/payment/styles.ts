@@ -48,14 +48,10 @@ export const ProgressBar = styled.div<ProgressBarProps>`
   background-color: ${({ theme }) => theme.color.secondary_100};
   height: 4px;
   transition: 0.5s ease-in-out;
-  top: 30rem;
+  top: 5.6rem;
 
   width: ${({ step }) =>
     step === 1 ? "20%" : step === 2 ? "80%" : "100%"};
-
-  @media (min-width: 1024px) {
-    top: 5.6rem;
-  }
 `;
 
 export const PaymentHeader = styled.div`
