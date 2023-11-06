@@ -11,7 +11,7 @@ import {
   StyledModal,
   Title,
 } from "./styles";
-import { maskAge, maskCpf, maskDate, maskRg } from "@/utils/masks";
+import { maskAge, maskCpf, maskDate } from "@/utils/masks";
 
 interface ModalProps {
   show: boolean;
@@ -21,13 +21,17 @@ interface ClientDataProps extends ModalProps {
   onClientDataSubmit: (data: any) => void; // Função para lidar com os dados do cliente
 }
 
-export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientDataProps) {
+export function ClientInfoModal({
+  show,
+  onHide,
+  onClientDataSubmit,
+}: ClientDataProps) {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [rg, setRg] = useState("");
-  const [age, setAge] = useState(""); 
-  const [birthDate, setBirthDate] = useState(""); 
-  const [maritalStatus, setMaritalStatus] = useState(""); 
+  const [age, setAge] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("");
   const clientData = {
     name,
     cpf,
@@ -100,7 +104,7 @@ export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientData
             <label htmlFor="clientRg">Qual o RG do Cliente:</label>
             <input
               value={rg}
-              onChange={(e: any) => setRg(maskRg(e.target.value))}
+              onChange={(e: any) => setRg(e.target.value)}
               type="text"
               id="clientRg"
               placeholder='"Exemplo: 0000000000"'
@@ -108,12 +112,12 @@ export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientData
           </FormGroup>
           <FormGroup>
             <label htmlFor="clientAge">Qual a Idade do Cliente:</label>
-            <input 
+            <input
               value={age}
               onChange={(e: any) => setAge(maskAge(e.target.value))}
-              type="text" 
-              id="clientAge" 
-              placeholder='"Exemplo: 20"' 
+              type="text"
+              id="clientAge"
+              placeholder='"Exemplo: 20"'
             />
           </FormGroup>
           <FormGroup>
