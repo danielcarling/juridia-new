@@ -16,29 +16,65 @@ import { BasicDataForm } from "@/components/register-account/BasicDataForm";
 import { PersonalDataForm } from "@/components/register-account/PersonalDataForm";
 import { CompanyDataForm } from "@/components/register-account/CompanyDataForm";
 import { scrollToElement } from "@/utils/scrollToElement";
+import { ErrorMessage } from "@/components/global/ErrorMessage";
 
 export default function RegisterAccount() {
   const [step, setStep] = useState(1);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [cpfCnpj, setCpfCnpj] = useState<string>("");
+  const [cpf, setCpf] = useState<string>("");
   const [mobilePhone, setMobilePhone] = useState<string>("");
   const [termsChecked, setTermsChecked] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [birthDate, setBirthDate] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [companyName, setCompanyName] = useState<string>("");
+  const [cnpj, setCnpj] = useState<string>("");
+  const [role, setRole] = useState<string>("Selecione seu cargo");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
-    scrollToElement("registerForm");
+    if (window.innerWidth < 1024) {
+      scrollToElement("registerForm");
+    }
   }, []);
 
+  function validateForm() {
+    if (step === 1) {
+      if (!name) {
+        return setErrorMessage("Nome é obrigatório");
+      } else if (!email) {
+        return setErrorMessage("Email é obrigatório");
+      } else if (!password) {
+        return setErrorMessage("Senha é obrigatório");
+      } else if (!termsChecked) {
+        return setErrorMessage("Aceite os termos");
+      }
+    } else if (step === 2) {
+      if (!cpf) {
+        return setErrorMessage("CPF/CNPJ é obrigatório");
+      } else if (cpf.replace(/\D/g, "").length < 11) {
+        return setErrorMessage("CPF deve ter pelo menos 11 digitos");
+      } else if (!birthDate) {
+        return setErrorMessage("Data de nascimento é obrigatório");
+      } else if (!gender) {
+        return setErrorMessage("Escolha um gênero");
+      }
+    }
+    setErrorMessage("");
+    setStep(step + 1);
+  }
+
   async function handleRegister() {
+    setErrorMessage("");
     setDisabled(true);
     const connect = await PostAPI("/register", {
       name,
       email,
       password,
-      cpfCnpj,
+      cpf,
       mobilePhone,
     });
     console.log(
@@ -49,7 +85,7 @@ export default function RegisterAccount() {
       "Senha:",
       password,
       "CPF/CNPJ:",
-      cpfCnpj,
+      cpf,
       "Telefone:",
       mobilePhone
     );
@@ -85,16 +121,32 @@ export default function RegisterAccount() {
                 />
               </>
             ) : step === 2 ? (
-              <PersonalDataForm cpf={cpfCnpj} onCpfChange={setCpfCnpj} />
+              <PersonalDataForm
+                cpf={cpf}
+                birthDate={birthDate}
+                gender={gender}
+                onCpfChange={setCpf}
+                onBirthDateChange={setBirthDate}
+                onGenderChange={setGender}
+              />
             ) : (
-              <CompanyDataForm />
+              <>
+                <CompanyDataForm
+                  companyName={companyName}
+                  cnpj={cnpj}
+                  role={role}
+                  onCompanyNameChange={setCompanyName}
+                  onCnpjChange={setCnpj}
+                  onRoleChange={setRole}
+                />
+                <button onClick={() => alert(role)}>dsajkakdsl</button>
+              </>
             )}
 
+            <ErrorMessage message={errorMessage} />
+
             {step === 1 ? (
-              <NextButton
-                onClick={() => setStep(step + 1)}
-                disabled={!termsChecked}
-              >
+              <NextButton onClick={validateForm} disabled={!termsChecked}>
                 Proximo
               </NextButton>
             ) : step === 2 ? (
@@ -102,9 +154,7 @@ export default function RegisterAccount() {
                 <BackButton onClick={() => setStep(step - 1)}>
                   Voltar
                 </BackButton>
-                <NextButton onClick={() => setStep(step + 1)}>
-                  Continuar
-                </NextButton>
+                <NextButton onClick={validateForm}>Continuar</NextButton>
               </div>
             ) : (
               <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>

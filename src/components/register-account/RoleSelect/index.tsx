@@ -4,10 +4,11 @@ import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 
 interface Props {
   values: string[];
+  selectedValue: string;
+  setSelectedValue: (value: string) => void;
 }
 
-export function RoleSelect({ values }: Props) {
-  const [selectedValue, setSelectedValue] = useState("Selecione seu cargo");
+export function RoleSelect({ values, selectedValue, setSelectedValue }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleBlur = () => {

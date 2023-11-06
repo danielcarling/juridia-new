@@ -8,15 +8,26 @@ import {
   RegisterFormHeader,
 } from "./styles";
 import { useState } from "react";
+import { maskCpf } from "@/utils/masks";
 
 interface Props {
   cpf: string;
   onCpfChange: (value: string) => void;
+  birthDate: string;
+  onBirthDateChange: (value: string) => void;
+  gender: string;
+  onGenderChange: (value: string) => void;
 }
-export function PersonalDataForm({ cpf, onCpfChange }: Props) {
-  const [selectedGender, setSelectedGender] = useState("");
+export function PersonalDataForm({
+  cpf,
+  onCpfChange,
+  birthDate,
+  onBirthDateChange,
+  gender,
+  onGenderChange,
+}: Props) {
   const handleRadioChange = (event: { target: { value: string } }) => {
-    setSelectedGender(event.target.value);
+    onGenderChange(event.target.value);
   };
 
   return (
@@ -33,7 +44,7 @@ export function PersonalDataForm({ cpf, onCpfChange }: Props) {
           id="cpf"
           placeholder="Digite seu CPF"
           value={cpf}
-          onChange={(e) => onCpfChange(e.target.value)}
+          onChange={(e) => onCpfChange(maskCpf(e.target.value))}
         />
       </FormGroup>
       <FormGroup>
@@ -42,6 +53,8 @@ export function PersonalDataForm({ cpf, onCpfChange }: Props) {
           type="date"
           placeholder="Sua Data de Nascimento"
           style={{ width: "100%" }}
+          value={birthDate}
+          onChange={(e) => onBirthDateChange(e.target.value)}
         />
       </FormGroup>
 
@@ -51,7 +64,7 @@ export function PersonalDataForm({ cpf, onCpfChange }: Props) {
         </label>
         <RadioContainer>
           <RadioGroup>
-            <RadioSelector htmlFor="male" checked={selectedGender === "male"}>
+            <RadioSelector htmlFor="male" checked={gender === "male"}>
               <div />
             </RadioSelector>
             <input
@@ -59,17 +72,14 @@ export function PersonalDataForm({ cpf, onCpfChange }: Props) {
               name="gender"
               id="male"
               value="male"
-              checked={selectedGender === "male"}
+              checked={gender === "male"}
               onChange={handleRadioChange}
             />
             <label htmlFor="male">Masculino</label>
           </RadioGroup>
 
           <RadioGroup>
-            <RadioSelector
-              htmlFor="female"
-              checked={selectedGender === "female"}
-            >
+            <RadioSelector htmlFor="female" checked={gender === "female"}>
               <div />
             </RadioSelector>
             <input
@@ -77,7 +87,7 @@ export function PersonalDataForm({ cpf, onCpfChange }: Props) {
               name="gender"
               id="female"
               value="female"
-              checked={selectedGender === "female"}
+              checked={gender === "female"}
               onChange={handleRadioChange}
             />
             <label htmlFor="female">Feminino</label>

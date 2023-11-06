@@ -128,7 +128,7 @@ export const NextButton = styled.button`
   width: 100%;
   padding: 0.8rem;
   border-radius: 5px;
-  margin: 3vh 0;
+  margin: 0 0;
   border: 0;
   outline: 0;
   background-color: ${({ theme }) => theme.color.secondary_100};

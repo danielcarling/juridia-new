@@ -1,11 +1,24 @@
+import { maskCnpj } from "@/utils/masks";
 import { RoleSelect } from "../RoleSelect";
-import {
-  FormGroup,
-  RegisterForm,
-  RegisterFormHeader,
-} from "./styles";
+import { FormGroup, RegisterForm, RegisterFormHeader } from "./styles";
 
-export function CompanyDataForm() {
+interface Props {
+  companyName: string;
+  cnpj: string;
+  role: string;
+  onCompanyNameChange: (value: string) => void;
+  onCnpjChange: (value: string) => void;
+  onRoleChange: (value: string) => void;
+}
+
+export function CompanyDataForm({
+  companyName,
+  cnpj,
+  role,
+  onCompanyNameChange,
+  onCnpjChange,
+  onRoleChange,
+}: Props) {
   return (
     <RegisterForm>
       <RegisterFormHeader>
@@ -14,22 +27,33 @@ export function CompanyDataForm() {
       </RegisterFormHeader>
 
       <FormGroup>
-        <label htmlFor="companyName">Nome da Empresa</label>
+        <label htmlFor="companyName">Nome da Empresa (Opcional)</label>
         <input
           type="text"
           id="companyName"
           placeholder="Digite o nome da empresa"
+          value={companyName}
+          onChange={(e) => onCompanyNameChange(e.target.value)}
         />
       </FormGroup>
 
       <FormGroup>
-        <label htmlFor="cnpj">CNPJ</label>
-        <input type="text" placeholder="Digite o CNPJ" />
+        <label htmlFor="cnpj">CNPJ (Opcional)</label>
+        <input
+          type="text"
+          placeholder="Digite o CNPJ"
+          value={cnpj}
+          onChange={(e) => onCnpjChange(maskCnpj(e.target.value))}
+        />
       </FormGroup>
 
       <FormGroup>
-        <label htmlFor="role">Seu Cargo</label>
-        <RoleSelect values={["Advogado", "Advogada"]} />
+        <label htmlFor="role">Seu Cargo (Opcional)</label>
+        <RoleSelect
+          values={["Advogado", "Advogada"]}
+          selectedValue={role}
+          setSelectedValue={onRoleChange}
+        />
       </FormGroup>
     </RegisterForm>
   );
