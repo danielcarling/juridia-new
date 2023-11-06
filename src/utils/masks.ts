@@ -30,6 +30,10 @@ export function maskCpf(value: string) {
   }
   value = value.replace(/\D/g, "");
 
+  if (value.length >= 11) {
+    value = value.slice(0, 11);
+  }
+
   if (value.length <= 11) {
     value = value.replace(/(\d{3})(\d)/, "$1.$2");
     value = value.replace(/(\d{3})(\d)/, "$1.$2");
@@ -37,25 +41,6 @@ export function maskCpf(value: string) {
   }
   return value;
 }
-
-
-// function maskCreditCard(value: string) {
-//   if (!value) {
-//     return "";
-//   }
-//   value = value.replace(/\D/g, "");
-
-//   if (value.length == 16) {
-//     value = value.slice(0, 16);
-//   }
-
-//   if (value.length <= 16) {
-//     value = value.replace(/(\d{4})(\d)/, "$1 $2");
-//     value = value.replace(/(\d{4})(\d)/, "$1 $2");
-//     value = value.replace(/(\d{4})(\d)/, "$1 $2");
-//     value = value.replace(/(\d{4})(\d)/, "$1 $2");
-//   }
-// }
 
 export function maskCnpj(value: string) {
   if (!value) {
@@ -91,6 +76,14 @@ export function maskCpfCnpj(value: string) {
   return value;
 }
 
+export function maskAge(value: string) {
+  if (!value) {
+    return "";
+  }
+  value = value.replace(/\D/g, "");
+  return value;
+}
+
 export function maskDate(value: string) {
   let data = value;
   data = data.replace(/\D/g, "");
@@ -99,8 +92,9 @@ export function maskDate(value: string) {
     data = data.slice(0, 8);
   }
 
-  if (data.length > 4) {
-    data = data.slice(0, 2) + "/" + data.slice(2, 4) + "/" + data.slice(4);
+  if (data.length <= 8) {
+    data = data.replace(/(\d{2})(\d)/, "$1/$2");
+    data = data.replace(/(\d{2})(\d)/, "$1/$2");
   }
 
   return data;

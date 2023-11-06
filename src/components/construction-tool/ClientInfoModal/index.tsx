@@ -11,6 +11,7 @@ import {
   StyledModal,
   Title,
 } from "./styles";
+import { maskAge, maskCpf, maskDate, maskRg } from "@/utils/masks";
 
 interface ModalProps {
   show: boolean;
@@ -89,7 +90,7 @@ export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientData
             <label htmlFor="clientCpf">Qual o CPF do Cliente:</label>
             <input
               value={cpf}
-              onChange={(e: any) => setCpf(e.target.value)}
+              onChange={(e: any) => setCpf(maskCpf(e.target.value))}
               type="text"
               id="clientCpf"
               placeholder='"Exemplo: 000.000.000-00"'
@@ -99,7 +100,7 @@ export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientData
             <label htmlFor="clientRg">Qual o RG do Cliente:</label>
             <input
               value={rg}
-              onChange={(e: any) => setRg(e.target.value)}
+              onChange={(e: any) => setRg(maskRg(e.target.value))}
               type="text"
               id="clientRg"
               placeholder='"Exemplo: 0000000000"'
@@ -109,7 +110,7 @@ export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientData
             <label htmlFor="clientAge">Qual a Idade do Cliente:</label>
             <input 
               value={age}
-              onChange={(e: any) => setAge(e.target.value)}
+              onChange={(e: any) => setAge(maskAge(e.target.value))}
               type="text" 
               id="clientAge" 
               placeholder='"Exemplo: 20"' 
@@ -121,7 +122,7 @@ export function ClientInfoModal({ show, onHide, onClientDataSubmit }: ClientData
             </label>
             <input
               value={birthDate}
-              onChange={(e: any) => setBirthDate(e.target.value)}
+              onChange={(e: any) => setBirthDate(maskDate(e.target.value))}
               type="text"
               id="clientBirthDate"
               placeholder='"Exemplo: 00/00/0000"'

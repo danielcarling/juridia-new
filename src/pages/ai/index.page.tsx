@@ -40,7 +40,7 @@ export default function ContractImprovement() {
 
   return (
     <Container>
-      <ContractHeader routerPath="home" />
+      <ContractHeader routerPath="/" />
       <Main>
         {!windowDimension(1024) && (
           <PageTitle>
