@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 import {
   Button1,
@@ -17,6 +18,15 @@ interface ModalProps {
 }
 
 export function WelcomeModal({ show, onHide }: ModalProps) {
+  const [dontShowAgain, setDontShowAgain] = useState(false);
+
+  function handleUserClick() {
+    if (dontShowAgain) {
+      localStorage.setItem("DontShowAgain", "true");
+    }
+    onHide();
+  }
+
   return (
     <StyledModal show={show} onHide={onHide} size="xl">
       <Content>
@@ -47,18 +57,20 @@ export function WelcomeModal({ show, onHide }: ModalProps) {
           </VideoContainer>
         </TextAndVideo>
         <CheckBoxGroup>
-          <input type="checkbox" name="dontShowAgain" id="dontShowAgain" />
+          <input
+            type="checkbox"
+            name="dontShowAgain"
+            id="dontShowAgain"
+            checked={dontShowAgain}
+            onChange={() => setDontShowAgain(!dontShowAgain)}
+          />
           <label htmlFor="dontShowAgain">Não ver novamente</label>
         </CheckBoxGroup>
 
         <ButtonsContainer>
-          <Button1>
-            Aprenda como usar
-          </Button1>
+          <Button1>Aprenda como usar</Button1>
 
-          <Button2>
-            Começar a utilizar
-          </Button2>
+          <Button2 onClick={handleUserClick}>Começar a utilizar</Button2>
         </ButtonsContainer>
       </Content>
     </StyledModal>

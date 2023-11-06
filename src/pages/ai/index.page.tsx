@@ -25,16 +25,16 @@ export default function ContractImprovement() {
     setUserMessage,
     handleUserMessageSubmit,
     handleTypingComplete,
-    handleKeyDown
+    handleKeyDown,
   } = useChatFunctions();
   const [showModal, setShowModal] = useState(false);
-  
 
   useEffect(() => {
-    // Verifica se a chave 'FirstUse' já está no localStorage
-    const isFirstUse = localStorage.getItem("FirstUse");
-    if (isFirstUse) {
-      setShowModal(true);
+    if (localStorage.getItem("DontShowAgain") === null) {
+      localStorage.setItem("DontShowAgain", "false");
+    }
+    if (localStorage.getItem("DontShowAgain") === "false") {
+      return setShowModal(true);
     }
   }, []);
 
@@ -49,29 +49,26 @@ export default function ContractImprovement() {
         )}
         <ChatContainer>
           <ChatBody>
-          {messages
-                    .filter((item: any, index: any) => index >= 2) // Filtrar mensagens com role diferente de "system"
-                    .map((item: any, index: any) => (
-                      <>
-                      {item.role === "assistant" ? (
-                        <>
-                          <IaMessage>
-                            {item.content}
-                          </IaMessage>
-                        </>
-                      ) : (
-                        <>
-                          <UserMessage>
-                            {item.content}
-                          </UserMessage>
-                        </>
-                      )}
-                      </>
-                        ))}
+            {messages
+              .filter((item: any, index: any) => index >= 2) // Filtrar mensagens com role diferente de "system"
+              .map((item: any, index: any) => (
+                <>
+                  {item.role === "assistant" ? (
+                    <>
+                      <IaMessage>{item.content}</IaMessage>
+                    </>
+                  ) : (
+                    <>
+                      <UserMessage>{item.content}</UserMessage>
+                    </>
+                  )}
+                </>
+              ))}
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-              <input type="text" 
+              <input
+                type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
                 placeholder={

@@ -3,7 +3,7 @@ import { Select } from "@/components/global/Select";
 import { Subtitle } from "@/components/global/Subtitle";
 import { TitleComponent } from "@/components/global/Title";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Content,
@@ -33,7 +33,23 @@ export default function ContractImprovement() {
       alert("Por favor, selecione um arquivo PDF.");
     }
   }
+  // useEffect(() => {
+  //   localStorage.setItem("contractMessages", JSON.stringify(messages));
+  // }, [messages]);
+  // async function handleCreatContract() {
+  //   try {
+  //     await handleApiCall();
+  //     await localStorage.setItem("contractMessages", JSON.stringify(messages));
+  //      router.push("/contrato-ia");
+  //     console.log("essa é a mensagenx2", messages);
 
+  //     const savedMessagesString = localStorage.getItem('contractMessages')!
+  //     const savedMessages = JSON.parse(savedMessagesString)
+  //     console.log('savedMessages xxx1 :', savedMessages)
+  //   } catch (err) {
+  //     console.error("Error: " + err);
+  //   }
+  // }
   return (
     <Container>
       <ContractHeader routerPath="home"/>
