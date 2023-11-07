@@ -6,7 +6,7 @@ import {
   InstallmentsContainer,
 } from "./styles";
 import { DropdownIconSvg } from "../../../../public/DropdownIcon";
-import { maskPhone } from "@/utils/masks";
+import { maskCep, maskCpfCnpj, maskPhone } from "@/utils/masks";
 
 interface Props {
   name: string;
@@ -17,8 +17,8 @@ interface Props {
   setCpfCnpj: (value: string) => void;
   cep: string;
   setCep: (value: string) => void;
-  number: string;
-  setNumber: (value: string) => void;
+  residencialNumber: string;
+  setResidencialNumber: (value: string) => void;
 }
 
 export function CardStep2({
@@ -30,8 +30,8 @@ export function CardStep2({
   setCpfCnpj,
   cep,
   setCep,
-  number,
-  setNumber,
+  residencialNumber,
+  setResidencialNumber,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
   const [installments, setInstallments] = useState("Número de Parcelas");
@@ -53,7 +53,13 @@ export function CardStep2({
     <CreditCardForm>
       <FormGroup>
         <label htmlFor="name">Nome Completo</label>
-        <input type="text" id="cardName" placeholder="Digite o seu nome" />
+        <input
+          type="text"
+          id="cardName"
+          placeholder="Digite o seu nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </FormGroup>
       <FormGroup>
         <label htmlFor="phoneNumber">Telefone de Cobrança</label>
@@ -67,7 +73,13 @@ export function CardStep2({
       </FormGroup>
       <FormGroup>
         <label htmlFor="cpf-cnpj">CPF ou CNPJ</label>
-        <input type="text" id="cpf-cnpj" placeholder="Digite seu CPF ou CNPJ" />
+        <input
+          type="text"
+          id="cpf-cnpj"
+          placeholder="Digite seu CPF ou CNPJ"
+          value={cpfCnpj}
+          onChange={(e) => setCpfCnpj(maskCpfCnpj(e.target.value))}
+        />
       </FormGroup>
 
       <CepAndNumberContainer>
@@ -78,6 +90,8 @@ export function CardStep2({
             id="cep"
             placeholder="Digite o CEP de cobrança"
             className="cep"
+            value={cep}
+            onChange={(e) => setCep(maskCep(e.target.value))}
           />
         </FormGroup>
         <FormGroup>
@@ -87,6 +101,8 @@ export function CardStep2({
             id="number"
             placeholder="Digite o número"
             className="number"
+            value={residencialNumber}
+            onChange={(e) => setResidencialNumber(e.target.value)}
           />
         </FormGroup>
       </CepAndNumberContainer>

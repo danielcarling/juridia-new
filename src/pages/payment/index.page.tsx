@@ -24,12 +24,23 @@ import { scrollToElement } from "@/utils/scrollToElement";
 import { CardStep1 } from "@/components/payment/CardStep1";
 import { CardStep2 } from "@/components/payment/CardStep2";
 import { ErrorMessage } from "@/components/global/ErrorMessage";
+import {
+  stripeCardNumberValidation,
+  stripeCardExpirValidation,
+} from "../../utils/creditCardValidation";
+import { onlyNumbers } from "@/utils/masks";
 
 export default function Payment() {
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [validity, setValidity] = useState("");
   const [securityCode, setSecurityCode] = useState("");
+
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [cep, setCep] = useState("");
+  const [residencialNumber, setResidencialNumber] = useState("");
 
   const [payOption, setPayOption] = useState("pix");
   const [pixStep, setPixStep] = useState(1);
@@ -46,25 +57,33 @@ export default function Payment() {
     if (cardStep === 1) {
       if (!cardName) {
         return setErrorMessage("Nome do Cartão é obrigatório");
-      } else if (!cardNumber) {
-        return setErrorMessage("Número do Cartão é obrigatório");
-      } else if (cardNumber.length < 16) {
-        return setErrorMessage(
-          "Número do Cartão deve ter pelo menos 16 digitos"
-        );
-      } else if (
-        !validity ||
-        validity.length < 5 ||
-        Number(validity.slice(0, 2)) < 1 ||
-        Number(validity.slice(0, 2)) > 12
-      ) {
+      } else if (!stripeCardNumberValidation(cardNumber)) {
+        return setErrorMessage("Insira um número de cartão válido");
+      } else if (!stripeCardExpirValidation(validity)) {
         return setErrorMessage("Insira uma data de vencimento válida");
       } else if (!securityCode || securityCode.length < 3) {
         return setErrorMessage("Insira um CVC válido");
       } else {
+        setErrorMessage("");
         setCardStep(2);
       }
     } else if (cardStep === 2) {
+      if (!name) {
+        return setErrorMessage("Insira um nome");
+      } else if (phoneNumber.replace(/\D/g, "").length < 11) {
+        return setErrorMessage("Insira um telefone válido");
+      } else if (
+        onlyNumbers(cpfCnpj).length < 11 ||
+        (onlyNumbers(cpfCnpj).length > 11 && onlyNumbers(cpfCnpj).length < 14)
+      ) {
+        return setErrorMessage("Insira um CPF ou Cnpj válido");
+      } else if (onlyNumbers(cep).length < 8) {
+        return setErrorMessage("Insira um CEP válido");
+      } else if (!residencialNumber) {
+        return setErrorMessage("Insira um número");
+      } else {
+        console.log("é os guri");
+      }
     }
   }
 
@@ -159,9 +178,21 @@ export default function Payment() {
                 </>
               ) : (
                 <>
-                  {/* <CardStep2  /> */}
+                  <CardStep2
+                    name={name}
+                    setName={setName}
+                    phoneNumber={phoneNumber}
+                    setPhoneNumber={setPhoneNumber}
+                    cpfCnpj={cpfCnpj}
+                    setCpfCnpj={setCpfCnpj}
+                    residencialNumber={residencialNumber}
+                    setResidencialNumber={setResidencialNumber}
+                    cep={cep}
+                    setCep={setCep}
+                  />
+                  <ErrorMessage message={errorMessage} />
                   <EndPurchase>
-                    <button>Finalizar Compra</button>
+                    <button onClick={validateCard}>Finalizar Compra</button>
                   </EndPurchase>
                 </>
               )}
