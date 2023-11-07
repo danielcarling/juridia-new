@@ -1,6 +1,6 @@
 import { ContractHeader } from "@/components/global/ContractHeader";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChatBody,
   ChatContainer,
@@ -15,6 +15,7 @@ import { windowDimension } from "@/utils/windowDimensions";
 import { useChatFunctions } from "./ia";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
+
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
@@ -61,18 +62,21 @@ export default function ContractImprovement() {
                   ) : (
                     <>
                       <UserMessage>
-                        <pre style={{ whiteSpace: "pre-wrap" }}>
-                          {item.content}
-                        </pre>
+                        <pre>{item.content}</pre>
                       </UserMessage>
                     </>
                   )}
+                  {/* {isLoading && (
+                    <IaMessage>
+                      <pre>...</pre>
+                    </IaMessage>
+                  )} */}
                 </>
               ))}
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-              <input
+              <textarea
                 type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}

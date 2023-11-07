@@ -87,7 +87,7 @@ export function useChatFunctions() {
     const handleTypingComplete = () => {};
   
     function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         handleUserMessageSubmit();
       }
