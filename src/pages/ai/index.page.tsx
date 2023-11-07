@@ -55,11 +55,19 @@ export default function ContractImprovement() {
                 <>
                   {item.role === "assistant" ? (
                     <>
-                      <IaMessage>{item.content}</IaMessage>
+                      <IaMessage>
+                        <pre style={{ whiteSpace: "pre-wrap" }}>
+                          {item.content}
+                        </pre>
+                      </IaMessage>
                     </>
                   ) : (
                     <>
-                      <UserMessage>{item.content}</UserMessage>
+                      <UserMessage>
+                        <pre style={{ whiteSpace: "pre-wrap" }}>
+                          {item.content}
+                        </pre>
+                      </UserMessage>
                     </>
                   )}
                 </>
@@ -85,7 +93,7 @@ export default function ContractImprovement() {
           </ChatFooter>
         </ChatContainer>
       </Main>
-      <WhatsApp />
+      {!windowDimension(1024) && <WhatsApp />}
       <WelcomeModal show={showModal} onHide={() => setShowModal(false)} />
     </Container>
   );
