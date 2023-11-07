@@ -159,7 +159,7 @@ export default function Payment() {
                 </>
               ) : (
                 <>
-                  <CardStep2 />
+                  {/* <CardStep2  /> */}
                   <EndPurchase>
                     <button>Finalizar Compra</button>
                   </EndPurchase>

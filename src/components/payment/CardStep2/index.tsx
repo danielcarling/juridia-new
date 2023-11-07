@@ -6,8 +6,33 @@ import {
   InstallmentsContainer,
 } from "./styles";
 import { DropdownIconSvg } from "../../../../public/DropdownIcon";
+import { maskPhone } from "@/utils/masks";
 
-export function CardStep2() {
+interface Props {
+  name: string;
+  setName: (value: string) => void;
+  phoneNumber: string;
+  setPhoneNumber: (value: string) => void;
+  cpfCnpj: string;
+  setCpfCnpj: (value: string) => void;
+  cep: string;
+  setCep: (value: string) => void;
+  number: string;
+  setNumber: (value: string) => void;
+}
+
+export function CardStep2({
+  name,
+  setName,
+  phoneNumber,
+  setPhoneNumber,
+  cpfCnpj,
+  setCpfCnpj,
+  cep,
+  setCep,
+  number,
+  setNumber,
+}: Props) {
   const [isFocused, setIsFocused] = useState(false);
   const [installments, setInstallments] = useState("Número de Parcelas");
 
@@ -36,6 +61,8 @@ export function CardStep2() {
           type="tel"
           id="phoneNumber"
           placeholder="Digite o seu número de telefone"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(maskPhone(e.target.value))}
         />
       </FormGroup>
       <FormGroup>
