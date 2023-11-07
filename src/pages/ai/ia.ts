@@ -21,30 +21,42 @@ export const StartMessage = [
   ];
 
 
-export async function handleApiCall(messages: any[]): Promise<string | null> {
-  const openai = new OpenAI({
-    apiKey: "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",
-    dangerouslyAllowBrowser: true,
-  });
-
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo-1106",
-      messages,
+  export async function handleApiCall(messages: any[]): Promise<string | null> {
+    const openai = new OpenAI({
+      apiKey: "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",
+      dangerouslyAllowBrowser: true,
     });
-    const Response = response.choices[0].message.content;
+  
+    try {
+      const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo-1106",
+        messages,
+        stream: true,
+      });
+      let finalResponse = ""; // Inicialize uma string vazia para armazenar a resposta final
+  
+      for await (const chunk of response) {
+        const chunkContent = chunk.choices[0].delta.content;
+        if (chunkContent !== undefined) { // Verifique se o chunkContent não é undefined
+          // console.log(chunkContent); // Se quiser ver os chunks no console
+  
+          // Adicione o chunk ao finalResponse
+          finalResponse += chunkContent;
+        }
+      }
+      console.log(finalResponse);
+      return finalResponse;
+    } catch (err) {
+      console.error("Error: " + err);
+      throw err;
+    }
+  } 
 
-    return Response;
-  } catch (err) {
-    console.error("Error: " + err);
-    throw err;
-  }
-}
 export function useChatFunctions() {
     const [messages, setMessages] = useState<any>([...StartMessage]);
     const [userMessage, setUserMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-  
+    const [receivedChunks, setReceivedChunks] = useState<string[]>([]);
     async function handleUserMessageSubmit() {
       if (userMessage.trim() !== "") {
         setIsLoading(true);
@@ -57,6 +69,7 @@ export function useChatFunctions() {
   
           if (apiResponse !== null) {
             const systemResponse = { role: "assistant", content: apiResponse };
+            setReceivedChunks(apiResponse);
             setMessages((prevMessages: any) => [...prevMessages, systemResponse]);
   
             setIsLoading(false);
@@ -80,5 +93,5 @@ export function useChatFunctions() {
       }
     }
   
-    return { messages, userMessage, isLoading, setMessages, setUserMessage, setIsLoading, handleUserMessageSubmit, handleTypingComplete, handleKeyDown };
+    return { messages, userMessage, isLoading, setMessages, setUserMessage,receivedChunks, setIsLoading, handleUserMessageSubmit, handleTypingComplete, handleKeyDown };
   }

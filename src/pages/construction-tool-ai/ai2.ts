@@ -23,7 +23,7 @@ export const StartMessage = [
 
 export async function handleApiCall(messages: any[]): Promise<string | null> {
   const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: "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",
     dangerouslyAllowBrowser: true,
   });
 
@@ -31,6 +31,7 @@ export async function handleApiCall(messages: any[]): Promise<string | null> {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-16k",
       messages,
+      
     });
     const Response = response.choices[0].message.content;
 
@@ -48,11 +49,13 @@ export function useChatFunctions() {
     const [startIndex, setStartIndex] = useState(0);
     const [StartMessage, setStartMessage] = useState<any>([]);
     const [messages, setMessages] = useState<any>([...StartMessage]);
-      
+    const [interestResponse, setInterestResponse] = useState("");
     useEffect(() => {
         const savedMessages = localStorage.getItem("savedMessages");
         const ClientDataStorage: any = localStorage.getItem("clientDataStorage");
+        const InterestStorage: any = localStorage.getItem("interestResponse");
         setClientData(JSON.parse(ClientDataStorage));
+        setInterestResponse(JSON.parse(InterestStorage));
         const clientDataSeparate = JSON.parse(
           localStorage.getItem("clientDataSeparate") || "{}"
         );
@@ -73,7 +76,7 @@ export function useChatFunctions() {
         const message1 = {
           role: "user",
           content:
-            "Apartir de agora voce esta no segundo ponto, Criar a petição com os dados informados,Voce esta falando com um advogado entao nao se preocupe com as correçoes, ele fará, entao recaptule os dados do cliente",
+            `Apartir de agora voce esta no segundo ponto, ${interestResponse} com os dados informados,Voce esta falando com um advogado entao nao se preocupe com as correçoes, ele fará, entao recaptule os dados do cliente`,
         };
         if (savedMessages) {
           const savedMessagesArray: any = JSON.parse(savedMessages);
@@ -84,7 +87,7 @@ export function useChatFunctions() {
       }, []);
       async function handleCreatePetition() {
           setIsLoading(true);
-          const contentSend = 'crie a petição, colocando todos dados dos clientes na petição'
+          const contentSend = `Agora ${interestResponse}, colocando todos dados dos clientes na petição,escreva em Markdown`
           const userMessageObj = { role: "user", content: contentSend };
           setMessages((prevMessages: any) => [...prevMessages, userMessageObj]);
           setUserMessage("");

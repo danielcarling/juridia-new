@@ -190,9 +190,13 @@ export const ChatFooter = styled.footer`
     border-radius: 10px 0px 10px 10px;
     background: #8c7552;
     padding: 0.5rem;
+    color: white;
 
     &:focus {
       outline: 1px solid ${({ theme }) => theme.color.primary_100};
+    }
+    &::placeholder {
+      color: white;
     }
   }
 

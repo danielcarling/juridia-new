@@ -1,6 +1,8 @@
 import { ContractHeader } from "@/components/global/ContractHeader";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import Balancer from "react-wrap-balancer";
 import {
   ChatBody,
   ChatContainer,
@@ -12,11 +14,11 @@ import {
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
-import { handleApiCall, useChatFunctions } from "./ai";
+import { useChatFunctions } from "./ai";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
-import Markdown from "react-markdown";
-export default function ContractImprovement() {
+import { sanitizeAndFormatText } from "@/utils/masks";
+export default function ContractInsightAi() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
   const {
@@ -27,18 +29,10 @@ export default function ContractImprovement() {
     handleUserMessageSubmit,
     handleTypingComplete,
     handleKeyDown,
-    startIndex,
-    handleCreatePetition,
   } = useChatFunctions();
-
-  useEffect(() => {
-    handleCreatePetition();
-    console.log('chamandoapi')
-  }, []);
- 
   return (
     <Container>
-      <ContractHeader routerPath="home" />
+      <ContractHeader routerPath="/contract-improvement" />
       <Main>
         {!windowDimension(1024) && (
           <PageTitle>
@@ -47,32 +41,31 @@ export default function ContractImprovement() {
         )}
         <ChatContainer>
           <ChatBody>
-          {messages
-                    .filter((item: any, index: any) => index >= startIndex+3) // Filtrar mensagens com role diferente de "system"
-                    .map((item: any, index: any) => (
-                      <>
-                      {item.role === "assistant" ? (
-                        <>
-                          <IaMessage>
-                            <Markdown>
-                              {item.content}
-                            </Markdown>
-                          </IaMessage>
-                        </>
-                      ) : (
-                        <>
-                          <UserMessage>
-                            {item.content}
-                          </UserMessage>
-                        </>
-                      )}
-                      </>
-                        ))}
+            {messages
+              .filter((item: any, index: any) => index >= 5) // Filtrar mensagens com role diferente de "system"
+              .map((item: any, index: any) => (
+                <>
+                {item.role === "assistant" ? (
+                  <IaMessage style={{whiteSpace: "pre-wrap"}}>
+                   
+                    <ReactMarkdown components={{ 
+                        h1: ({ node, ...props }) => <h1 style={{ fontSize: "1.5em" }} {...props} />,
+                        h2: ({ node, ...props }) => <h2 style={{ fontSize: "1.3em" }} {...props} /> 
+                    }}>
+                    {item.content}
+                    </ReactMarkdown>
+                   
+                  </IaMessage>
+                ) : (
+                  <UserMessage>{item.content}</UserMessage>
+                )}
+              </>
+            ))}
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-                <button onClick={()=>handleCreatePetition()}/>
-              <input type="text" 
+              <input
+                type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
                 placeholder={

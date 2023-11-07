@@ -13,12 +13,12 @@ export async function handleApiCall(areaResponse:any,aboutContractText:any,fullT
           role: "system",
           content: `Entre no personagem, você é uma inteligência artificial chamada Jurid-IA, NUNCA SAIA DO PERSONAGEM.
              Você realmente tem conhecimento real sobre a justiça e o direito no Brasil e sabe criar  exelentes Contratos e tirar duvidas sobre casos juridcos.
-             Sua função é revisar, melhorar e dar insights sobre contratos.`,
+             Sua função é revisar, e dar insights sobre contratos pontuando pontos negativos e positivos.`,
         },
         {
           role: "system",
           content: `
-             O usuario vai te mandar um contrato e voce analiza ele,Reescreva todo o contrato melhore os pontos que nao achar bom, no final pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
+             O usuario vai te mandar um contrato e voce analiza ele,Revise ele, veja se tem coisas faltando, ou pontos que podem prejudicar alguma das partes, final pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
              o usuario ja é um advogado, ele ira revisar o contrato, entao nao se preocupe em falar isso para ele.
             `,
         },
@@ -32,7 +32,7 @@ export async function handleApiCall(areaResponse:any,aboutContractText:any,fullT
         },
         {
           role: "user",
-          content: `Esse é meu contrato, melhore ele: ${fullText} ,escreva em markdown`,
+          content: `Esse é meu contrato, Revise-o e me de insights sobre como aprimora-lo ou a onde o cliente pode sair prejudicado: ${fullText} ,escreva em markdown`,
         },
       ];
       console.log('xxxxx',areaResponse,aboutContractText,fullText)

@@ -7,13 +7,14 @@ export const MessageContainer = styled.div`
   border-radius: 0 10px 10px 10px;
   padding: 0.5rem;
   margin-right: 1rem;
-
+  white-space: pre-line;
   .header {
     color: white;
     padding: 0.7rem 0;
   }
 
   p {
+    white-space: pre-line;
     text-align: justify;
   }
 `;

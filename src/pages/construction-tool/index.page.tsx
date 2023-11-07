@@ -52,6 +52,7 @@ export default function ConstructionTool() {
   function handleCreatePetition() {
     try {
       localStorage.setItem("savedMessages", JSON.stringify(messages));
+      localStorage.setItem("interestResponse", JSON.stringify(interestResponse));
       router.push("/construction-tool-ai");
     } catch (err) {
       console.error("Error: " + err);
@@ -114,22 +115,28 @@ export default function ConstructionTool() {
               </p>
             </ChatHeader>
             <ChatBody>
-            {messages
-                    // .filter((item: any) => item.role !== "system")
-                    // .filter((item: any, index) => index >= 3) 
-                    .map((item: any, index: any) => (
-                      <>
-                      {item.role === "assistant" ? (
-                        <>
-                          <IaMessage message={item.content}/>
-                        </>
-                      ) : (
-                        <>
-                          <UserMessage message={item.content}/>
-                        </>
-                      )}
-                      </>
+              {areaResponse === "Clique aqui e escolha" || themeResponse === "Clique aqui e escolha" || interestResponse === "Clique aqui e escolha" || client_data === "" ? (
+                <IaMessage message=' Antes de começar por favor Preencha os dados a cima'/>
+                  ) : ( 
+                    <>
+                      {messages
+                        .filter((item: any) => item.role !== "system")
+                        .filter((item: any, index) => index >= 3) 
+                        .map((item: any, index: any) => (
+                          <>
+                            {item.role === "assistant" ? (
+                              <>
+                                <IaMessage message={item.content}/>
+                              </> 
+                            ) : (
+                              <>
+                                <UserMessage message={item.content}/>
+                              </>
+                            )}  
+                          </>
                         ))}
+                    </>
+              )}
             </ChatBody>
             <ChatFooter>
               <input type="text" 
@@ -141,7 +148,7 @@ export default function ConstructionTool() {
                      : "Digite sua mensagem..."
                  }
                  onKeyDown={handleKeyDown}
-                 disabled={isLoading}
+                 disabled={isLoading || areaResponse === "Clique aqui e escolha" || themeResponse === "Clique aqui e escolha" || interestResponse === "Clique aqui e escolha" || client_data === ""}
               />
               <button 
                 onClick={() => handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading)}

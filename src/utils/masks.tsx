@@ -1,3 +1,5 @@
+import React from "react";
+
 export function maskCep(value: string) {
   if (!value) {
     return "";
@@ -165,3 +167,9 @@ export function maskCard(value: string) {
   value = value.replace(/(\d{4})(\d)/, "$1 $2");
   return value;
 }
+export function sanitizeAndFormatText(inputText: string) {
+  // Divide o texto em linhas e junta-as com <br />
+  let formattedText = inputText.split('\n').map((line, index) => <React.Fragment key={index}>{line}<br /></React.Fragment>);
+  return formattedText;
+}
+

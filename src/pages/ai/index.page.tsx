@@ -25,6 +25,7 @@ export default function ContractImprovement() {
     setUserMessage,
     handleUserMessageSubmit,
     handleTypingComplete,
+    receivedChunks,
     handleKeyDown,
   } = useChatFunctions();
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +56,7 @@ export default function ContractImprovement() {
                 <>
                   {item.role === "assistant" ? (
                     <>
-                      <IaMessage>{item.content}</IaMessage>
+                      <IaMessage>{index < 2 ? item.content : receivedChunks[index - 2]}</IaMessage>
                     </>
                   ) : (
                     <>

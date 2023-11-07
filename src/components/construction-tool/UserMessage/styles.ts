@@ -8,7 +8,7 @@ export const MessageContainer = styled.div`
   padding: 0.5rem;
   margin-left: 1rem;
   color: black;
-
+  white-space: pre-line;
   .header {
     padding: 0.7rem 0;
     font-size: 1.2rem;
@@ -17,5 +17,6 @@ export const MessageContainer = styled.div`
 
   p {
     text-align: justify;
+    white-space: pre-line;
   }
 `;
