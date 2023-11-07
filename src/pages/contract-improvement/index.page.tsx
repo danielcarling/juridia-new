@@ -18,38 +18,53 @@ import {
   VideoContainer,
 } from "./styles";
 import { AreaOptions } from "@/utils/constants";
+import { usePdfUpload } from "./pdfUploader";
+import { handleApiCall } from "./ia";
+import { Spinner } from "react-bootstrap";
 
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
   const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
+  const { handleUpload, fullText } = usePdfUpload();
+  const [loading, setLoading] = useState(false);
 
+  const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
 
     if (selectedFile && selectedFile.type === "application/pdf") {
+      handleUpload(selectedFile);
       setFileName(selectedFile.name);
     } else {
       alert("Por favor, selecione um arquivo PDF.");
     }
   }
-  // useEffect(() => {
-  //   localStorage.setItem("contractMessages", JSON.stringify(messages));
-  // }, [messages]);
-  // async function handleCreatContract() {
-  //   try {
-  //     await handleApiCall();
-  //     await localStorage.setItem("contractMessages", JSON.stringify(messages));
-  //      router.push("/contrato-ia");
-  //     console.log("essa é a mensagenx2", messages);
-
-  //     const savedMessagesString = localStorage.getItem('contractMessages')!
-  //     const savedMessages = JSON.parse(savedMessagesString)
-  //     console.log('savedMessages xxx1 :', savedMessages)
-  //   } catch (err) {
-  //     console.error("Error: " + err);
-  //   }
-  // }
+  const [data, setData] = useState<any>("");
+  const handleClickImproveContract = async () => {
+    setLoading(true); // Ativa o loading
+    if (!areaResponse || !aboutContractText || !fullText) {
+      console.log(areaResponse, aboutContractText, fullText);
+      alert("Preencha todos os campos antes de melhorar o contrato.");
+      setLoading(false); // Desativa o loading
+      return;
+    }
+    try {
+      console.log('Chamando API')
+      const apiResponse = await handleApiCall(
+        areaResponse,
+        aboutContractText,
+        fullText
+      );
+        
+      setData(apiResponse); // Atualiza o estado 'data' com a resposta da API
+      localStorage.setItem("improvementApiResponse", JSON.stringify(apiResponse)); // Salva a resposta no localStorage
+      setLoading(false); // Desativa o loading após receber a resposta
+    } catch (error) {
+      console.error("Error: " + error);
+      setLoading(false); // Desativa o loading em caso de erro
+    }
+  }
   return (
     <Container>
       <ContractHeader routerPath="home"/>
@@ -77,7 +92,7 @@ export default function ContractImprovement() {
                 style={{ margin: "2rem 0 1rem" }}
               />
               <ContractDetails>
-                <textarea placeholder="Descreva seu contrato aqui..." />
+                <textarea placeholder="Descreva seu contrato aqui..." value={aboutContractText} onChange={(e: any) => setAboutContractText(e.target.value)} />
               </ContractDetails>
             </div>
 
@@ -109,7 +124,7 @@ export default function ContractImprovement() {
             </div>
 
             <SubmitContract>
-              <button>Melhorar Contrato</button>
+              <button onClick={handleClickImproveContract}>Melhorar Contrato</button>
             </SubmitContract>
           </ContractForm>
 
@@ -120,7 +135,13 @@ export default function ContractImprovement() {
               style={{ marginBottom: "1.5rem" }}
             />
 
-            <SolutionInfo></SolutionInfo>
+            <SolutionInfo>{loading ? (
+                <Spinner/> // Substitua com o componente de spinner desejado
+              ) : (
+                <>
+                {data} 
+                </>
+               )}</SolutionInfo>
 
             <Subtitle
               content="2 - Assista o vídeo abaixo caso tenha alguma dúvida:"

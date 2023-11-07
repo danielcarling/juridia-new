@@ -23,7 +23,7 @@ export const StartMessage = [
 
 export async function handleApiCall(messages: any[]): Promise<string | null> {
   const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: "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",
     dangerouslyAllowBrowser: true,
   });
 
@@ -80,21 +80,31 @@ export function useChatFunctions() {
           setStartMessage([...savedMessagesArray, createClientData, message1]);
           setMessages([...savedMessagesArray, createClientData, message1]);
           setStartIndex(savedMessagesArray.length);
-          callAPI()
         }
       }, []);
-      async function callAPI() {
-        try {
-          // Chame a função para lidar com a API
-          await handleApiCall([...messages,{
-            role: "system",
-            content: `
-             crie a petição, colocando todos dados dos clientes na petição
-        `,
-          },])
-        } catch (err) {
-          console.error("Error: " + err);
-        }
+      async function handleCreatePetition() {
+          setIsLoading(true);
+          const contentSend = 'crie a petição, colocando todos dados dos clientes na petição'
+          const userMessageObj = { role: "user", content: contentSend };
+          setMessages((prevMessages: any) => [...prevMessages, userMessageObj]);
+          setUserMessage("");
+    
+          try {
+            const apiResponse = await handleApiCall([...messages, userMessageObj]);
+    
+            if (apiResponse !== null) {
+              const systemResponse = { role: "assistant", content: apiResponse };
+              setMessages((prevMessages: any) => [...prevMessages, systemResponse]);
+    
+              setIsLoading(false);
+            } else {
+              // Trate o caso em que a API retorna null
+              console.error("A API retornou null.");
+              setIsLoading(false);
+            }
+          } catch (err) {
+            console.error("Error: " + err);
+          }       
       }
 
 
@@ -133,5 +143,5 @@ export function useChatFunctions() {
       }
     }
   
-    return { messages, userMessage, isLoading,callAPI, setMessages,startIndex, setUserMessage, setIsLoading, handleUserMessageSubmit, handleTypingComplete, handleKeyDown };
+    return { messages, userMessage, isLoading,handleCreatePetition, setMessages,startIndex, setUserMessage, setIsLoading, handleUserMessageSubmit, handleTypingComplete, handleKeyDown };
   }

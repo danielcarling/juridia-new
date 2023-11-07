@@ -2,8 +2,10 @@ import * as pdfjsLib from "pdfjs-dist";
 import "pdfjs-dist/build/pdf.worker.min";
 import { useState } from "react";
 
-export const handleUpload = async (file: any) => {
-    const [fullText, setFullText] = useState<string>("");
+export const usePdfUpload = () => {
+  const [fullText, setFullText] = useState<string>("");
+
+  const handleUpload = async (file: any) => {
     try {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
@@ -35,3 +37,6 @@ export const handleUpload = async (file: any) => {
       alert(error.message);
     }
   };
+
+  return { handleUpload, fullText };
+};
