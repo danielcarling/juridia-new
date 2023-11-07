@@ -20,12 +20,16 @@ import {
 import { PixSvg } from "../../../public/payment/PixCardIcon";
 import { useEffect, useState } from "react";
 import { Footer } from "@/components/register-account/Footer";
-import { CreditCard } from "@/components/payment/CreditCard";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { CardStep1 } from "@/components/payment/CardStep1";
 import { CardStep2 } from "@/components/payment/CardStep2";
 
 export default function Payment() {
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [validity, setValidity] = useState("");
+  const [securityCode, setSecurityCode] = useState("");
+
   const [payOption, setPayOption] = useState("pix");
   const [pixStep, setPixStep] = useState(1);
   const [cardStep, setCardStep] = useState(1);
@@ -107,7 +111,18 @@ export default function Payment() {
             <>
               {cardStep === 1 ? (
                 <>
-                  <CardStep1 />
+                  <CardStep1
+                    {...{
+                      cardName,
+                      setCardName,
+                      cardNumber,
+                      setCardNumber,
+                      validity,
+                      setValidity,
+                      securityCode,
+                      setSecurityCode,
+                    }}
+                  />
                   <NextStep onClick={() => setCardStep(2)}>
                     <button>Próximo</button>
                   </NextStep>

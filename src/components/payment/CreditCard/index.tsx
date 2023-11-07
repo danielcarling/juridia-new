@@ -9,17 +9,20 @@ interface Props {
 
 export function CreditCard({ cardNumber, setCardNumber }: Props) {
   const handleCardNumberChange = (value: string) => {
-    const inputCardNumber = value.replace(/\D/g, ""); // Remove non-digit characters
+    value = value.replace(/\D/g, "");
 
-    // Mask the input card number with 'X'
-    const maskedCardNumber = inputCardNumber
+    if (value.length >= 16) {
+      value = value.slice(0, 16);
+    }
+
+    const maskedCardNumber = value
       .padEnd(16, "X")
       .split("")
       .map((char, index) => (index % 4 === 0 && index > 0 ? ` ${char}` : char))
       .join("")
       .trim();
 
-    setCardNumber(maskedCardNumber);
+    return maskedCardNumber;
   };
 
   useEffect(() => {
@@ -36,7 +39,7 @@ export function CreditCard({ cardNumber, setCardNumber }: Props) {
           <JuridiaTextSvg />
         </div>
         <CreditCardInfo>
-          <strong>{cardNumber}</strong>
+          <strong>{handleCardNumberChange(cardNumber)}</strong>
           <span>Cartão de Crédito Jurid IA</span>
         </CreditCardInfo>
       </Content>

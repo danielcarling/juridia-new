@@ -1,10 +1,29 @@
 import { useState } from "react";
 import { CreditCard } from "../CreditCard";
 import { CreditCardForm, FormGroup, ValidityAndCvc } from "./styles";
+import { maskCreditCard } from "@/utils/masks";
 
-export function CardStep1() {
-  const [cardNumber, setCardNumber] = useState("");
+interface Props {
+  cardName: string;
+  setCardName: (value: string) => void;
+  cardNumber: string;
+  setCardNumber: (value: string) => void;
+  validity: string;
+  setValidity: (value: string) => void;
+  securityCode: string;
+  setSecurityCode: (value: string) => void;
+}
 
+export function CardStep1({
+  cardName,
+  setCardName,
+  cardNumber,
+  setCardNumber,
+  validity,
+  setValidity,
+  securityCode,
+  setSecurityCode,
+}: Props) {
   return (
     <>
       <div
@@ -31,7 +50,8 @@ export function CardStep1() {
             type="text"
             id="cardNumber"
             placeholder="Digite o número do cartao"
-            onChange={(e) => setCardNumber(e.target.value)}
+            value={cardNumber}
+            onChange={(e) => setCardNumber(maskCreditCard(e.target.value))}
           />
         </FormGroup>
         <ValidityAndCvc>
@@ -42,6 +62,8 @@ export function CardStep1() {
               id="validity"
               placeholder="MM/AA"
               className="validity"
+              value={validity}
+              onChange={(e) => setValidity(e.target.value)}
             />
           </FormGroup>
           <FormGroup className="validityAndCVC">
@@ -51,6 +73,8 @@ export function CardStep1() {
               id="securityCode"
               placeholder="XXX"
               className="securityCode"
+              value={securityCode}
+              onChange={(e) => setSecurityCode(e.target.value)}
             />
           </FormGroup>
         </ValidityAndCvc>

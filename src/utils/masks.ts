@@ -88,6 +88,22 @@ export function maskAge(value: string) {
   return value;
 }
 
+export function maskCreditCard(value: string) {
+  value = value.replace(/\D/g, "");
+
+  if (value.length >= 16) {
+    value = value.slice(0, 16);
+  }
+
+  const maskedCardNumber = value
+    .split("")
+    .map((char, index) => (index % 4 === 0 && index > 0 ? ` ${char}` : char))
+    .join("")
+    .trim();
+
+  return maskedCardNumber;
+}
+
 export function maskDate(value: string) {
   let data = value;
   data = data.replace(/\D/g, "");
