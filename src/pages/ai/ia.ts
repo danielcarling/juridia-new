@@ -23,13 +23,13 @@ export const StartMessage = [
 
 export async function handleApiCall(messages: any[]): Promise<string | null> {
   const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: "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",
     dangerouslyAllowBrowser: true,
   });
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo-16k",
+      model: "gpt-3.5-turbo-1106",
       messages,
     });
     const Response = response.choices[0].message.content;

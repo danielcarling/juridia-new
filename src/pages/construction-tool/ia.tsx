@@ -35,7 +35,7 @@ type Message = {
 
   export async function handleApiCall(messages: any[],setMessages:any): Promise<string | null> {
     const openai = new OpenAI({
-      apiKey: "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",
+      apiKey: "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",
       dangerouslyAllowBrowser: true,
     });
   

@@ -27,11 +27,11 @@ export default function ContractImprovement() {
     handleTypingComplete,
     handleKeyDown,
     startIndex,
-    callAPI,
+    handleCreatePetition,
   } = useChatFunctions();
 
   useEffect(() => {
-    callAPI();
+    handleCreatePetition;
     console.log('chamandoapi')
   }, []);
  
@@ -68,6 +68,7 @@ export default function ContractImprovement() {
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
+                <button onClick={()=>handleCreatePetition()}/>
               <input type="text" 
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
