@@ -31,8 +31,8 @@ export const Main = styled.main`
 
 export const PageTitle = styled.div`
   padding: 1.5rem 0 2rem 3rem;
-  border-bottom: 3px solid #7F5619;
-`
+  border-bottom: 3px solid #7f5619;
+`;
 
 export const ChatContainer = styled.div`
   position: relative;
