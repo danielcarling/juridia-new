@@ -23,6 +23,7 @@ import { Footer } from "@/components/register-account/Footer";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { CardStep1 } from "@/components/payment/CardStep1";
 import { CardStep2 } from "@/components/payment/CardStep2";
+import { ErrorMessage } from "@/components/global/ErrorMessage";
 
 export default function Payment() {
   const [cardName, setCardName] = useState("");
@@ -35,9 +36,37 @@ export default function Payment() {
   const [cardStep, setCardStep] = useState(1);
   const [progressBarStep, setProgressBarStep] = useState(1);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   useEffect(() => {
     scrollToElement("payment");
   }, []);
+
+  function validateCard() {
+    if (cardStep === 1) {
+      if (!cardName) {
+        return setErrorMessage("Nome do Cartão é obrigatório");
+      } else if (!cardNumber) {
+        return setErrorMessage("Número do Cartão é obrigatório");
+      } else if (cardNumber.length < 16) {
+        return setErrorMessage(
+          "Número do Cartão deve ter pelo menos 16 digitos"
+        );
+      } else if (
+        !validity ||
+        validity.length < 5 ||
+        Number(validity.slice(0, 2)) < 1 ||
+        Number(validity.slice(0, 2)) > 12
+      ) {
+        return setErrorMessage("Insira uma data de vencimento válida");
+      } else if (!securityCode || securityCode.length < 3) {
+        return setErrorMessage("Insira um CVC válido");
+      } else {
+        setCardStep(2);
+      }
+    } else if (cardStep === 2) {
+    }
+  }
 
   useEffect(() => {
     if (payOption === "pix") {
@@ -123,7 +152,8 @@ export default function Payment() {
                       setSecurityCode,
                     }}
                   />
-                  <NextStep onClick={() => setCardStep(2)}>
+                  <ErrorMessage message={errorMessage} />
+                  <NextStep onClick={validateCard}>
                     <button>Próximo</button>
                   </NextStep>
                 </>

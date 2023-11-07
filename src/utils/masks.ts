@@ -119,3 +119,32 @@ export function maskDate(value: string) {
 
   return data;
 }
+
+export function maskCardValidity(value: string) {
+  if (!value) {
+    return "";
+  }
+
+  value = value.replace(/\D/g, "");
+
+  if (value.length >= 4) {
+    value = value.slice(0, 4);
+  }
+
+  value = value.replace(/(\d{2})(\d)/, "$1/$2");
+  return value;
+}
+
+export function maskCvc(value: string) {
+  if (!value) {
+    return "";
+  }
+
+  value = value.replace(/\D/g, "");
+
+  if (value.length >= 3) {
+    value = value.slice(0, 3);
+  }
+
+  return value;
+}

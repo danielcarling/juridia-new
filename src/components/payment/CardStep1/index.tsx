@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CreditCard } from "../CreditCard";
 import { CreditCardForm, FormGroup, ValidityAndCvc } from "./styles";
-import { maskCreditCard } from "@/utils/masks";
+import { maskCardValidity, maskCreditCard, maskCvc } from "@/utils/masks";
 
 interface Props {
   cardName: string;
@@ -42,6 +42,8 @@ export function CardStep1({
             type="text"
             id="cardName"
             placeholder="Digite o nome do cartão"
+            value={cardName}
+            onChange={(e) => setCardName(e.target.value)}
           />
         </FormGroup>
         <FormGroup>
@@ -63,7 +65,7 @@ export function CardStep1({
               placeholder="MM/AA"
               className="validity"
               value={validity}
-              onChange={(e) => setValidity(e.target.value)}
+              onChange={(e) => setValidity(maskCardValidity(e.target.value))}
             />
           </FormGroup>
           <FormGroup className="validityAndCVC">
@@ -74,7 +76,7 @@ export function CardStep1({
               placeholder="XXX"
               className="securityCode"
               value={securityCode}
-              onChange={(e) => setSecurityCode(e.target.value)}
+              onChange={(e) => setSecurityCode(maskCvc(e.target.value))}
             />
           </FormGroup>
         </ValidityAndCvc>
