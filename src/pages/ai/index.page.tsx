@@ -56,7 +56,7 @@ export default function ContractImprovement() {
                 <>
                   {item.role === "assistant" ? (
                     <>
-                      <IaMessage>{index < 2 ? item.content : receivedChunks[index - 2]}</IaMessage>
+                      <IaMessage>{item.content}</IaMessage>
                     </>
                   ) : (
                     <>

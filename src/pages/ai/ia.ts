@@ -23,7 +23,7 @@ export const StartMessage = [
 
   export async function handleApiCall(messages: any[]): Promise<string | null> {
     const openai = new OpenAI({
-      apiKey: "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",
+      apiKey: "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",
       dangerouslyAllowBrowser: true,
     });
   
@@ -38,7 +38,7 @@ export const StartMessage = [
       for await (const chunk of response) {
         const chunkContent = chunk.choices[0].delta.content;
         if (chunkContent !== undefined) { // Verifique se o chunkContent não é undefined
-          // console.log(chunkContent); // Se quiser ver os chunks no console
+           console.log(chunkContent); // Se quiser ver os chunks no console
   
           // Adicione o chunk ao finalResponse
           finalResponse += chunkContent;
