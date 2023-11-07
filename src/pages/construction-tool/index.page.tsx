@@ -60,7 +60,7 @@ export default function ConstructionTool() {
   }
   return (
     <Container>
-      <ContractHeader routerPath="home" />
+      <ContractHeader />
       <Main>
         <PageTitle>
           <TitleComponent content="Ferramenta de Construção" />

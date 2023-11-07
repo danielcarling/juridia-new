@@ -5,15 +5,11 @@ import { BackButton, HeaderContainer, UserInfo } from "./styles";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-
-interface Props {
-  routerPath: string;
-}
-export function ContractHeader({routerPath}:Props) {
+export function ContractHeader() {
   const router = useRouter()
   return (
     <HeaderContainer>
-      <BackButton onClick={()=> router.push(`${routerPath}`)}>
+      <BackButton onClick={()=> router.back()}>
         <BackIconSvg />
       </BackButton>
       <div className="logo">

@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { EyeSlashSVG } from "../../../public/login/EyeSlash";
 import { Footer } from "@/components/register-account/Footer";
 import { scrollToElement } from "@/utils/scrollToElement";
+import { Spinner } from "react-bootstrap";
 
 export default function Login() {
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function Login() {
     localStorage.setItem(token, connect.body.token);
     localStorage.setItem(refreshToken, connect.body.refreshToken);
     // alert("Conta criada com sucesso!");
-    return router.push("/home");
+    return router.push("/");
   }
   return (
     <Container>
@@ -128,7 +129,11 @@ export default function Login() {
             </button>
           </PasswordRecovery>
           <LoginButton disabled={disabled} onClick={handleLogin}>
-            Entrar
+            {disabled ? (
+              <Spinner style={{ width: "1.2rem", height: "1.2rem" }} />
+            ) : (
+              "Entrar"
+            )}
           </LoginButton>
 
           <p

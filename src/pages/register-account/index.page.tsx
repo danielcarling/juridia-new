@@ -17,6 +17,7 @@ import { PersonalDataForm } from "@/components/register-account/PersonalDataForm
 import { CompanyDataForm } from "@/components/register-account/CompanyDataForm";
 import { scrollToElement } from "@/utils/scrollToElement";
 import { ErrorMessage } from "@/components/global/ErrorMessage";
+import { Spinner } from "react-bootstrap";
 
 export default function RegisterAccount() {
   const [step, setStep] = useState(1);
@@ -49,6 +50,8 @@ export default function RegisterAccount() {
         return setErrorMessage("Email é obrigatório");
       } else if (!password) {
         return setErrorMessage("Senha é obrigatório");
+      } else if (mobilePhone.replace(/\D/g, "").length < 11) {
+        return setErrorMessage("Insira um número de telefone válido");
       } else if (!termsChecked) {
         return setErrorMessage("Aceite os termos");
       }
@@ -139,7 +142,6 @@ export default function RegisterAccount() {
                   onCnpjChange={setCnpj}
                   onRoleChange={setRole}
                 />
-                <button onClick={() => alert(role)}>dsajkakdsl</button>
               </>
             )}
 
@@ -162,7 +164,11 @@ export default function RegisterAccount() {
                   Voltar
                 </BackButton>
                 <NextButton onClick={handleRegister} disabled={disabled}>
-                  Finalizar Cadastro
+                  {disabled ? (
+                    <Spinner style={{ width: "1.3rem", height: "1.3rem" }} />
+                  ) : (
+                    "Finalizar Cadastro"
+                  )}
                 </NextButton>
               </div>
             )}

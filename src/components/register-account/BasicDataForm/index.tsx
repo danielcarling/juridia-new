@@ -1,3 +1,4 @@
+import { maskPhone } from "@/utils/masks";
 import { FormGroup, RegisterForm, RegisterFormHeader, TermsContainer } from "./styles";
 
 interface Props{
@@ -57,7 +58,7 @@ export function BasicDataForm({
           id="phoneNumber"
           placeholder="Digite seu telefone"
           value={mobilePhone}
-          onChange={(e) => onMobilePhoneChange(e.target.value)}
+          onChange={(e) => onMobilePhoneChange(maskPhone(e.target.value))}
         />
       </FormGroup>
       <FormGroup>
