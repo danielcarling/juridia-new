@@ -67,6 +67,10 @@ export const IaMessage = styled.div`
   padding: 1rem 0.5rem;
   margin-right: 1rem;
 
+  pre {
+    white-space: pre-wrap;
+  }
+
   @media (min-width: 1024px) {
     border-radius: 0px 30px 30px 30px;
     font-size: 1rem;
@@ -91,7 +95,7 @@ export const ChatFooter = styled.div`
   bottom: 0;
   left: 0;
   background-color: ${({ theme }) => theme.color.primary_100};
-  height: 6rem;
+  height: auto;
   width: 100%;
 
   .send-message {
@@ -104,7 +108,11 @@ export const ChatFooter = styled.div`
     padding: 0.5rem;
     border-radius: 15px 15px 0 0;
 
-    input {
+    textarea {
+      white-space: pre-wrap;
+      height: 10rem;
+      resize: none;
+      height: 100%;
       font-weight: 700;
       width: 90%;
       border: 0;
@@ -155,12 +163,13 @@ export const ChatFooter = styled.div`
 
     .send-message {
       border-radius: 20px 20px 0 0;
-      width: 80%;
+      width: 90%;
+      max-width: 50rem;
       margin: auto;
       height: 100%;
       padding: 0.5rem 0.5rem 0.5rem 9rem;
 
-      input {
+      textarea {
         padding: 0.7rem;
       }
 
