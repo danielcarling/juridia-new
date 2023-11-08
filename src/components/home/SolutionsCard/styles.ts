@@ -6,6 +6,7 @@ export const Container = styled.div`
   border-radius: 11px;
   border: 1px solid #d2ae6d;
   padding: 1rem 0.625rem 0.3rem;
+  height: 100%;
 
   background: linear-gradient(144deg, #a07d40 25.42%, #282a3b 78.84%);
 `;

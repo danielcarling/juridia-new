@@ -22,14 +22,17 @@ interface CardProps {
 export default function HowToUse() {
   const [tutorials, setTutorials] = useState<CardProps[]>([]);
   const [modalVideoUrl, setModalVideoUrl] = useState("");
+  const [showSlider, setShowSlider] = useState(false);
 
   const [sliderRef] = useKeenSlider({
-    loop: true,
+    // loop: true,
     slides: {
       perView: "auto",
       spacing: 38,
     },
   });
+
+  const slides = [1, 2, 3];
 
   const router = useRouter();
 
@@ -51,8 +54,8 @@ export default function HowToUse() {
   async function getTutorials() {
     const connect = await getAPI("/tutorial");
     if (connect.status === 200) {
-      console.log(connect);
       setTutorials(connect.body.tutorials);
+      setShowSlider(true);
     }
   }
 
@@ -80,20 +83,23 @@ export default function HowToUse() {
           content="Clique no Card para  extrair o máximo de cada funcionalidade:"
           style={{ marginLeft: "1rem" }}
         />
-        <SliderContainer ref={sliderRef}>
-          {tutorials &&
-            tutorials.map((card) => (
+        {showSlider && (
+          <SliderContainer ref={sliderRef}>
+            {tutorials.map((card) => (
               <div className="keen-slider__slide">
-                <VideoCard
-                  imgSrc="/home/solutionCardImg1.svg"
-                  name={card.name}
-                  description={card.description}
-                  updateTime={card.update_time}
-                  onClick={() => handleShowTutorial(card.video_url)}
-                />
+                {tutorials && (
+                  <VideoCard
+                    imgSrc="/home/solutionCardImg1.svg"
+                    name={card.name}
+                    description={card.description}
+                    updateTime={card.update_time}
+                    onClick={() => handleShowTutorial(card.video_url)}
+                  />
+                )}
               </div>
             ))}
-        </SliderContainer>
+          </SliderContainer>
+        )}
         <WhatsApp />
       </Main>
       <TutorialModal

@@ -29,6 +29,7 @@ export default function Home() {
   const [funcionalities, setFuncionalities] = useState<FuncionalitiesProps[]>(
     []
   );
+  const [showSlider, setShowSlider] = useState(false);
   const router = useRouter();
 
   async function handleVerify() {
@@ -50,6 +51,7 @@ export default function Home() {
     const connect = await getAPI("/functionalities");
     if (connect.status === 200) {
       setFuncionalities(connect.body.functionalities);
+      setShowSlider(true);
     }
   }
 
@@ -95,21 +97,23 @@ export default function Home() {
           content="Soluções Frequentes:"
           style={{ marginLeft: "1rem" }}
         />
-        <SliderContainer ref={sliderRef}>
-          {funcionalities.map((item) => (
-            <div className="keen-slider__slide" key={item.id}>
-              <SolutionsCard
-                id={item.id}
-                page_url={item.page_url}
-                description={item.description}
-                name={item.name}
-                video_url={item.video_url}
-                update_time={item.update_time}
-                created_at={item.created_at}
-              />
-            </div>
-          ))}
-        </SliderContainer>
+        {showSlider && (
+          <SliderContainer ref={sliderRef}>
+            {funcionalities.map((item) => (
+              <div className="keen-slider__slide" key={item.id}>
+                <SolutionsCard
+                  id={item.id}
+                  page_url={item.page_url}
+                  description={item.description}
+                  name={item.name}
+                  video_url={item.video_url}
+                  update_time={item.update_time}
+                  created_at={item.created_at}
+                />
+              </div>
+            ))}
+          </SliderContainer>
+        )}
         <WhatsApp />
       </Main>
     </Container>
