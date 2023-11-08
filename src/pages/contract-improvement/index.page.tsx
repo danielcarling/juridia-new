@@ -18,11 +18,11 @@ import {
   VideoContainer,
 } from "./styles";
 import { AreaOptions } from "@/utils/constants";
-import { usePdfUpload } from "./pdfUploader";
 import { handleApiCall } from "./ia";
 import { Spinner } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
+import { usePdfUpload } from "@/lib/pdfUploader";
 
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
@@ -32,7 +32,7 @@ export default function ContractImprovement() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
+  const [aboutContractText, setAboutContractText] = useState("");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
 
