@@ -8,9 +8,20 @@ import { TutorialModal } from "@/components/how-to-use/VideoModal";
 import { useEffect, useState } from "react";
 import { TitleComponent } from "@/components/global/Title";
 import { useRouter } from "next/router";
-import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
+import { authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+
+interface CardProps {
+  imgSrc: string;
+  name: string;
+  description: string;
+  update_time: string;
+  video_url: string;
+}
 
 export default function HowToUse() {
+  const [tutorials, setTutorials] = useState<CardProps[]>([]);
+  const [modalVideoUrl, setModalVideoUrl] = useState("");
+
   const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {
@@ -36,11 +47,23 @@ export default function HowToUse() {
     }
   }
 
+  async function getTutorials() {
+    const connect = await getAPI("/tutorial");
+    if (connect.status === 200) {
+      console.log(connect);
+      setTutorials(connect.body.tutorials);
+    }
+  }
+
+  function handleShowTutorial(videoUrl: string) {
+    setModalVideoUrl(videoUrl);
+    setShowTutorialModal(true);
+  }
+
   useEffect(() => {
     handleVerify();
+    getTutorials();
   }, []);
-
-  const cardsInfo = [1, 2, 3, 4, 5, 6, 7];
 
   const [showTutorialModal, setShowTutorialModal] = useState(false);
   return (
@@ -57,20 +80,25 @@ export default function HowToUse() {
           style={{ marginLeft: "1rem" }}
         />
         <SliderContainer ref={sliderRef}>
-          {cardsInfo.map((card) => (
-            <div className="keen-slider__slide">
-              <VideoCard
-                imgSrc="/home/solutionCardImg1.svg"
-                onClick={() => setShowTutorialModal(true)}
-              />
-            </div>
-          ))}
+          {tutorials &&
+            tutorials.map((card) => (
+              <div className="keen-slider__slide">
+                <VideoCard
+                  imgSrc="/home/solutionCardImg1.svg"
+                  name={card.name}
+                  description={card.description}
+                  updateTime={card.update_time}
+                  onClick={() => handleShowTutorial(card.video_url)}
+                />
+              </div>
+            ))}
         </SliderContainer>
         <WhatsApp />
       </Main>
       <TutorialModal
         show={showTutorialModal}
         onHide={() => setShowTutorialModal(false)}
+        videoUrl={modalVideoUrl}
       />
     </Container>
   );

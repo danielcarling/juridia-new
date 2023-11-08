@@ -16,9 +16,10 @@ import {
 interface ModalProps {
   show: boolean;
   onHide: () => void;
+  videoUrl?: string;
 }
 
-export function TutorialModal({ show, onHide }: ModalProps) {
+export function TutorialModal({ show, onHide, videoUrl }: ModalProps) {
   return (
     <StyledModal show={show} onHide={onHide} size="xl">
       <Content>
@@ -34,7 +35,7 @@ export function TutorialModal({ show, onHide }: ModalProps) {
           <iframe
             width="560"
             height="315"
-            src="https://www.youtube.com/embed/2J7xlDH4QkA?si=-eOeTCPtH7Rq4S2A"
+            src={videoUrl}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

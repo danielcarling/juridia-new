@@ -2,10 +2,19 @@ import { CardHeader, Container, TextContainer } from "./styles";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   imgSrc: string;
+  name: string;
+  description: string;
+  updateTime: string;
   rest?: any;
 }
 
-export function VideoCard({ imgSrc, ...rest }: Props) {
+export function VideoCard({
+  imgSrc,
+  name,
+  description,
+  updateTime,
+  ...rest
+}: Props) {
   return (
     <Container {...rest}>
       <CardHeader>
@@ -13,15 +22,15 @@ export function VideoCard({ imgSrc, ...rest }: Props) {
           <div className="imgContainer">
             <img src={imgSrc} alt="" />
           </div>
-          <strong>Melhorar Contratos</strong>
+          <strong>{name}</strong>
         </div>
-        <span>Atualizado em 12/09/2023</span>
+        <span>
+          Atualizado em {updateTime.slice(8, 10)}/{updateTime.slice(5, 7)}/
+          {updateTime.slice(0, 4)}
+        </span>
       </CardHeader>
       <TextContainer>
-        <p>
-          Insira seus Contratos e deixe a Inteligência Artificial trabalhar por
-          Você, após melhorar seu contrato ela passará um resumo das alterações.
-        </p>
+        <p>{description}</p>
       </TextContainer>
     </Container>
   );

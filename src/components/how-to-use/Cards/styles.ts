@@ -9,6 +9,7 @@ export const Container = styled.div`
   padding: 1rem 0.625rem 0.3rem;
   background: linear-gradient(144deg, #a07d40 25.42%, #282a3b 78.84%);
   transition: 0.2s;
+  height: 100%;
 
   &:hover {
     scale: 1.02;
