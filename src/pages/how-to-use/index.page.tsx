@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
 
 interface CardProps {
+  id: string;
   imgSrc: string;
   name: string;
   description: string;

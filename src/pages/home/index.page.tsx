@@ -12,10 +12,23 @@ import { useKeenSlider } from "keen-slider/react";
 import { WhatsApp } from "@/components/global/Whatsapp";
 import { TitleComponent } from "@/components/global/Title";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
+import { useEffect, useState } from "react";
+import { authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+
+export interface FuncionalitiesProps {
+  created_at: string;
+  description: string;
+  id: string;
+  name: string;
+  page_url: string;
+  update_time: string;
+  video_url: string;
+}
 
 export default function Home() {
+  const [funcionalities, setFuncionalities] = useState<FuncionalitiesProps[]>(
+    []
+  );
   const router = useRouter();
 
   async function handleVerify() {
@@ -33,9 +46,17 @@ export default function Home() {
     }
   }
 
+  async function getFuncionalities() {
+    const connect = await getAPI("/functionalities");
+    if (connect.status === 200) {
+      setFuncionalities(connect.body.functionalities);
+    }
+  }
+
   useEffect(() => {
     handleVerify();
-  });
+    getFuncionalities();
+  }, []);
 
   const [sliderRef] = useKeenSlider({
     loop: true,
@@ -44,14 +65,6 @@ export default function Home() {
       spacing: 38,
     },
   });
-
-  const SliderCards = [
-    { index: 0, name: "Componente 1", routerSrc: "/ai" },
-    { index: 1, name: "Componente 2", routerSrc: "/construction-tool" },
-    { index: 2, name: "Componente 3", routerSrc: "/contract-improvement" },
-    { index: 3, name: "Componente 4", routerSrc: "/componente4" },
-    { index: 4, name: "Componente 5", routerSrc: "/componente5" },
-  ];
 
   return (
     <Container>
@@ -83,11 +96,16 @@ export default function Home() {
           style={{ marginLeft: "1rem" }}
         />
         <SliderContainer ref={sliderRef}>
-          {SliderCards.map((item) => (
-            <div className="keen-slider__slide" key={item.index}>
+          {funcionalities.map((item) => (
+            <div className="keen-slider__slide" key={item.id}>
               <SolutionsCard
-                imgSrc="/home/solutionCardImg1.svg"
-                routerPath={item.routerSrc}
+                id={item.id}
+                page_url={item.page_url}
+                description={item.description}
+                name={item.name}
+                video_url={item.video_url}
+                update_time={item.update_time}
+                created_at={item.created_at}
               />
             </div>
           ))}
