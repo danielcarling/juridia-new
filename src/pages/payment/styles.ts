@@ -252,6 +252,7 @@ export const EndPurchase = styled(NextStep)`
   button {
     background-color: #20b038;
     color: black;
+    width: 18rem;
 
     &:hover {
       background-color: #1b922f;

@@ -31,6 +31,7 @@ import {
 import { onlyNumbers } from "@/utils/masks";
 import { useRouter } from "next/router";
 import { AuthPostAPI, authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+import { Spinner } from "react-bootstrap";
 
 interface PlansProps {
   credit_value: number;
@@ -63,6 +64,7 @@ export default function Payment() {
   const [pixStep, setPixStep] = useState(1);
   const [cardStep, setCardStep] = useState(1);
   const [progressBarStep, setProgressBarStep] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -92,13 +94,15 @@ export default function Payment() {
 
   async function finishCardBuy() {
     validateCard();
-    const connect = await AuthPostAPI(`/new-credit-card/${selectedPlan?.id}`, {
+    setLoading(true);
+
+    const data = {
       creditCard: {
         holderName: cardName,
         number: cardNumber,
         expiryMonth: validity.split("/")[0],
         expiryYear: validity.split("/")[1],
-        cvc: securityCode,
+        ccv: securityCode,
       },
       creditCardHolderInfo: {
         name: name,
@@ -110,11 +114,22 @@ export default function Payment() {
         phone: phoneNumber,
         mobilePhone: phoneNumber,
       },
-    });
+      installmentCount: Number(installments),
+      saveCreditCard: saveCreditCard,
+    };
+
+    const connect = await AuthPostAPI(
+      `/new-credit-card/${selectedPlan?.id}`,
+      data
+    );
 
     if (connect.status === 200) {
       alert("Compra realizada com sucesso");
+      setLoading(false);
       return router.push("/");
+    } else {
+      setLoading(false);
+      return alert("Algo deu errado");
     }
   }
 
@@ -289,9 +304,10 @@ export default function Payment() {
                   />
                   <ErrorMessage message={errorMessage} />
                   <EndPurchase>
-                    <button onClick={finishCardBuy}>Finalizar Compra</button>
+                    <button onClick={finishCardBuy} disabled={loading}>
+                      {loading ? <Spinner /> : "Finalizar Compra"}
+                    </button>
                   </EndPurchase>
-                  <button onClick={() => alert(cardNumber)}>dsklaaskjld</button>
                 </>
               )}
             </>
