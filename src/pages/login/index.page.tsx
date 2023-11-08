@@ -14,7 +14,13 @@ import {
   PasswordRecovery,
 } from "./styles";
 
-import { PostAPI, refreshToken, token } from "@/lib/axios";
+import {
+  PostAPI,
+  authGetAPI,
+  loginVerifyAPI,
+  refreshToken,
+  token,
+} from "@/lib/axios";
 import { useRouter } from "next/router";
 import { EyeSlashSVG } from "../../../public/login/EyeSlash";
 import { Footer } from "@/components/register-account/Footer";
@@ -27,6 +33,23 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState<boolean>(false);
+
+  async function handleVerify() {
+    const connect = await loginVerifyAPI();
+
+    if (connect === 200) {
+      const connect2 = await authGetAPI("/user/validation");
+      if (connect2.status !== 200) {
+        alert("Assinatura necessária");
+        return router.push("/payment");
+      }
+      return router.push("/");
+    }
+  }
+
+  useEffect(() => {
+    handleVerify();
+  });
 
   function toggleShowPassword() {
     if (showPassword === "password") {

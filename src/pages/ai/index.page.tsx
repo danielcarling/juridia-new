@@ -15,7 +15,7 @@ import { windowDimension } from "@/utils/windowDimensions";
 import { useChatFunctions } from "./ia";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
-import { loginVerifyAPI } from "@/lib/axios";
+import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
 import { useRouter } from "next/router";
 
 export default function ContractImprovement() {
@@ -35,24 +35,29 @@ export default function ContractImprovement() {
 
   const router = useRouter();
 
-  async function handleVerifyLogin() {
-    const connect = await AuthPatch("/user/refresh");
-    alert('Login realizado com sucesso')
+  async function handleVerify() {
+    const connect = await loginVerifyAPI();
+
     if (connect !== 200) {
       alert("Login necessário");
       return router.push("/login");
+    } else if (connect === 200) {
+      const connect2 = await authGetAPI("/user/validation");
+      if (connect2.status !== 200) {
+        alert("Assinatura necessária");
+        return router.push("/payment");
+      }
     }
-
   }
 
   useEffect(() => {
+    handleVerify();
     if (localStorage.getItem("DontShowAgain") === null) {
       localStorage.setItem("DontShowAgain", "false");
     }
     if (localStorage.getItem("DontShowAgain") === "false") {
       return setShowModal(true);
     }
-    handleVerifyLogin();
   }, []);
 
   return (

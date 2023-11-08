@@ -5,6 +5,7 @@ export const api = axios.create({
 })
 export const token = "Jurid-IA.token";
 export const refreshToken = "Jurid-IA.refreshToken";
+
 export const PostAPI = async (url: string, data: any) => {
   const connect = await api
     .post(url, data)

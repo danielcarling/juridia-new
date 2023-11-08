@@ -30,7 +30,7 @@ import {
 } from "../../utils/creditCardValidation";
 import { onlyNumbers } from "@/utils/masks";
 import { useRouter } from "next/router";
-import { loginVerifyAPI } from "@/lib/axios";
+import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
 
 export default function Payment() {
   const [cardName, setCardName] = useState("");
@@ -69,16 +69,22 @@ export default function Payment() {
 
   const router = useRouter();
 
-  async function handleVerifyLogin() {
+  async function handleVerify() {
     const connect = await loginVerifyAPI();
+
     if (connect !== 200) {
       alert("Login necessário");
       return router.push("/login");
+    } else if (connect === 200) {
+      const connect2 = await authGetAPI("/user/validation");
+      if (connect2.status === 200) {
+        return router.push("/");
+      }
     }
   }
 
   useEffect(() => {
-    handleVerifyLogin();
+    handleVerify();
     scrollToElement("payment");
   }, []);
 
