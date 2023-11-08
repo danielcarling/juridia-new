@@ -4,12 +4,28 @@ import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
 import { BackButton, HeaderContainer, UserInfo } from "./styles";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { UserProps } from "../Header";
+import { authGetAPI } from "@/lib/axios";
 
 export function ContractHeader() {
-  const router = useRouter()
+  const [userData, setUserData] = useState<UserProps>();
+
+  async function getUserData() {
+    const connect = await authGetAPI("/user/profile");
+    if (connect.status === 200) {
+      setUserData(connect.body.user);
+    }
+  }
+
+  useEffect(() => {
+    getUserData();
+  });
+
+  const router = useRouter();
   return (
     <HeaderContainer>
-      <BackButton onClick={()=> router.back()}>
+      <BackButton onClick={() => router.back()}>
         <BackIconSvg />
       </BackButton>
       <div className="logo">
@@ -19,8 +35,8 @@ export function ContractHeader() {
         <UserInfo>
           <Image width={200} height={200} src="/userPhoto.png" alt={""} />
           <div className="nameAndEmail">
-            <strong>Gabriel Antonio</strong>
-            <span>email@example.com</span>
+            <strong>{userData?.name}</strong>
+            <span>{userData?.email}</span>
           </div>
         </UserInfo>
       )}
