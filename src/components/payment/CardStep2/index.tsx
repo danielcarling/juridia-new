@@ -19,31 +19,34 @@ interface Props {
   setCep: (value: string) => void;
   residencialNumber: string;
   setResidencialNumber: (value: string) => void;
+  installments: string;
+  setInstallments: (value: string) => void;
+  installmentsValues: string[];
 }
 
 export function CardStep2({
   name,
-  setName,
   phoneNumber,
-  setPhoneNumber,
   cpfCnpj,
-  setCpfCnpj,
   cep,
-  setCep,
   residencialNumber,
+  installments,
+  setName,
+  setPhoneNumber,
+  setCpfCnpj,
+  setInstallments,
+  installmentsValues,
+  setCep,
   setResidencialNumber,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
-  const [installments, setInstallments] = useState("Número de Parcelas");
-
-  const installmentsValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const handleBlur = () => {
     setIsFocused(false);
   };
 
   function handleSelect(value: string) {
-    setInstallments(value + "x");
+    setInstallments(value);
     setIsFocused(false);
     const saveCard = document.getElementById("saveCard");
     saveCard?.focus();

@@ -41,6 +41,22 @@ export default function Payment() {
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [cep, setCep] = useState("");
   const [residencialNumber, setResidencialNumber] = useState("");
+  const [installments, setInstallments] = useState("Número de parcelas");
+
+  const installmentsValues = [
+    "1x",
+    "2x",
+    "3x",
+    "4x",
+    "5x",
+    "6x",
+    "7x",
+    "8x",
+    "9x",
+    "10x",
+    "11x",
+    "12x",
+  ];
 
   const [payOption, setPayOption] = useState("pix");
   const [pixStep, setPixStep] = useState(1);
@@ -81,8 +97,11 @@ export default function Payment() {
         return setErrorMessage("Insira um CEP válido");
       } else if (!residencialNumber) {
         return setErrorMessage("Insira um número");
+      } else if (installments === "Número de parcelas") {
+        alert(installments)
+        return setErrorMessage("Selecione o número de parcelas");
       } else {
-        console.log("é os guri");
+        setErrorMessage("");
       }
     }
   }
@@ -180,15 +199,18 @@ export default function Payment() {
                 <>
                   <CardStep2
                     name={name}
-                    setName={setName}
                     phoneNumber={phoneNumber}
-                    setPhoneNumber={setPhoneNumber}
                     cpfCnpj={cpfCnpj}
-                    setCpfCnpj={setCpfCnpj}
-                    residencialNumber={residencialNumber}
-                    setResidencialNumber={setResidencialNumber}
                     cep={cep}
+                    residencialNumber={residencialNumber}
+                    installments={installments}
+                    setInstallments={setInstallments}
+                    installmentsValues={installmentsValues}
+                    setName={setName}
+                    setPhoneNumber={setPhoneNumber}
+                    setCpfCnpj={setCpfCnpj}
                     setCep={setCep}
+                    setResidencialNumber={setResidencialNumber}
                   />
                   <ErrorMessage message={errorMessage} />
                   <EndPurchase>
