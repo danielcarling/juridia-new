@@ -36,11 +36,13 @@ export default function ContractImprovement() {
   const router = useRouter();
 
   async function handleVerifyLogin() {
-    const connect = await loginVerifyAPI();
+    const connect = await AuthPatch("/user/refresh");
+    alert('Login realizado com sucesso')
     if (connect !== 200) {
       alert("Login necessário");
       return router.push("/login");
     }
+
   }
 
   useEffect(() => {

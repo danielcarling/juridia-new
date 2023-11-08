@@ -43,8 +43,8 @@ export default function Login() {
   async function handleLogin() {
     setDisabled(true);
     const connect = await PostAPI("/login", {
-      email,
-      password,
+      email: email,
+      password: password,
     });
     console.log("Email:", email, "Senha:", password);
     if (connect.status !== 200) {
@@ -55,7 +55,9 @@ export default function Login() {
     localStorage.setItem(token, connect.body.token);
     localStorage.setItem(refreshToken, connect.body.refreshToken);
     // alert("Conta criada com sucesso!");
-    return router.push("/");
+    if (connect.status === 200) {
+      return router.push("/");
+    }
   }
   return (
     <Container>
