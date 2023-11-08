@@ -16,9 +16,12 @@ import { handleApiCall, useChatFunctions } from "./ai";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
 import Markdown from "react-markdown";
+import { loginVerifyAPI } from "@/lib/axios";
+import { useRouter } from "next/router";
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
+  const router = useRouter();
   const {
     messages,
     userMessage,
@@ -31,14 +34,23 @@ export default function ContractImprovement() {
     handleCreatePetition,
   } = useChatFunctions();
 
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
+  }
+
   useEffect(() => {
     handleCreatePetition();
-    console.log('chamandoapi')
+    handleVerifyLogin();
+    console.log("chamandoapi");
   }, []);
- 
+
   return (
     <Container>
-      <ContractHeader routerPath="home" />
+      <ContractHeader />
       <Main>
         {!windowDimension(1024) && (
           <PageTitle>
@@ -47,32 +59,29 @@ export default function ContractImprovement() {
         )}
         <ChatContainer>
           <ChatBody>
-          {messages
-                    .filter((item: any, index: any) => index >= startIndex+3) // Filtrar mensagens com role diferente de "system"
-                    .map((item: any, index: any) => (
-                      <>
-                      {item.role === "assistant" ? (
-                        <>
-                          <IaMessage>
-                            <Markdown>
-                              {item.content}
-                            </Markdown>
-                          </IaMessage>
-                        </>
-                      ) : (
-                        <>
-                          <UserMessage>
-                            {item.content}
-                          </UserMessage>
-                        </>
-                      )}
-                      </>
-                        ))}
+            {messages
+              .filter((item: any, index: any) => index >= startIndex + 3) // Filtrar mensagens com role diferente de "system"
+              .map((item: any, index: any) => (
+                <>
+                  {item.role === "assistant" ? (
+                    <>
+                      <IaMessage>
+                        <Markdown>{item.content}</Markdown>
+                      </IaMessage>
+                    </>
+                  ) : (
+                    <>
+                      <UserMessage>{item.content}</UserMessage>
+                    </>
+                  )}
+                </>
+              ))}
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-                <button onClick={()=>handleCreatePetition()}/>
-              <input type="text" 
+              <button onClick={() => handleCreatePetition()} />
+              <input
+                type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
                 placeholder={

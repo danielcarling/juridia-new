@@ -9,7 +9,7 @@ import {
   NextButton,
   ProgressBar,
 } from "./styles";
-import { PostAPI } from "@/lib/axios";
+import { PostAPI, loginVerifyAPI } from "@/lib/axios";
 import { Footer } from "@/components/register-account/Footer";
 import { RegisterAccountHeader } from "@/components/register-account/Header";
 import { BasicDataForm } from "@/components/register-account/BasicDataForm";
@@ -36,7 +36,16 @@ export default function RegisterAccount() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const router = useRouter();
 
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect === 200) {
+      return router.push("/");
+    }
+  }
+
   useEffect(() => {
+    handleVerifyLogin();
+
     if (window.innerWidth < 1024) {
       scrollToElement("registerForm");
     }

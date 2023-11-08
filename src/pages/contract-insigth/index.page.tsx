@@ -21,6 +21,8 @@ import { AreaOptions } from "@/utils/constants";
 import { usePdfUpload } from "../../lib/pdfUploader";
 import { handleApiCall } from "./ai";
 import { Spinner } from "react-bootstrap";
+import { useRouter } from "next/router";
+import { loginVerifyAPI } from "@/lib/axios";
 
 export default function ContractInsight() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
@@ -50,24 +52,42 @@ export default function ContractInsight() {
       return;
     }
     try {
-      console.log('Chamando API')
+      console.log("Chamando API");
       const apiResponse = await handleApiCall(
         areaResponse,
         aboutContractText,
         fullText
       );
-        
+
       setData(apiResponse); // Atualiza o estado 'data' com a resposta da API
-      localStorage.setItem("improvementApiResponse", JSON.stringify(apiResponse)); // Salva a resposta no localStorage
+      localStorage.setItem(
+        "improvementApiResponse",
+        JSON.stringify(apiResponse)
+      ); // Salva a resposta no localStorage
       setLoading(false); // Desativa o loading após receber a resposta
     } catch (error) {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro
     }
+  };
+
+  const router = useRouter();
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
   }
+
+  useEffect(() => {
+    handleVerifyLogin();
+  }, []);
+
   return (
     <Container>
-      <ContractHeader routerPath="home"/>
+      <ContractHeader />
       <Main>
         <PageTitle>
           <TitleComponent content="Insights de Contratos" />
@@ -79,7 +99,7 @@ export default function ContractInsight() {
                 content="1 - Sobre qual área do Direito é o contrato?"
                 style={{ marginBottom: "2rem" }}
               />
-              <Select 
+              <Select
                 values={AreaOptions}
                 selectedValue={areaResponse}
                 setSelectedValue={setAreaResponse}
@@ -92,7 +112,11 @@ export default function ContractInsight() {
                 style={{ margin: "2rem 0 1rem" }}
               />
               <ContractDetails>
-                <textarea placeholder="Descreva seu contrato aqui..." value={aboutContractText} onChange={(e: any) => setAboutContractText(e.target.value)} />
+                <textarea
+                  placeholder="Descreva seu contrato aqui..."
+                  value={aboutContractText}
+                  onChange={(e: any) => setAboutContractText(e.target.value)}
+                />
               </ContractDetails>
             </div>
 
@@ -124,7 +148,9 @@ export default function ContractInsight() {
             </div>
 
             <SubmitContract>
-              <button onClick={handleClickImproveContract}>Melhorar Contrato</button>
+              <button onClick={handleClickImproveContract}>
+                Melhorar Contrato
+              </button>
             </SubmitContract>
           </ContractForm>
 
@@ -135,13 +161,13 @@ export default function ContractInsight() {
               style={{ marginBottom: "1.5rem" }}
             />
 
-            <SolutionInfo>{loading ? (
-                <Spinner/> // Substitua com o componente de spinner desejado
+            <SolutionInfo>
+              {loading ? (
+                <Spinner /> // Substitua com o componente de spinner desejado
               ) : (
-                <>
-                {data} 
-                </>
-               )}</SolutionInfo>
+                <>{data}</>
+              )}
+            </SolutionInfo>
 
             <Subtitle
               content="2 - Assista o vídeo abaixo caso tenha alguma dúvida:"

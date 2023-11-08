@@ -29,6 +29,8 @@ import {
   stripeCardExpirValidation,
 } from "../../utils/creditCardValidation";
 import { onlyNumbers } from "@/utils/masks";
+import { useRouter } from "next/router";
+import { loginVerifyAPI } from "@/lib/axios";
 
 export default function Payment() {
   const [cardName, setCardName] = useState("");
@@ -65,7 +67,18 @@ export default function Payment() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  const router = useRouter();
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
+  }
+
   useEffect(() => {
+    handleVerifyLogin();
     scrollToElement("payment");
   }, []);
 
@@ -98,7 +111,7 @@ export default function Payment() {
       } else if (!residencialNumber) {
         return setErrorMessage("Insira um número");
       } else if (installments === "Número de parcelas") {
-        alert(installments)
+        alert(installments);
         return setErrorMessage("Selecione o número de parcelas");
       } else {
         setErrorMessage("");

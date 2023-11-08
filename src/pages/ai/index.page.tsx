@@ -15,6 +15,8 @@ import { windowDimension } from "@/utils/windowDimensions";
 import { useChatFunctions } from "./ia";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
+import { loginVerifyAPI } from "@/lib/axios";
+import { useRouter } from "next/router";
 
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
@@ -31,6 +33,16 @@ export default function ContractImprovement() {
   } = useChatFunctions();
   const [showModal, setShowModal] = useState(false);
 
+  const router = useRouter();
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
+  }
+
   useEffect(() => {
     if (localStorage.getItem("DontShowAgain") === null) {
       localStorage.setItem("DontShowAgain", "false");
@@ -38,6 +50,7 @@ export default function ContractImprovement() {
     if (localStorage.getItem("DontShowAgain") === "false") {
       return setShowModal(true);
     }
+    handleVerifyLogin();
   }, []);
 
   return (

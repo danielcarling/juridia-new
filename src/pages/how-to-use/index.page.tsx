@@ -5,8 +5,10 @@ import { Container, Main, PrincipalBanner, SliderContainer } from "./styles";
 import { useKeenSlider } from "keen-slider/react";
 import { VideoCard } from "@/components/how-to-use/Cards";
 import { TutorialModal } from "@/components/how-to-use/VideoModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TitleComponent } from "@/components/global/Title";
+import { useRouter } from "next/router";
+import { loginVerifyAPI } from "@/lib/axios";
 
 export default function HowToUse() {
   const [sliderRef] = useKeenSlider({
@@ -16,6 +18,20 @@ export default function HowToUse() {
       spacing: 38,
     },
   });
+
+  const router = useRouter();
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
+  }
+
+  useEffect(() => {
+    handleVerifyLogin();
+  }, []);
 
   const cardsInfo = [1, 2, 3, 4, 5, 6, 7];
 

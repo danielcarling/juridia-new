@@ -12,9 +12,27 @@ import { useKeenSlider } from "keen-slider/react";
 import { WhatsApp } from "@/components/global/Whatsapp";
 import { TitleComponent } from "@/components/global/Title";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { loginVerifyAPI } from "@/lib/axios";
 
 export default function Home() {
   const router = useRouter();
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
+  }
+
+  async function handleVerifySubscription() {
+    
+  }
+
+  useEffect(() => {
+    handleVerifyLogin();
+  });
 
   const [sliderRef] = useKeenSlider({
     loop: true,

@@ -21,6 +21,8 @@ import { AreaOptions } from "@/utils/constants";
 import { usePdfUpload } from "./pdfUploader";
 import { handleApiCall } from "./ia";
 import { Spinner } from "react-bootstrap";
+import { useRouter } from "next/router";
+import { loginVerifyAPI } from "@/lib/axios";
 
 export default function ContractImprovement() {
   const selectValues = ["Contrato", "Contrato", "Contrato"];
@@ -28,6 +30,7 @@ export default function ContractImprovement() {
   const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
   const { handleUpload, fullText } = usePdfUpload();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -50,24 +53,40 @@ export default function ContractImprovement() {
       return;
     }
     try {
-      console.log('Chamando API')
+      console.log("Chamando API");
       const apiResponse = await handleApiCall(
         areaResponse,
         aboutContractText,
         fullText
       );
-        
+
       setData(apiResponse); // Atualiza o estado 'data' com a resposta da API
-      localStorage.setItem("improvementApiResponse", JSON.stringify(apiResponse)); // Salva a resposta no localStorage
+      localStorage.setItem(
+        "improvementApiResponse",
+        JSON.stringify(apiResponse)
+      ); // Salva a resposta no localStorage
       setLoading(false); // Desativa o loading após receber a resposta
     } catch (error) {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro
     }
+  };
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
   }
+
+  useEffect(() => {
+    handleVerifyLogin();
+  }, []);
+
   return (
     <Container>
-      <ContractHeader routerPath="home"/>
+      <ContractHeader />
       <Main>
         <PageTitle>
           <TitleComponent content="Melhoria de Contratos" />
@@ -79,7 +98,7 @@ export default function ContractImprovement() {
                 content="1 - Sobre qual área do Direito é o contrato?"
                 style={{ marginBottom: "2rem" }}
               />
-              <Select 
+              <Select
                 values={AreaOptions}
                 selectedValue={areaResponse}
                 setSelectedValue={setAreaResponse}
@@ -92,7 +111,11 @@ export default function ContractImprovement() {
                 style={{ margin: "2rem 0 1rem" }}
               />
               <ContractDetails>
-                <textarea placeholder="Descreva seu contrato aqui..." value={aboutContractText} onChange={(e: any) => setAboutContractText(e.target.value)} />
+                <textarea
+                  placeholder="Descreva seu contrato aqui..."
+                  value={aboutContractText}
+                  onChange={(e: any) => setAboutContractText(e.target.value)}
+                />
               </ContractDetails>
             </div>
 
@@ -124,7 +147,9 @@ export default function ContractImprovement() {
             </div>
 
             <SubmitContract>
-              <button onClick={handleClickImproveContract}>Melhorar Contrato</button>
+              <button onClick={handleClickImproveContract}>
+                Melhorar Contrato
+              </button>
             </SubmitContract>
           </ContractForm>
 
@@ -135,13 +160,13 @@ export default function ContractImprovement() {
               style={{ marginBottom: "1.5rem" }}
             />
 
-            <SolutionInfo>{loading ? (
-                <Spinner/> // Substitua com o componente de spinner desejado
+            <SolutionInfo>
+              {loading ? (
+                <Spinner /> // Substitua com o componente de spinner desejado
               ) : (
-                <>
-                {data} 
-                </>
-               )}</SolutionInfo>
+                <>{data}</>
+              )}
+            </SolutionInfo>
 
             <Subtitle
               content="2 - Assista o vídeo abaixo caso tenha alguma dúvida:"

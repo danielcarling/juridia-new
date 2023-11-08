@@ -19,45 +19,73 @@ import {
   SelectGroup,
 } from "./styles";
 import { UserMessage } from "@/components/construction-tool/UserMessage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClientInfoModal } from "@/components/construction-tool/ClientInfoModal";
 import { AreaOptions, InterestOptions, ThemesOptions } from "@/utils/constants";
 import { useRouter } from "next/router";
-import { 
+import {
   handleClientDataSubmit,
   handleApiCall,
   handleStartConversation,
-  handleUserMessageSubmit,StartMessage,
+  handleUserMessageSubmit,
+  StartMessage,
   handleReloadData,
-} from './ia';
+} from "./ia";
+import { loginVerifyAPI } from "@/lib/axios";
 export default function ConstructionTool() {
   const [modalShow, setModalShow] = useState(false);
   const router = useRouter();
   const [reload, setReload] = useState(false);
   const [areaResponse, setAreaResponse] = useState("Clique aqui e escolha");
-  const [interestResponse, setInterestResponse] = useState("Clique aqui e escolha");
+  const [interestResponse, setInterestResponse] = useState(
+    "Clique aqui e escolha"
+  );
   const [themeResponse, setThemeResponse] = useState("Clique aqui e escolha");
   const [client_data, setClient_data] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState([...StartMessage]);
   const [userMessage, setUserMessage] = useState("");
   const selectValues = ["Contrato", "Contrato", "Contrato"];
-  const [selectedValue, setSelectedValue] = useState("Selecione uma opção")
+  const [selectedValue, setSelectedValue] = useState("Selecione uma opção");
+
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter") {
       event.preventDefault();
-      handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading);
+      handleUserMessageSubmit(
+        userMessage,
+        setMessages,
+        setUserMessage,
+        handleApiCall,
+        messages,
+        setIsLoading
+      );
     }
   }
   function handleCreatePetition() {
     try {
       localStorage.setItem("savedMessages", JSON.stringify(messages));
-      localStorage.setItem("interestResponse", JSON.stringify(interestResponse));
+      localStorage.setItem(
+        "interestResponse",
+        JSON.stringify(interestResponse)
+      );
       router.push("/construction-tool-ai");
     } catch (err) {
       console.error("Error: " + err);
     }
   }
+
+  async function handleVerifyLogin() {
+    const connect = await loginVerifyAPI();
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    }
+  }
+
+  useEffect(() => {
+    handleVerifyLogin();
+  }, []);
+
   return (
     <Container>
       <ContractHeader />
@@ -68,7 +96,7 @@ export default function ConstructionTool() {
         <CaseOptions>
           <SelectGroup>
             <Subtitle content="1 - Escolha a área do Direito:" />
-            <Select  
+            <Select
               values={AreaOptions}
               selectedValue={areaResponse}
               setSelectedValue={setAreaResponse}
@@ -76,18 +104,20 @@ export default function ConstructionTool() {
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="2 - Escolha o Tema a ser Trabalhado:" />
-            <Select 
-              values={ThemesOptions[areaResponse as keyof typeof ThemesOptions] ||[]}
+            <Select
+              values={
+                ThemesOptions[areaResponse as keyof typeof ThemesOptions] || []
+              }
               selectedValue={themeResponse}
-              setSelectedValue={setThemeResponse} 
+              setSelectedValue={setThemeResponse}
             />
           </SelectGroup>
           <SelectGroup>
             <Subtitle content="3 - Escolha o interesse:" />
-            <Select 
-              values={InterestOptions} 
+            <Select
+              values={InterestOptions}
               selectedValue={interestResponse}
-              setSelectedValue={setInterestResponse} 
+              setSelectedValue={setInterestResponse}
             />
           </SelectGroup>
           <SelectGroup>
@@ -115,43 +145,60 @@ export default function ConstructionTool() {
               </p>
             </ChatHeader>
             <ChatBody>
-              {areaResponse === "Clique aqui e escolha" || themeResponse === "Clique aqui e escolha" || interestResponse === "Clique aqui e escolha" || client_data === "" ? (
-                <IaMessage message=' Antes de começar por favor Preencha os dados a cima'/>
-                  ) : ( 
-                    <>
-                      {messages
-                        .filter((item: any) => item.role !== "system")
-                        .filter((item: any, index) => index >= 3) 
-                        .map((item: any, index: any) => (
+              {areaResponse === "Clique aqui e escolha" ||
+              themeResponse === "Clique aqui e escolha" ||
+              interestResponse === "Clique aqui e escolha" ||
+              client_data === "" ? (
+                <IaMessage message=" Antes de começar por favor Preencha os dados a cima" />
+              ) : (
+                <>
+                  {messages
+                    .filter((item: any) => item.role !== "system")
+                    .filter((item: any, index) => index >= 3)
+                    .map((item: any, index: any) => (
+                      <>
+                        {item.role === "assistant" ? (
                           <>
-                            {item.role === "assistant" ? (
-                              <>
-                                <IaMessage message={item.content}/>
-                              </> 
-                            ) : (
-                              <>
-                                <UserMessage message={item.content}/>
-                              </>
-                            )}  
+                            <IaMessage message={item.content} />
                           </>
-                        ))}
-                    </>
+                        ) : (
+                          <>
+                            <UserMessage message={item.content} />
+                          </>
+                        )}
+                      </>
+                    ))}
+                </>
               )}
             </ChatBody>
             <ChatFooter>
-              <input type="text" 
-                 value={userMessage}
-                 onChange={(e: any) => setUserMessage(e.target.value)}
-                 placeholder={
-                   isLoading
-                     ? "Gerando Resposta..."
-                     : "Digite sua mensagem..."
-                 }
-                 onKeyDown={handleKeyDown}
-                 disabled={isLoading || areaResponse === "Clique aqui e escolha" || themeResponse === "Clique aqui e escolha" || interestResponse === "Clique aqui e escolha" || client_data === ""}
+              <input
+                type="text"
+                value={userMessage}
+                onChange={(e: any) => setUserMessage(e.target.value)}
+                placeholder={
+                  isLoading ? "Gerando Resposta..." : "Digite sua mensagem..."
+                }
+                onKeyDown={handleKeyDown}
+                disabled={
+                  isLoading ||
+                  areaResponse === "Clique aqui e escolha" ||
+                  themeResponse === "Clique aqui e escolha" ||
+                  interestResponse === "Clique aqui e escolha" ||
+                  client_data === ""
+                }
               />
-              <button 
-                onClick={() => handleUserMessageSubmit( userMessage, setMessages, setUserMessage,handleApiCall, messages,setIsLoading)}
+              <button
+                onClick={() =>
+                  handleUserMessageSubmit(
+                    userMessage,
+                    setMessages,
+                    setUserMessage,
+                    handleApiCall,
+                    messages,
+                    setIsLoading
+                  )
+                }
               >
                 <img src="/sendIcon.svg" alt="" />
               </button>
@@ -159,11 +206,15 @@ export default function ConstructionTool() {
           </ChatContainer>
         </CaseDescription>
         <BuildContract>
-          <button onClick={()=>handleCreatePetition()}>Começar Construção</button>
+          <button onClick={() => handleCreatePetition()}>
+            Começar Construção
+          </button>
         </BuildContract>
       </Main>
       <WhatsApp />
-      <ClientInfoModal show={modalShow} onHide={() => setModalShow(false)}
+      <ClientInfoModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
         onClientDataSubmit={(data: any) =>
           handleClientDataSubmit(
             data,
