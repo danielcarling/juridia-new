@@ -8,36 +8,39 @@ import {
 import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 import { maskCep, maskCpfCnpj, maskPhone } from "@/utils/masks";
 import { formatMoney } from "@/utils/formatMoney";
-import { getAPI } from "@/lib/axios";
 
 interface Props {
-  name: string;
-  setName: (value: string) => void;
-  phoneNumber: string;
-  setPhoneNumber: (value: string) => void;
-  cpfCnpj: string;
-  setCpfCnpj: (value: string) => void;
   cep: string;
-  setCep: (value: string) => void;
-  residencialNumber: string;
-  setResidencialNumber: (value: string) => void;
-  installments: string | number;
-  setInstallments: (value: string) => void;
-  installmentsValues: number[];
+  name: string;
+  email: string;
+  cpfCnpj: string;
+  phoneNumber: string;
   saveCreditCard: boolean;
-  setSaveCreditCard: (value: boolean) => void;
+  residencialNumber: string;
+  installmentsValues: number[];
+  installments: string | number;
   creditValue: number | undefined;
+  setCep: (value: string) => void;
+  setName: (value: string) => void;
+  setEmail: (value: string) => void;
+  setCpfCnpj: (value: string) => void;
+  setPhoneNumber: (value: string) => void;
+  setInstallments: (value: string) => void;
+  setSaveCreditCard: (value: boolean) => void;
+  setResidencialNumber: (value: string) => void;
 }
 
 export function CardStep2({
+  cep,
   name,
+  email,
   phoneNumber,
   cpfCnpj,
-  cep,
   residencialNumber,
   installments,
   saveCreditCard,
   setName,
+  setEmail,
   setPhoneNumber,
   setCpfCnpj,
   setInstallments,
@@ -70,6 +73,16 @@ export function CardStep2({
           placeholder="Digite o seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup>
+        <label htmlFor="name">Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Digite o seu email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </FormGroup>
       <FormGroup>

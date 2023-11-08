@@ -30,7 +30,7 @@ import {
 } from "../../utils/creditCardValidation";
 import { onlyNumbers } from "@/utils/masks";
 import { useRouter } from "next/router";
-import { authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+import { AuthPostAPI, authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
 
 interface PlansProps {
   credit_value: number;
@@ -46,6 +46,7 @@ export default function Payment() {
   const [securityCode, setSecurityCode] = useState("");
 
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [cep, setCep] = useState("");
@@ -89,11 +90,53 @@ export default function Payment() {
     }
   }
 
+  async function finishCardBuy() {
+    validateCard();
+    const connect = await AuthPostAPI(`/new-credit-card/${selectedPlan?.id}`, {
+      creditCard: {
+        holderName: cardName,
+        number: cardNumber,
+        expiryMonth: validity.split("/")[0],
+        expiryYear: validity.split("/")[1],
+        cvc: securityCode,
+      },
+      creditCardHolderInfo: {
+        name: name,
+        email: email,
+        cpfCnpj: cpfCnpj,
+        postalCode: cep,
+        addressNumber: residencialNumber,
+        addressComplement: "",
+        phone: phoneNumber,
+        mobilePhone: phoneNumber,
+      },
+    });
+
+    if (connect.status === 200) {
+      alert("Compra realizada com sucesso");
+      return router.push("/");
+    }
+  }
+
   useEffect(() => {
     handleVerify();
     getPlans();
     scrollToElement("payment");
   }, []);
+
+  function validateEmail(email: string) {
+    if (!email) {
+      return false;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+
+    return true;
+  }
 
   function validateCard() {
     if (cardStep === 1) {
@@ -112,6 +155,8 @@ export default function Payment() {
     } else if (cardStep === 2) {
       if (!name) {
         return setErrorMessage("Insira um nome");
+      } else if (!validateEmail(email)) {
+        return setErrorMessage("Insira um e-mail válido");
       } else if (phoneNumber.replace(/\D/g, "").length < 11) {
         return setErrorMessage("Insira um telefone válido");
       } else if (
@@ -224,6 +269,7 @@ export default function Payment() {
                 <>
                   <CardStep2
                     name={name}
+                    email={email}
                     phoneNumber={phoneNumber}
                     cpfCnpj={cpfCnpj}
                     cep={cep}
@@ -233,6 +279,7 @@ export default function Payment() {
                     setInstallments={setInstallments}
                     installmentsValues={installmentsValues}
                     setName={setName}
+                    setEmail={setEmail}
                     setPhoneNumber={setPhoneNumber}
                     setCpfCnpj={setCpfCnpj}
                     setCep={setCep}
@@ -242,8 +289,9 @@ export default function Payment() {
                   />
                   <ErrorMessage message={errorMessage} />
                   <EndPurchase>
-                    <button onClick={validateCard}>Finalizar Compra</button>
+                    <button onClick={finishCardBuy}>Finalizar Compra</button>
                   </EndPurchase>
+                  <button onClick={() => alert(cardNumber)}>dsklaaskjld</button>
                 </>
               )}
             </>
