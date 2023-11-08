@@ -55,9 +55,17 @@ export default function Home() {
     }
   }
 
+  async function getPlans() {
+    const connect = await getAPI("plans");
+    if (connect.status === 200) {
+      console.log(connect);
+    }
+  }
+
   useEffect(() => {
     handleVerify();
     getFuncionalities();
+    getPlans();
   }, []);
 
   const [sliderRef] = useKeenSlider({

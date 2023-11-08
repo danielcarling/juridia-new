@@ -30,7 +30,14 @@ import {
 } from "../../utils/creditCardValidation";
 import { onlyNumbers } from "@/utils/masks";
 import { useRouter } from "next/router";
-import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
+import { authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+
+interface PlansProps {
+  credit_value: number;
+  id: string;
+  pix_value: number;
+  status: string;
+}
 
 export default function Payment() {
   const [cardName, setCardName] = useState("");
@@ -43,22 +50,13 @@ export default function Payment() {
   const [cpfCnpj, setCpfCnpj] = useState("");
   const [cep, setCep] = useState("");
   const [residencialNumber, setResidencialNumber] = useState("");
-  const [installments, setInstallments] = useState("Número de parcelas");
+  const [installments, setInstallments] = useState<string | number>(
+    "Número de parcelas"
+  );
+  const [saveCreditCard, setSaveCreditCard] = useState(false);
+  const installmentsValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  const installmentsValues = [
-    "1x",
-    "2x",
-    "3x",
-    "4x",
-    "5x",
-    "6x",
-    "7x",
-    "8x",
-    "9x",
-    "10x",
-    "11x",
-    "12x",
-  ];
+  const [selectedPlan, setSelectedPlan] = useState<PlansProps>();
 
   const [payOption, setPayOption] = useState("pix");
   const [pixStep, setPixStep] = useState(1);
@@ -77,14 +75,23 @@ export default function Payment() {
       return router.push("/login");
     } else if (connect === 200) {
       const connect2 = await authGetAPI("/user/validation");
-      if (connect2.status === 200) {
+      if (connect2.status !== 200) {
         return router.push("/");
       }
     }
   }
 
+  async function getPlans() {
+    const connect = await getAPI("/plans");
+    if (connect.status === 200) {
+      setSelectedPlan(connect.body.plans[0]);
+      console.log(selectedPlan);
+    }
+  }
+
   useEffect(() => {
     handleVerify();
+    getPlans();
     scrollToElement("payment");
   }, []);
 
@@ -117,7 +124,6 @@ export default function Payment() {
       } else if (!residencialNumber) {
         return setErrorMessage("Insira um número");
       } else if (installments === "Número de parcelas") {
-        alert(installments);
         return setErrorMessage("Selecione o número de parcelas");
       } else {
         setErrorMessage("");
@@ -223,6 +229,7 @@ export default function Payment() {
                     cep={cep}
                     residencialNumber={residencialNumber}
                     installments={installments}
+                    saveCreditCard={saveCreditCard}
                     setInstallments={setInstallments}
                     installmentsValues={installmentsValues}
                     setName={setName}
@@ -230,6 +237,8 @@ export default function Payment() {
                     setCpfCnpj={setCpfCnpj}
                     setCep={setCep}
                     setResidencialNumber={setResidencialNumber}
+                    setSaveCreditCard={setSaveCreditCard}
+                    creditValue={selectedPlan?.credit_value}
                   />
                   <ErrorMessage message={errorMessage} />
                   <EndPurchase>

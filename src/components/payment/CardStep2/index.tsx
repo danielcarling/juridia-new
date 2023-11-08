@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CepAndNumberContainer,
   CreditCardForm,
@@ -7,6 +7,8 @@ import {
 } from "./styles";
 import { DropdownIconSvg } from "../../../../public/DropdownIcon";
 import { maskCep, maskCpfCnpj, maskPhone } from "@/utils/masks";
+import { formatMoney } from "@/utils/formatMoney";
+import { getAPI } from "@/lib/axios";
 
 interface Props {
   name: string;
@@ -19,9 +21,12 @@ interface Props {
   setCep: (value: string) => void;
   residencialNumber: string;
   setResidencialNumber: (value: string) => void;
-  installments: string;
+  installments: string | number;
   setInstallments: (value: string) => void;
-  installmentsValues: string[];
+  installmentsValues: number[];
+  saveCreditCard: boolean;
+  setSaveCreditCard: (value: boolean) => void;
+  creditValue: number | undefined;
 }
 
 export function CardStep2({
@@ -31,6 +36,7 @@ export function CardStep2({
   cep,
   residencialNumber,
   installments,
+  saveCreditCard,
   setName,
   setPhoneNumber,
   setCpfCnpj,
@@ -38,6 +44,8 @@ export function CardStep2({
   installmentsValues,
   setCep,
   setResidencialNumber,
+  setSaveCreditCard,
+  creditValue,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -116,7 +124,13 @@ export function CardStep2({
         onBlur={handleBlur}
         isOpen={isFocused}
       >
-        <strong>{installments} </strong>
+        <strong>
+          {installments}
+          {installments !== "Número de parcelas" &&
+            `x - ${formatMoney(
+              (creditValue ? creditValue : 0) / Number(installments)
+            )}`}
+        </strong>
         <DropdownIconSvg width="1.6rem" />
         <div className="installments">
           {installmentsValues.map((value) => (
@@ -124,7 +138,7 @@ export function CardStep2({
               className="option"
               onClick={() => handleSelect(value.toString())}
             >
-              {value}x - R$ 1250,00
+              {value}x - {formatMoney((creditValue ? creditValue : 0) / value)}
             </div>
           ))}
         </div>
@@ -138,7 +152,15 @@ export function CardStep2({
           margin: "1.5rem 0 1rem",
         }}
       >
-        <input type="checkbox" name="saveCard" id="saveCard" />
+        <input
+          type="checkbox"
+          name="saveCard"
+          id="saveCard"
+          checked={saveCreditCard}
+          onChange={(e) => {
+            setSaveCreditCard(!saveCreditCard);
+          }}
+        />
         <label
           htmlFor="saveCard"
           style={{ fontWeight: "bold", fontStyle: "italic" }}
