@@ -3,7 +3,7 @@ import { Select } from "@/components/global/Select";
 import { Subtitle } from "@/components/global/Subtitle";
 import { TitleComponent } from "@/components/global/Title";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   Content,
@@ -21,6 +21,7 @@ import { AreaOptions } from "@/utils/constants";
 import { usePdfUpload } from "../../lib/pdfUploader";
 import { Spinner } from "react-bootstrap";
 import { useRouter } from "next/router";
+import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
 
 export default function ContractImprovement() {
   const [fileName, setFileName] = useState("");
@@ -59,10 +60,30 @@ export default function ContractImprovement() {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro
     }
+  };
+
+  async function handleVerify() {
+    const connect = await loginVerifyAPI();
+
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    } else if (connect === 200) {
+      const connect2 = await authGetAPI("/user/validation");
+      if (connect2.status !== 200) {
+        alert("Assinatura necessária");
+        return router.push("/payment");
+      }
+    }
   }
+
+  useEffect(() => {
+    handleVerify();
+  }, []);
+
   return (
     <Container>
-      <ContractHeader routerPath="home"/>
+      <ContractHeader />
       <Main>
         <PageTitle>
           <TitleComponent content="Melhoria de Contratos" />
@@ -74,7 +95,7 @@ export default function ContractImprovement() {
                 content="1 - Sobre qual área do Direito é o contrato?"
                 style={{ marginBottom: "2rem" }}
               />
-              <Select 
+              <Select
                 values={AreaOptions}
                 selectedValue={areaResponse}
                 setSelectedValue={setAreaResponse}
@@ -87,7 +108,11 @@ export default function ContractImprovement() {
                 style={{ margin: "2rem 0 1rem" }}
               />
               <ContractDetails>
-                <textarea placeholder="Descreva seu contrato aqui..." value={aboutContractText} onChange={(e: any) => setAboutContractText(e.target.value)} />
+                <textarea
+                  placeholder="Descreva seu contrato aqui..."
+                  value={aboutContractText}
+                  onChange={(e: any) => setAboutContractText(e.target.value)}
+                />
               </ContractDetails>
             </div>
 
@@ -119,7 +144,9 @@ export default function ContractImprovement() {
             </div>
 
             <SubmitContract>
-              <button onClick={handleClickImproveContract}>Melhorar Contrato</button>
+              <button onClick={handleClickImproveContract}>
+                Melhorar Contrato
+              </button>
             </SubmitContract>
           </ContractForm>
 
@@ -130,13 +157,13 @@ export default function ContractImprovement() {
               style={{ marginBottom: "1.5rem" }}
             />
 
-            <SolutionInfo>{loading ? (
-                <Spinner/> // Substitua com o componente de spinner desejado
+            <SolutionInfo>
+              {loading ? (
+                <Spinner /> // Substitua com o componente de spinner desejado
               ) : (
-                <>
-                {data} 
-                </>
-               )}</SolutionInfo>
+                <>{data}</>
+              )}
+            </SolutionInfo>
 
             <Subtitle
               content="2 - Assista o vídeo abaixo caso tenha alguma dúvida:"

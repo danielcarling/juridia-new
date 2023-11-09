@@ -16,7 +16,6 @@ export function CreditCard({ cardNumber, setCardNumber }: Props) {
     }
 
     const maskedCardNumber = value
-      .padEnd(16, "X")
       .split("")
       .map((char, index) => (index % 4 === 0 && index > 0 ? ` ${char}` : char))
       .join("")
@@ -39,7 +38,11 @@ export function CreditCard({ cardNumber, setCardNumber }: Props) {
           <JuridiaTextSvg />
         </div>
         <CreditCardInfo>
-          <strong>{handleCardNumberChange(cardNumber)}</strong>
+          <strong>
+            {cardNumber.length === 0
+              ? "XXXX XXXX XXXX XXXX"
+              : handleCardNumberChange(cardNumber)}
+          </strong>
           <span>Cartão de Crédito Jurid IA</span>
         </CreditCardInfo>
       </Content>

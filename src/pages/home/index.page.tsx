@@ -11,8 +11,63 @@ import { SolutionsCard } from "@/components/home/SolutionsCard";
 import { useKeenSlider } from "keen-slider/react";
 import { WhatsApp } from "@/components/global/Whatsapp";
 import { TitleComponent } from "@/components/global/Title";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+
+export interface FuncionalitiesProps {
+  created_at: string;
+  description: string;
+  id: string;
+  name: string;
+  page_url: string;
+  update_time: string;
+  video_url: string;
+}
 
 export default function Home() {
+  const [funcionalities, setFuncionalities] = useState<FuncionalitiesProps[]>(
+    []
+  );
+  const [showSlider, setShowSlider] = useState(false);
+  const router = useRouter();
+
+  async function handleVerify() {
+    const connect = await loginVerifyAPI();
+
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    } else if (connect === 200) {
+      const connect2 = await authGetAPI("/user/validation");
+      if (connect2.status !== 200) {
+        alert("Assinatura necessária");
+        return router.push("/payment");
+      }
+    }
+  }
+
+  async function getFuncionalities() {
+    const connect = await getAPI("/functionalities");
+    if (connect.status === 200) {
+      setFuncionalities(connect.body.functionalities);
+      setShowSlider(true);
+    }
+  }
+
+  async function getPlans() {
+    const connect = await getAPI("plans");
+    if (connect.status === 200) {
+      console.log(connect);
+    }
+  }
+
+  useEffect(() => {
+    handleVerify();
+    getFuncionalities();
+    getPlans();
+  }, []);
+
   const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {
@@ -21,14 +76,6 @@ export default function Home() {
     },
   });
 
-  const SliderCards = [
-    { index: 0, name: 'Componente 1', routerSrc: '/ai' },
-    { index: 1, name: 'Componente 2', routerSrc: '/construction-tool' },
-    { index: 2, name: 'Componente 3', routerSrc: '/contract-improvement' },
-    { index: 3, name: 'Componente 4', routerSrc: '/componente4' },
-    { index: 4, name: 'Componente 5', routerSrc: '/componente5' },
-  ];
-    
   return (
     <Container>
       <Sidebar />
@@ -41,8 +88,16 @@ export default function Home() {
         <SecondaryBanners>
           <TitleComponent content="Utilize a Jurid IA e tenha mais Produtividade:" />
           <div className="banners">
-            <img src="/home/secondaryBanner1.png" alt="" />
-            <img src="/home/secondaryBanner2.png" alt="" />
+            <img
+              src="/home/secondaryBanner1.png"
+              alt=""
+              onClick={() => router.push("/construction-tool")}
+            />
+            <img
+              src="/home/secondaryBanner2.png"
+              alt=""
+              onClick={() => router.push("/ai")}
+            />
           </div>
         </SecondaryBanners>
 
@@ -50,13 +105,23 @@ export default function Home() {
           content="Soluções Frequentes:"
           style={{ marginLeft: "1rem" }}
         />
-        <SliderContainer ref={sliderRef}>
-          {SliderCards.map((item) => (
-            <div className="keen-slider__slide" key={item.index}>
-              <SolutionsCard imgSrc="/home/solutionCardImg1.svg" routerPath={item.routerSrc}/>
-            </div>
-          ))}
-        </SliderContainer>
+        {showSlider && (
+          <SliderContainer ref={sliderRef}>
+            {funcionalities.map((item) => (
+              <div className="keen-slider__slide" key={item.id}>
+                <SolutionsCard
+                  id={item.id}
+                  page_url={item.page_url}
+                  description={item.description}
+                  name={item.name}
+                  video_url={item.video_url}
+                  update_time={item.update_time}
+                  created_at={item.created_at}
+                />
+              </div>
+            ))}
+          </SliderContainer>
+        )}
         <WhatsApp />
       </Main>
     </Container>

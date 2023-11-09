@@ -5,36 +5,39 @@ import {
   Container,
   TextContainer,
 } from "./styles";
+import { FuncionalitiesProps } from "@/pages/home/index.page";
 
-interface Props {
-  imgSrc: string;
-  routerPath: string;
-  videoSrc?: string
-}
-
-export function SolutionsCard({ imgSrc, routerPath, videoSrc }: Props) {
+export function SolutionsCard({
+  description,
+  name,
+  page_url,
+  video_url,
+  update_time,
+}: FuncionalitiesProps) {
   const router = useRouter();
   return (
     <Container>
       <CardHeader>
         <div className="title">
           <div className="imgContainer">
-            <img src={imgSrc} alt="" />
+            <img src={"/home/solutionCardImg1.svg"} alt="" />
           </div>
-          <strong>Melhorar Contratos</strong>
+          <strong>{name}</strong>
         </div>
-        <span>Atualizado em 12/09/2023</span>
+        <span>
+          Atualizado em {update_time.slice(8, 10)}/{update_time.slice(5, 7)}/
+          {update_time.slice(0, 4)}
+        </span>
       </CardHeader>
       <TextContainer>
-        <p>
-          Insira seus Contratos e deixe a Inteligência Artificial trabalhar por
-          Você, após melhorar seu contrato ela passará um resumo das alterações.
-        </p>
+        <p>{description}</p>
       </TextContainer>
 
       <ButtonsContainer>
-        <button onClick={()=> router.push(`${routerPath}`)}>Utilizar Solução</button>
-        <button onClick={()=> router.push(`${videoSrc}`)}><img src="/home/youtubeLogo.svg" alt="" /> Assistir Vídeo Explicativo</button>
+        <button onClick={() => router.push(page_url)}>Utilizar Solução</button>
+        <button onClick={() => router.push(video_url)}>
+          <img src="/home/youtubeLogo.svg" alt="" /> Assistir Vídeo Explicativo
+        </button>
       </ButtonsContainer>
     </Container>
   );

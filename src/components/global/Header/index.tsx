@@ -12,9 +12,20 @@ import {
   UserInfo,
 } from "./styles";
 import { JuridiaTextSvg } from "../../../../public/JuridiaTextLogo";
+import { authGetAPI } from "@/lib/axios";
+
+export interface UserProps {
+  cpfCnpf: string;
+  name: string;
+  email: string;
+  enterprise: string | null;
+  enterpriseCnpj: string | null;
+  mobilePhone: string;
+}
 
 export function Header() {
   const [show, setShow] = useState(false);
+  const [userData, setUserData] = useState<UserProps>();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -23,13 +34,24 @@ export function Header() {
 
   const path = router.pathname;
 
+  async function getUserData() {
+    const connect = await authGetAPI("/user/profile");
+    if (connect.status === 200) {
+      setUserData(connect.body.user);
+    }
+  }
+
   useEffect(() => {
     window.addEventListener("resize", () => {
       if (window.innerWidth > 1024) {
         handleClose();
       }
     });
-  });
+  }, []);
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <>
@@ -66,8 +88,8 @@ export function Header() {
                   <img src="/userPhoto.png" alt="" />
                 </div>
                 <div className="name-and-email">
-                  <strong>Gabriel Antonio</strong>
-                  <span>email@example.com</span>
+                  <strong>{userData?.name}</strong>
+                  <span>{userData?.email}</span>
                 </div>
               </UserInfo>
             </Body>

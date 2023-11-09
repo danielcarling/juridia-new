@@ -6,6 +6,11 @@ export function maskCep(value: string) {
   }
 
   value = value.replace(/\D/g, ""); // 1239856
+
+  if (value.length >= 8) {
+    value = value.slice(0, 8);
+  }
+
   value = value.replace(/^(\d{5})(\d)/, "$1-$2");
   return value;
 }
@@ -67,6 +72,10 @@ export function maskCpfCnpj(value: string) {
     return "";
   }
   value = value.replace(/\D/g, "");
+
+  if (value.length > 14) {
+    value = value.slice(0, 14);
+  }
 
   if (value.length <= 11) {
     value = value.replace(/(\d{3})(\d)/, "$1.$2");
@@ -169,7 +178,15 @@ export function maskCard(value: string) {
 }
 export function sanitizeAndFormatText(inputText: string) {
   // Divide o texto em linhas e junta-as com <br />
-  let formattedText = inputText.split('\n').map((line, index) => <React.Fragment key={index}>{line}<br /></React.Fragment>);
+  let formattedText = inputText.split("\n").map((line, index) => (
+    <React.Fragment key={index}>
+      {line}
+      <br />
+    </React.Fragment>
+  ));
   return formattedText;
 }
 
+export function onlyNumbers(value: string) {
+  return value.replace(/\D/g, "");
+}

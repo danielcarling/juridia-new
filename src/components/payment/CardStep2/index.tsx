@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CepAndNumberContainer,
   CreditCardForm,
@@ -6,44 +6,58 @@ import {
   InstallmentsContainer,
 } from "./styles";
 import { DropdownIconSvg } from "../../../../public/DropdownIcon";
-import { maskPhone } from "@/utils/masks";
+import { maskCep, maskCpfCnpj, maskPhone } from "@/utils/masks";
+import { formatMoney } from "@/utils/formatMoney";
 
 interface Props {
-  name: string;
-  setName: (value: string) => void;
-  phoneNumber: string;
-  setPhoneNumber: (value: string) => void;
-  cpfCnpj: string;
-  setCpfCnpj: (value: string) => void;
   cep: string;
+  name: string;
+  email: string;
+  cpfCnpj: string;
+  phoneNumber: string;
+  saveCreditCard: boolean;
+  residencialNumber: string;
+  installmentsValues: number[];
+  installments: string | number;
+  creditValue: number | undefined;
   setCep: (value: string) => void;
-  number: string;
-  setNumber: (value: string) => void;
+  setName: (value: string) => void;
+  setEmail: (value: string) => void;
+  setCpfCnpj: (value: string) => void;
+  setPhoneNumber: (value: string) => void;
+  setInstallments: (value: string) => void;
+  setSaveCreditCard: (value: boolean) => void;
+  setResidencialNumber: (value: string) => void;
 }
 
 export function CardStep2({
-  name,
-  setName,
-  phoneNumber,
-  setPhoneNumber,
-  cpfCnpj,
-  setCpfCnpj,
   cep,
+  name,
+  email,
+  phoneNumber,
+  cpfCnpj,
+  residencialNumber,
+  installments,
+  saveCreditCard,
+  setName,
+  setEmail,
+  setPhoneNumber,
+  setCpfCnpj,
+  setInstallments,
+  installmentsValues,
   setCep,
-  number,
-  setNumber,
+  setResidencialNumber,
+  setSaveCreditCard,
+  creditValue,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
-  const [installments, setInstallments] = useState("Número de Parcelas");
-
-  const installmentsValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   const handleBlur = () => {
     setIsFocused(false);
   };
 
   function handleSelect(value: string) {
-    setInstallments(value + "x");
+    setInstallments(value);
     setIsFocused(false);
     const saveCard = document.getElementById("saveCard");
     saveCard?.focus();
@@ -53,7 +67,23 @@ export function CardStep2({
     <CreditCardForm>
       <FormGroup>
         <label htmlFor="name">Nome Completo</label>
-        <input type="text" id="cardName" placeholder="Digite o seu nome" />
+        <input
+          type="text"
+          id="cardName"
+          placeholder="Digite o seu nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup>
+        <label htmlFor="name">Email</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Digite o seu email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </FormGroup>
       <FormGroup>
         <label htmlFor="phoneNumber">Telefone de Cobrança</label>
@@ -67,7 +97,13 @@ export function CardStep2({
       </FormGroup>
       <FormGroup>
         <label htmlFor="cpf-cnpj">CPF ou CNPJ</label>
-        <input type="text" id="cpf-cnpj" placeholder="Digite seu CPF ou CNPJ" />
+        <input
+          type="text"
+          id="cpf-cnpj"
+          placeholder="Digite seu CPF ou CNPJ"
+          value={cpfCnpj}
+          onChange={(e) => setCpfCnpj(maskCpfCnpj(e.target.value))}
+        />
       </FormGroup>
 
       <CepAndNumberContainer>
@@ -78,6 +114,8 @@ export function CardStep2({
             id="cep"
             placeholder="Digite o CEP de cobrança"
             className="cep"
+            value={cep}
+            onChange={(e) => setCep(maskCep(e.target.value))}
           />
         </FormGroup>
         <FormGroup>
@@ -87,6 +125,8 @@ export function CardStep2({
             id="number"
             placeholder="Digite o número"
             className="number"
+            value={residencialNumber}
+            onChange={(e) => setResidencialNumber(e.target.value)}
           />
         </FormGroup>
       </CepAndNumberContainer>
@@ -97,7 +137,13 @@ export function CardStep2({
         onBlur={handleBlur}
         isOpen={isFocused}
       >
-        <strong>{installments} </strong>
+        <strong>
+          {installments}
+          {installments !== "Número de parcelas" &&
+            `x - ${formatMoney(
+              (creditValue ? creditValue : 0) / Number(installments)
+            )}`}
+        </strong>
         <DropdownIconSvg width="1.6rem" />
         <div className="installments">
           {installmentsValues.map((value) => (
@@ -105,7 +151,7 @@ export function CardStep2({
               className="option"
               onClick={() => handleSelect(value.toString())}
             >
-              {value}x - R$ 1250,00
+              {value}x - {formatMoney((creditValue ? creditValue : 0) / value)}
             </div>
           ))}
         </div>
@@ -119,7 +165,15 @@ export function CardStep2({
           margin: "1.5rem 0 1rem",
         }}
       >
-        <input type="checkbox" name="saveCard" id="saveCard" />
+        <input
+          type="checkbox"
+          name="saveCard"
+          id="saveCard"
+          checked={saveCreditCard}
+          onChange={(e) => {
+            setSaveCreditCard(!saveCreditCard);
+          }}
+        />
         <label
           htmlFor="saveCard"
           style={{ fontWeight: "bold", fontStyle: "italic" }}

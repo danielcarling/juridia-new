@@ -14,11 +14,18 @@ import {
   PasswordRecovery,
 } from "./styles";
 
-import { PostAPI, refreshToken, token } from "@/lib/axios";
+import {
+  PostAPI,
+  authGetAPI,
+  loginVerifyAPI,
+  refreshToken,
+  token,
+} from "@/lib/axios";
 import { useRouter } from "next/router";
 import { EyeSlashSVG } from "../../../public/login/EyeSlash";
 import { Footer } from "@/components/register-account/Footer";
 import { scrollToElement } from "@/utils/scrollToElement";
+import { Spinner } from "react-bootstrap";
 
 export default function Login() {
   const router = useRouter();
@@ -42,10 +49,9 @@ export default function Login() {
   async function handleLogin() {
     setDisabled(true);
     const connect = await PostAPI("/login", {
-      email,
-      password,
+      email: email,
+      password: password,
     });
-    console.log("Email:", email, "Senha:", password);
     if (connect.status !== 200) {
       setDisabled(false);
       return alert(connect.body);
@@ -53,8 +59,9 @@ export default function Login() {
     setDisabled(true);
     localStorage.setItem(token, connect.body.token);
     localStorage.setItem(refreshToken, connect.body.refreshToken);
-    // alert("Conta criada com sucesso!");
-    return router.push("/home");
+    if (connect.status === 200) {
+      return router.push("/");
+    }
   }
   return (
     <Container>
@@ -128,7 +135,11 @@ export default function Login() {
             </button>
           </PasswordRecovery>
           <LoginButton disabled={disabled} onClick={handleLogin}>
-            Entrar
+            {disabled ? (
+              <Spinner style={{ width: "1.2rem", height: "1.2rem" }} />
+            ) : (
+              "Entrar"
+            )}
           </LoginButton>
 
           <p

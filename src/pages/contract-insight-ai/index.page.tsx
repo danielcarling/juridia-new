@@ -34,7 +34,7 @@ export default function ContractImprovementAi() {
   }, []);
   return (
     <Container>
-      <ContractHeader routerPath="/contract-insight" />
+      <ContractHeader />
       <Main>
         {!windowDimension(1024) && (
           <PageTitle>

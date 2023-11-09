@@ -28,7 +28,7 @@ export default function ContractImprovementAi() {
   } = useChatFunctions();
   return (
     <Container>
-      <ContractHeader routerPath="/contract-improvement" />
+      <ContractHeader />
       <Main>
         {!windowDimension(1024) && (
           <PageTitle>

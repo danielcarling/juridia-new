@@ -49,10 +49,16 @@ export const SecondaryBanners = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 2rem 0;
-
     gap: 2rem;
+    cursor: pointer;
+
     img {
       width: 95%;
+      transition: 0.2s;
+
+      &:hover {
+        scale: 1.02;
+      }
     }
 
     @media (min-width: 1024px) {

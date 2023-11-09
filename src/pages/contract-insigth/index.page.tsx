@@ -20,6 +20,7 @@ import {
 import { AreaOptions } from "@/utils/constants";
 import { usePdfUpload } from "../../lib/pdfUploader";
 import { Spinner } from "react-bootstrap";
+import { authGetAPI, loginVerifyAPI } from "@/lib/axios";
 import { useRouter } from "next/router";
 
 export default function ContractImprovement() {
@@ -27,7 +28,6 @@ export default function ContractImprovement() {
   const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
   const { handleUpload, fullText } = usePdfUpload();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -59,10 +59,32 @@ export default function ContractImprovement() {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro
     }
+  };
+
+  const router = useRouter();
+
+  async function handleVerify() {
+    const connect = await loginVerifyAPI();
+
+    if (connect !== 200) {
+      alert("Login necessário");
+      return router.push("/login");
+    } else if (connect === 200) {
+      const connect2 = await authGetAPI("/user/validation");
+      if (connect2.status !== 200) {
+        alert("Assinatura necessária");
+        return router.push("/payment");
+      }
+    }
   }
+
+  useEffect(() => {
+    handleVerify();
+  }, []);
+
   return (
     <Container>
-      <ContractHeader routerPath="home"/>
+      <ContractHeader />
       <Main>
         <PageTitle>
           <TitleComponent content="Insights de Contratos" />
@@ -74,7 +96,7 @@ export default function ContractImprovement() {
                 content="1 - Sobre qual área do Direito é o contrato?"
                 style={{ marginBottom: "2rem" }}
               />
-              <Select 
+              <Select
                 values={AreaOptions}
                 selectedValue={areaResponse}
                 setSelectedValue={setAreaResponse}
@@ -87,7 +109,11 @@ export default function ContractImprovement() {
                 style={{ margin: "2rem 0 1rem" }}
               />
               <ContractDetails>
-                <textarea placeholder="Descreva seu contrato aqui..." value={aboutContractText} onChange={(e: any) => setAboutContractText(e.target.value)} />
+                <textarea
+                  placeholder="Descreva seu contrato aqui..."
+                  value={aboutContractText}
+                  onChange={(e: any) => setAboutContractText(e.target.value)}
+                />
               </ContractDetails>
             </div>
 
@@ -119,7 +145,9 @@ export default function ContractImprovement() {
             </div>
 
             <SubmitContract>
-              <button onClick={handleClickImproveContract}>Melhorar Contrato</button>
+              <button onClick={handleClickImproveContract}>
+                Melhorar Contrato
+              </button>
             </SubmitContract>
           </ContractForm>
 
@@ -130,13 +158,13 @@ export default function ContractImprovement() {
               style={{ marginBottom: "1.5rem" }}
             />
 
-            <SolutionInfo>{loading ? (
-                <Spinner/> // Substitua com o componente de spinner desejado
+            <SolutionInfo>
+              {loading ? (
+                <Spinner /> // Substitua com o componente de spinner desejado
               ) : (
-                <>
-                {data} 
-                </>
-               )}</SolutionInfo>
+                <>{data}</>
+              )}
+            </SolutionInfo>
 
             <Subtitle
               content="2 - Assista o vídeo abaixo caso tenha alguma dúvida:"
