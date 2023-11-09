@@ -1,5 +1,20 @@
+import { ErrorMessage } from "@/components/global/ErrorMessage";
+import { CardStep1 } from "@/components/payment/CardStep1";
+import { CardStep2 } from "@/components/payment/CardStep2";
+import { Footer } from "@/components/register-account/Footer";
 import { RegisterAccountHeader } from "@/components/register-account/Header";
+import { AuthPostAPI, authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
+import { onlyNumbers } from "@/utils/masks";
+import { scrollToElement } from "@/utils/scrollToElement";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { Alert, Button, Spinner } from "react-bootstrap";
 import { CreditCardSvg } from "../../../public/payment/CreditCardIcon";
+import { PixSvg } from "../../../public/payment/PixCardIcon";
+import {
+  stripeCardExpirValidation,
+  stripeCardNumberValidation,
+} from "../../utils/creditCardValidation";
 import {
   Container,
   CopyPastePix,
@@ -17,21 +32,6 @@ import {
   QrCode,
   SalesArtContainer,
 } from "./styles";
-import { PixSvg } from "../../../public/payment/PixCardIcon";
-import { useEffect, useState } from "react";
-import { Footer } from "@/components/register-account/Footer";
-import { scrollToElement } from "@/utils/scrollToElement";
-import { CardStep1 } from "@/components/payment/CardStep1";
-import { CardStep2 } from "@/components/payment/CardStep2";
-import { ErrorMessage } from "@/components/global/ErrorMessage";
-import {
-  stripeCardNumberValidation,
-  stripeCardExpirValidation,
-} from "../../utils/creditCardValidation";
-import { onlyNumbers } from "@/utils/masks";
-import { useRouter } from "next/router";
-import { AuthPostAPI, authGetAPI, getAPI, loginVerifyAPI } from "@/lib/axios";
-import { Spinner } from "react-bootstrap";
 
 interface PlansProps {
   credit_value: number;
@@ -58,6 +58,14 @@ export default function Payment() {
   const [saveCreditCard, setSaveCreditCard] = useState(false);
   const installmentsValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
+  const [pixInfo, setPixInfo] = useState({
+    encodedImage: "",
+    expirationDate: "",
+    payLoad: "",
+    payment_id: "",
+    value: 0,
+  });
+
   const [selectedPlan, setSelectedPlan] = useState<PlansProps>();
 
   const [payOption, setPayOption] = useState("pix");
@@ -67,6 +75,7 @@ export default function Payment() {
   const [loading, setLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const router = useRouter();
 
@@ -88,8 +97,29 @@ export default function Payment() {
     const connect = await getAPI("/plans");
     if (connect.status === 200) {
       setSelectedPlan(connect.body.plans[0]);
-      console.log(selectedPlan);
     }
+  }
+
+  async function finishPixBuy() {
+    setLoading(true);
+    const connect = await AuthPostAPI(`/pix/${selectedPlan?.id}`, {});
+    console.log(connect);
+
+    if (connect.status === 200) {
+      setLoading(false);
+      setPixInfo({
+        encodedImage: connect.body.payment.encodedImage,
+        expirationDate: connect.body.payment.expirationDate,
+        payLoad: connect.body.payment.payload,
+        payment_id: connect.body.payment.payment_id,
+        value: connect.body.payment.value,
+      });
+      setPixStep(2);
+    } else {
+      setLoading(false);
+      alert("Algo deu errado, tente novamente.");
+    }
+    console.log(pixInfo);
   }
 
   async function finishCardBuy() {
@@ -232,25 +262,38 @@ export default function Payment() {
           {payOption === "pix" && (
             <>
               {pixStep === 1 ? (
-                <GeneratePix onClick={() => setPixStep(2)}>
-                  <span>Clique aqui para</span>
-                  <strong>Gerar o Pix Copia e Cola</strong>
+                <GeneratePix onClick={finishPixBuy}>
+                  {loading ? (
+                    <Spinner />
+                  ) : (
+                    <>
+                      <span>Clique aqui para</span>
+                      <strong>Gerar o Pix Copia e Cola</strong>
+                    </>
+                  )}
                 </GeneratePix>
               ) : (
                 <PixContainer>
                   <QrCode>
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg/1200px-Link_pra_pagina_principal_da_Wikipedia-PT_em_codigo_QR_b.svg.png"
-                      alt=""
-                    />
+                    {pixInfo.encodedImage !== "" && (
+                      <img
+                        src={"data:image/png;base64," + pixInfo.encodedImage}
+                        alt=""
+                      />
+                    )}
                   </QrCode>
 
-                  <CopyPastePix>
+                  <CopyPastePix
+                    onClick={() => {
+                      navigator.clipboard.writeText(pixInfo.payLoad);
+                      setShowAlert(true);
+                    }}
+                  >
                     <span>Clique aqui para</span>
                     <strong>Copiar Pix Copia e Cola</strong>
                   </CopyPastePix>
 
-                  <FinishPix>
+                  <FinishPix onClick={() => router.push("/")}>
                     <span>Após efetuar o Pagamento</span>
                     <strong>Clique aqui e Prossiga</strong>
                   </FinishPix>
@@ -312,6 +355,26 @@ export default function Payment() {
               )}
             </>
           )}
+
+          <Alert
+            show={showAlert}
+            variant="dark"
+            style={{
+              position: "fixed",
+              top: "30%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <Alert.Heading>Código copiado</Alert.Heading>
+            <p>O Pix Copia e Cola foi copiado para a área de transferência.</p>
+            <hr />
+            <div className="d-flex justify-content-end">
+              <Button onClick={() => setShowAlert(false)} variant="dark">
+                Fechar
+              </Button>
+            </div>
+          </Alert>
         </PaymentContainer>
       </Main>
       <Footer />

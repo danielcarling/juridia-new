@@ -50,8 +50,7 @@ export const ProgressBar = styled.div<ProgressBarProps>`
   transition: 0.5s ease-in-out;
   top: 5.6rem;
 
-  width: ${({ step }) =>
-    step === 1 ? "20%" : step === 2 ? "80%" : "100%"};
+  width: ${({ step }) => (step === 1 ? "20%" : step === 2 ? "80%" : "100%")};
 `;
 
 export const PaymentHeader = styled.div`
@@ -120,10 +119,13 @@ export const PayOptionCard = styled.div<PayOptionCardProps>`
 `;
 
 export const GeneratePix = styled.button`
+  width: 19rem;
+  height: 4rem;
   margin: 7rem auto 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border: 0;
   border-radius: 10px;
   background: #37b5aa;
@@ -139,6 +141,9 @@ export const GeneratePix = styled.button`
   }
 
   @media (min-width: 768px) {
+    width: 23rem;
+    height: 4.5rem;
+
     span {
       font-size: 1.125rem;
     }
@@ -156,22 +161,19 @@ export const PixContainer = styled.div`
 `;
 
 export const QrCode = styled.div`
-  width: 13rem;
-  padding: 1rem;
   border-radius: 10px;
   background-color: white;
   margin: 1rem 0 1.9rem;
 
   img {
-    width: 11rem;
+    width: 13rem;
+    border-radius: 10px;
     height: auto;
   }
 
   @media (min-width: 1024px) {
-    width: 17rem;
-
     img {
-      width: 15rem;
+      width: 16rem;
     }
   }
 `;
@@ -180,7 +182,6 @@ export const CopyPastePix = styled(GeneratePix)`
   margin: 0;
   background: #20b038;
   color: white;
-  padding: 0 2rem;
 
   span {
     font-size: 0.75rem;
