@@ -142,7 +142,7 @@ export function useChatFunctions() {
   
     const handleTypingComplete = () => {};
   
-    function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    function handleKeyDown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
       if (event.key === "Enter") {
         event.preventDefault();
         handleUserMessageSubmit();

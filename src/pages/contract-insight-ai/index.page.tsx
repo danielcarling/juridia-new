@@ -67,7 +67,6 @@ export default function ContractImprovementAi() {
           <ChatFooter>
             <div className="send-message">
               <textarea
-                type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
                 placeholder={
