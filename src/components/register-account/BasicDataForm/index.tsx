@@ -1,7 +1,12 @@
 import { maskPhone } from "@/utils/masks";
-import { FormGroup, RegisterForm, RegisterFormHeader, TermsContainer } from "./styles";
+import {
+  FormGroup,
+  RegisterForm,
+  RegisterFormHeader,
+  TermsContainer,
+} from "./styles";
 
-interface Props{
+interface Props {
   name: string;
   email: string;
   mobilePhone: string;
@@ -23,7 +28,7 @@ export function BasicDataForm({
   onEmailChange,
   onMobilePhoneChange,
   onPasswordChange,
-  onTermsChange
+  onTermsChange,
 }: Props) {
   return (
     <RegisterForm>
@@ -72,14 +77,17 @@ export function BasicDataForm({
       </FormGroup>
 
       <TermsContainer>
-        <input type="checkbox" id="terms" checked={termsChecked}
-          onChange={(e) => onTermsChange(e.target.checked)} />
+        <input
+          type="checkbox"
+          id="terms"
+          checked={termsChecked}
+          onChange={(e) => onTermsChange(e.target.checked)}
+        />
         <label htmlFor="terms">
           Ao informar meus dados, tenho ciência dos <span>Termos de Uso</span> e
           da <span>Política de Privacidade</span>.
         </label>
       </TermsContainer>
-
     </RegisterForm>
   );
 }

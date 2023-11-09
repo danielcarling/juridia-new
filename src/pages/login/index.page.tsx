@@ -34,23 +34,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState<boolean>(false);
 
-  async function handleVerify() {
-    const connect = await loginVerifyAPI();
-
-    if (connect === 200) {
-      const connect2 = await authGetAPI("/user/validation");
-      if (connect2.status !== 200) {
-        alert("Assinatura necessária");
-        return router.push("/payment");
-      }
-      return router.push("/");
-    }
-  }
-
-  useEffect(() => {
-    handleVerify();
-  });
-
   function toggleShowPassword() {
     if (showPassword === "password") {
       setShowPassword("text");
@@ -69,7 +52,6 @@ export default function Login() {
       email: email,
       password: password,
     });
-    console.log("Email:", email, "Senha:", password);
     if (connect.status !== 200) {
       setDisabled(false);
       return alert(connect.body);
@@ -77,7 +59,6 @@ export default function Login() {
     setDisabled(true);
     localStorage.setItem(token, connect.body.token);
     localStorage.setItem(refreshToken, connect.body.refreshToken);
-    // alert("Conta criada com sucesso!");
     if (connect.status === 200) {
       return router.push("/");
     }

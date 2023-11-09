@@ -87,7 +87,7 @@ export default function Payment() {
       return router.push("/login");
     } else if (connect === 200) {
       const connect2 = await authGetAPI("/user/validation");
-      if (connect2.status !== 200) {
+      if (connect2.status === 200) {
         return router.push("/");
       }
     }
@@ -103,7 +103,6 @@ export default function Payment() {
   async function finishPixBuy() {
     setLoading(true);
     const connect = await AuthPostAPI(`/pix/${selectedPlan?.id}`, {});
-    console.log(connect);
 
     if (connect.status === 200) {
       setLoading(false);
@@ -119,7 +118,6 @@ export default function Payment() {
       setLoading(false);
       alert("Algo deu errado, tente novamente.");
     }
-    console.log(pixInfo);
   }
 
   async function finishCardBuy() {
