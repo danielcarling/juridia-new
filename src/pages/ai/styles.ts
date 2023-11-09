@@ -4,13 +4,13 @@ export const Container = styled.div`
   & * {
     font-family: "Lato", sans-serif;
   }
-  background-color: ${({ theme }) => theme.color.primary_100};
 `;
 
 export const Main = styled.main`
   position: relative;
   width: 100%;
   background-color: ${({ theme }) => theme.color.primary_100};
+
   overflow: hidden;
   ::-webkit-scrollbar {
     width: 0.5rem;
@@ -36,7 +36,7 @@ export const PageTitle = styled.div`
 
 export const ChatContainer = styled.div`
   position: relative;
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 10.82rem);
   padding: 0.75rem 1.125rem 0;
   overflow: auto;
   margin: 0.5rem auto 0;
@@ -93,10 +93,10 @@ export const UserMessage = styled(IaMessage)`
 export const ChatFooter = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 0.5%;
   background-color: ${({ theme }) => theme.color.primary_100};
   height: auto;
-  width: 100%;
+  width: 99%;
 
   .send-message {
     display: flex;

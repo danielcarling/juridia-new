@@ -95,8 +95,7 @@ export default function ContractImprovement() {
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-              <button onClick={() => handleCreatePetition()} />
-              <input
+              <textarea
                 type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
@@ -114,7 +113,7 @@ export default function ContractImprovement() {
           </ChatFooter>
         </ChatContainer>
       </Main>
-      <WhatsApp />
+      {!windowDimension(1024) && <WhatsApp />}
     </Container>
   );
 }

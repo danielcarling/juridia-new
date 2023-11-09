@@ -66,7 +66,7 @@ export default function ContractImprovementAi() {
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-              <input
+              <textarea
                 type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
@@ -84,7 +84,7 @@ export default function ContractImprovementAi() {
           </ChatFooter>
         </ChatContainer>
       </Main>
-      <WhatsApp />
+      {!windowDimension(1024) && <WhatsApp />}
     </Container>
   );
 }

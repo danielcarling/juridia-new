@@ -16,10 +16,18 @@ export const HeaderContainer = styled.header`
 export const BackButton = styled.button`
   position: absolute;
   color: #282c49;
-  top: 0.5rem;
+  top: 1rem;
   left: 2%;
   background-color: transparent;
   border: none;
+
+  .svg {
+    width: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    top: 0.5rem;
+  }
 `;
 
 export const UserInfo = styled.div`

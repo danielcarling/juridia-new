@@ -32,7 +32,7 @@ export default function ContractImprovementAi() {
 
   useEffect(() => {
     handleCreatePetition();
-    console.log('chamandoapi')
+    console.log("chamandoapi");
   }, []);
   const router = useRouter();
 
@@ -67,7 +67,7 @@ export default function ContractImprovementAi() {
         <ChatContainer>
           <ChatBody>
             {messages
-               .filter((item: any, index: any) => index >= 5) // Filtrar mensagens com role diferente de "system"
+              .filter((item: any, index: any) => index >= 5) // Filtrar mensagens com role diferente de "system"
               .map((item: any, index: any) => (
                 <>
                   {item.role === "assistant" ? (
@@ -93,7 +93,7 @@ export default function ContractImprovementAi() {
           </ChatBody>
           <ChatFooter>
             <div className="send-message">
-              <input
+              <textarea
                 type="text"
                 value={userMessage}
                 onChange={(e: any) => setUserMessage(e.target.value)}
@@ -111,7 +111,7 @@ export default function ContractImprovementAi() {
           </ChatFooter>
         </ChatContainer>
       </Main>
-      <WhatsApp />
+      {!windowDimension(1024) && <WhatsApp />}
     </Container>
   );
 }
