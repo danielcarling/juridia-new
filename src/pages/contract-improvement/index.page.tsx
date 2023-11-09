@@ -29,7 +29,7 @@ export default function ContractImprovement() {
   const { handleUpload, fullText } = usePdfUpload();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
+  const [aboutContractText, setAboutContractText] = useState("");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
 

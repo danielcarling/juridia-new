@@ -17,7 +17,7 @@ function getPrevImprovementMessages() {
         {
           role: "system",
           content: `
-             O usuario vai te mandar um contrato e voce analiza ele,Reescreva todo o contrato melhore os pontos que nao achar bom, no final pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
+             O usuario vai te mandar um contrato e voce analiza ele,Reescreva todo o contrato melhore os pontos que nao achar bom, no final explique para o usuario caso haja clausulas que voce acha importante adicionar.
              o usuario ja é um advogado, ele ira revisar o contrato, entao nao se preocupe em falar isso para ele.
             `,
         },
@@ -53,7 +53,7 @@ export function useChatFunctions() {
 
     async function handleApiCall(messageList: any[]): Promise<string | null> {
       const openai = new OpenAI({
-        apiKey: "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",
+        apiKey: "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",
         dangerouslyAllowBrowser: true,
       });
   

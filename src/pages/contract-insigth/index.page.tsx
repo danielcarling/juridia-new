@@ -54,7 +54,7 @@ export default function ContractImprovement() {
       localStorage.setItem("fullTextInsights", JSON.stringify(fullText));
 
       setLoading(false);
-      router.push('/contract-insigth-ai') // Desativa o loading após receber a resposta
+      router.push('/contract-insight-ai') // Desativa o loading após receber a resposta
     } catch (error) {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro
