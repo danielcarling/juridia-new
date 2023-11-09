@@ -45,6 +45,7 @@ export const TextContainer = styled.div`
   margin: 0.5rem 0;
   color: white;
   text-align: justify;
+  height: 8rem;
 `;
 
 export const ButtonsContainer = styled.div`
