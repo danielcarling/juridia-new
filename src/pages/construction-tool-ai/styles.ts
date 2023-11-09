@@ -31,12 +31,12 @@ export const Main = styled.main`
 
 export const PageTitle = styled.div`
   padding: 1.5rem 0 2rem 3rem;
-  border-bottom: 3px solid #7F5619;
-`
+  border-bottom: 3px solid #7f5619;
+`;
 
 export const ChatContainer = styled.div`
   position: relative;
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 10.8rem);
   padding: 0.75rem 1.125rem 0;
   overflow: auto;
   margin: 0.5rem auto 0;
@@ -89,10 +89,10 @@ export const UserMessage = styled(IaMessage)`
 export const ChatFooter = styled.div`
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 0.5%;
   background-color: ${({ theme }) => theme.color.primary_100};
-  height: 6rem;
-  width: 100%;
+  height: auto;
+  width: 99%;
 
   .send-message {
     display: flex;
@@ -104,7 +104,11 @@ export const ChatFooter = styled.div`
     padding: 0.5rem;
     border-radius: 15px 15px 0 0;
 
-    input {
+    textarea {
+      white-space: pre-wrap;
+      height: 10rem;
+      resize: none;
+      height: 100%;
       font-weight: 700;
       width: 90%;
       border: 0;
@@ -155,12 +159,13 @@ export const ChatFooter = styled.div`
 
     .send-message {
       border-radius: 20px 20px 0 0;
-      width: 80%;
+      width: 90%;
+      max-width: 50rem;
       margin: auto;
       height: 100%;
       padding: 0.5rem 0.5rem 0.5rem 9rem;
 
-      input {
+      textarea {
         padding: 0.7rem;
       }
 

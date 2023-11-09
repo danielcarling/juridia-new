@@ -26,7 +26,7 @@ export function ContractHeader() {
   return (
     <HeaderContainer>
       <BackButton onClick={() => router.back()}>
-        <BackIconSvg />
+        <BackIconSvg width={windowDimension(1024) ? "1.8rem" : "2.5rem"} height="auto" />
       </BackButton>
       <div className="logo">
         <JuridiaTextSvg width="13rem" />
