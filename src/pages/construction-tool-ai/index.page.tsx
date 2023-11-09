@@ -12,7 +12,7 @@ import {
   UserMessage,
 } from "./styles";
 import { windowDimension } from "@/utils/windowDimensions";
-import { handleApiCall, useChatFunctions } from "./ai";
+import {  useChatFunctions } from "./ai";
 import { WelcomeModal } from "@/components/ai/WelcomeModal";
 import { TitleComponent } from "@/components/global/Title";
 import Markdown from "react-markdown";
@@ -54,7 +54,12 @@ export default function ContractImprovement() {
                       {item.role === "assistant" ? (
                         <>
                           <IaMessage>
-                            <Markdown>
+                            <Markdown components={{ 
+                                h1: ({ node, ...props }) => <h1 style={{ fontSize: "1.5em" }} {...props} />,
+                                h2: ({ node, ...props }) => <h2 style={{ fontSize: "1.3em" }} {...props} />, 
+                                h3: ({ node, ...props }) => <h2 style={{ fontSize: "1.3em" }} {...props} />
+                              }}
+                            >
                               {item.content}
                             </Markdown>
                           </IaMessage>

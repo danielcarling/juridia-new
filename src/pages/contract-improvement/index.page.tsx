@@ -3,7 +3,7 @@ import { Select } from "@/components/global/Select";
 import { Subtitle } from "@/components/global/Subtitle";
 import { TitleComponent } from "@/components/global/Title";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Container,
   Content,
@@ -18,17 +18,16 @@ import {
   VideoContainer,
 } from "./styles";
 import { AreaOptions } from "@/utils/constants";
-import { usePdfUpload } from "./pdfUploader";
-import { handleApiCall } from "./ia";
+import { usePdfUpload } from "../../lib/pdfUploader";
 import { Spinner } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 export default function ContractImprovement() {
-  const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
   const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
   const { handleUpload, fullText } = usePdfUpload();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -50,16 +49,12 @@ export default function ContractImprovement() {
       return;
     }
     try {
-      console.log('Chamando API')
-      const apiResponse = await handleApiCall(
-        areaResponse,
-        aboutContractText,
-        fullText
-      );
-        
-      setData(apiResponse); // Atualiza o estado 'data' com a resposta da API
-      localStorage.setItem("improvementApiResponse", JSON.stringify(apiResponse)); // Salva a resposta no localStorage
-      setLoading(false); // Desativa o loading após receber a resposta
+      localStorage.setItem("areaResponse", JSON.stringify(areaResponse));
+      localStorage.setItem("aboutContractText", JSON.stringify(aboutContractText));
+      localStorage.setItem("fullText", JSON.stringify(fullText));
+
+      setLoading(false);
+      router.push('/contract-improvement-ai') // Desativa o loading após receber a resposta
     } catch (error) {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro

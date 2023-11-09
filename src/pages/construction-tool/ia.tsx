@@ -35,27 +35,46 @@ type Message = {
 
   export async function handleApiCall(messages: any[],setMessages:any): Promise<string | null> {
     const openai = new OpenAI({
-      apiKey: "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",
+      apiKey: "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",
       dangerouslyAllowBrowser: true,
     });
-  
+
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo-16k",
+        model: "gpt-3.5-turbo-1106",
         messages,
+        stream: true,
       });
-      const Response = response.choices[0].message.content;
-      const systemResponse = { role: "assistant", content: Response };
+      let finalResponse = ""; // Inicialize uma string vazia para armazenar a resposta final
 
-        // Atualize o estado de mensagens com a resposta da API
-        setMessages((prevMessages:any) => [...prevMessages, systemResponse]);
-      console.log('Resposta',response)
-      return Response;
-    } catch (err) {
-      console.error("Error: " + err);
-      throw err;
+    for await (const chunk of response) {
+      const chunkContent = chunk.choices[0].delta.content;
+        // Verifique se o chunkContent não é undefined
+        const systemResponse = { role: "assistant", content: finalResponse };
+
+        setMessages((prevMessages: any) => {
+          const currentMessage = prevMessages[prevMessages.length - 1];
+
+          if (currentMessage.role === "assistant") {
+            prevMessages[prevMessages.length - 1] = systemResponse;
+            return [...prevMessages];
+          } else {
+            return [...prevMessages, systemResponse];
+          }
+        });
+
+        // console.log(messages.length);
+        // Adicione o chunk ao finalResponse
+        finalResponse += chunkContent;
+      
     }
+    console.log(finalResponse)
+    return finalResponse;
+  } catch (err) {
+    console.error("Error: " + err);
+    throw err;
   }
+}
 
   export const handleClientDataSubmit = (
     data: any,

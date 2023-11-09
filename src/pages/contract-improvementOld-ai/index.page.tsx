@@ -1,6 +1,6 @@
 import { ContractHeader } from "@/components/global/ContractHeader";
 import { WhatsApp } from "@/components/global/Whatsapp";
-import React, { useEffect } from "react";
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import {
   ChatBody,
@@ -25,13 +25,7 @@ export default function ContractImprovementAi() {
     handleUserMessageSubmit,
     handleTypingComplete,
     handleKeyDown,
-    handleCreatePetition,
   } = useChatFunctions();
-
-  useEffect(() => {
-    handleCreatePetition();
-    console.log('chamandoapi')
-  }, []);
   return (
     <Container>
       <ContractHeader routerPath="/contract-improvement" />
@@ -44,20 +38,20 @@ export default function ContractImprovementAi() {
         <ChatContainer>
           <ChatBody>
             {messages
-               .filter((item: any, index: any) => index >= 5) // Filtrar mensagens com role diferente de "system"
+              .filter((item: any, index: any) => index >= 5) // Filtrar mensagens com role diferente de "system"
               .map((item: any, index: any) => (
                 <>
                 {item.role === "assistant" ? (
                   <IaMessage style={{whiteSpace: "pre-wrap"}}>
                    
-                   <ReactMarkdown components={{ 
-                       h1: ({ node, ...props }) => <h1 style={{ fontSize: "1.5em" }} {...props} />,
-                       h2: ({ node, ...props }) => <h2 style={{ fontSize: "1.3em" }} {...props} /> 
-                   }}>
-                   {item.content}
-                   </ReactMarkdown>
-                  
-                 </IaMessage>
+                    <ReactMarkdown components={{ 
+                        h1: ({ node, ...props }) => <h1 style={{ fontSize: "1.5em" }} {...props} />,
+                        h2: ({ node, ...props }) => <h2 style={{ fontSize: "1.3em" }} {...props} /> 
+                    }}>
+                    {item.content}
+                    </ReactMarkdown>
+                   
+                  </IaMessage>
                 ) : (
                   <UserMessage>{item.content}</UserMessage>
                 )}

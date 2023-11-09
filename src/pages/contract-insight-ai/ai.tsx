@@ -3,21 +3,21 @@ import React, { useEffect, useState } from "react";
 
 function getPrevImprovementMessages() {
     if (typeof window !== 'undefined') {
-      const areaResponse = localStorage.getItem("areaResponse");
-      const aboutContractText = localStorage.getItem("aboutContractText");
-      const fullText = localStorage.getItem("fullText");
+      const areaResponse = localStorage.getItem("areaResponseInsights");
+      const aboutContractText = localStorage.getItem("aboutContractTextInsights");
+      const fullText = localStorage.getItem("fullTextInsights");
 
       const messages = [
         {
           role: "system",
           content: `Entre no personagem, você é uma inteligência artificial chamada Jurid-IA, NUNCA SAIA DO PERSONAGEM.
              Você realmente tem conhecimento real sobre a justiça e o direito no Brasil e sabe criar  exelentes Contratos e tirar duvidas sobre casos juridcos.
-             Sua função é revisar, melhorar e dar insights sobre contratos.`,
+             Sua função é revisar, e dar insights sobre contratos pontuando pontos negativos e positivos.`,
         },
         {
           role: "system",
           content: `
-             O usuario vai te mandar um contrato e voce analiza ele,Reescreva todo o contrato melhore os pontos que nao achar bom, no final pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
+             O usuario vai te mandar um contrato e voce analiza ele,Revise ele, veja se tem coisas faltando, ou pontos que podem prejudicar alguma das partes, final pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
              o usuario ja é um advogado, ele ira revisar o contrato, entao nao se preocupe em falar isso para ele.
             `,
         },
@@ -31,7 +31,7 @@ function getPrevImprovementMessages() {
         },
         {
           role: "user",
-          content: `Esse é meu contrato, melhore ele: ${fullText} ,escreva em markdown`,
+          content: `Esse é meu contrato, Revise-o e me de insights sobre como aprimora-lo ou a onde o cliente pode sair prejudicado: ${fullText} ,escreva em markdown`,
         },
       ];
       return messages;
@@ -43,14 +43,7 @@ export function useChatFunctions() {
     const [messages, setMessages] = useState<any>([...getPrevImprovementMessages()]);
     const [userMessage, setUserMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const convertNewLines = (text: string) =>
-  text.split("\n").map((line, i) => (
-    <span key={i}>
-      {line}
-      <br />
-    </span>
-  ));
-
+    
     async function handleApiCall(messageList: any[]): Promise<string | null> {
       const openai = new OpenAI({
         apiKey: "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",

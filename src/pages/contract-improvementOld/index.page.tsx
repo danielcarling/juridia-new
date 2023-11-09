@@ -19,15 +19,16 @@ import {
 } from "./styles";
 import { AreaOptions } from "@/utils/constants";
 import { usePdfUpload } from "../../lib/pdfUploader";
+import { handleApiCall } from "./ia";
 import { Spinner } from "react-bootstrap";
-import { useRouter } from "next/router";
 
 export default function ContractImprovement() {
+  const selectValues = ["Contrato", "Contrato", "Contrato"];
   const [fileName, setFileName] = useState("");
   const [areaResponse, setAreaResponse] = useState("Selecione uma opção");
   const { handleUpload, fullText } = usePdfUpload();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+
   const [aboutContractText, setAboutContractText] = useState("Escreva aqui");
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files && event.target.files[0];
@@ -49,12 +50,16 @@ export default function ContractImprovement() {
       return;
     }
     try {
-      localStorage.setItem("areaResponseInsights", JSON.stringify(areaResponse));
-      localStorage.setItem("aboutContractTextInsights", JSON.stringify(aboutContractText));
-      localStorage.setItem("fullTextInsights", JSON.stringify(fullText));
-
-      setLoading(false);
-      router.push('/contract-insigth-ai') // Desativa o loading após receber a resposta
+      console.log('Chamando API')
+      const apiResponse = await handleApiCall(
+        areaResponse,
+        aboutContractText,
+        fullText
+      );
+        
+      setData(apiResponse); // Atualiza o estado 'data' com a resposta da API
+      localStorage.setItem("improvementApiResponse", JSON.stringify(apiResponse)); // Salva a resposta no localStorage
+      setLoading(false); // Desativa o loading após receber a resposta
     } catch (error) {
       console.error("Error: " + error);
       setLoading(false); // Desativa o loading em caso de erro
@@ -65,7 +70,7 @@ export default function ContractImprovement() {
       <ContractHeader routerPath="home"/>
       <Main>
         <PageTitle>
-          <TitleComponent content="Insights de Contratos" />
+          <TitleComponent content="Melhoria de Contratos" />
         </PageTitle>
         <Content>
           <ContractForm>

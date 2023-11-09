@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 function getPrevImprovementMessages() {
     if (typeof window !== 'undefined') {
-      const messages = JSON.parse(localStorage.getItem("PrevinsightsMessages") || "[]");
+      const messages = JSON.parse(localStorage.getItem("PrevImprovementMessages") || "[]");
       return messages;
     }
     return [];
@@ -11,7 +11,7 @@ function getPrevImprovementMessages() {
   
 function getImprovementApiResponse() {
     if (typeof window !== 'undefined') {
-      const response = localStorage.getItem("insightsApiResponse") || "";
+      const response = localStorage.getItem("improvementApiResponse") || "";
       return response;
     }
     return "";
@@ -19,7 +19,7 @@ function getImprovementApiResponse() {
 
 export async function handleApiCall(messages: any[]): Promise<string | null> {
   const openai = new OpenAI({
-    apiKey: "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",
+    apiKey: "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",
     dangerouslyAllowBrowser: true,
   });
 
@@ -36,26 +36,13 @@ export async function handleApiCall(messages: any[]): Promise<string | null> {
     throw err;
   }
 }
-const convertNewLines = (text: string) =>
-  text.split("\n").map((line, i) => (
-    <span key={i}>
-      {line}
-      <br />
-    </span>
-  ));
+
 export function useChatFunctions() {
     const [messages, setMessages] = useState<any>([...getPrevImprovementMessages()]);
     const [userMessage, setUserMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
   
-    useEffect(() => {
-      const apiResponse = JSON.parse(getImprovementApiResponse());
-        const formattedMessage = convertNewLines(apiResponse);
-        if (apiResponse) {
-          const systemResponse = { role: "assistant", content: apiResponse };
-          setMessages((prevMessages: any) => [...prevMessages, systemResponse]);
-        }
-      }, []);
+  
 
     async function handleUserMessageSubmit() {
       if (userMessage.trim() !== "") {
@@ -82,6 +69,7 @@ export function useChatFunctions() {
         }
       }
     }
+    
   
     const handleTypingComplete = () => {};
   
