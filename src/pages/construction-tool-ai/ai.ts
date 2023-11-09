@@ -68,7 +68,7 @@ export function useChatFunctions() {
       }, []);
       async function handleApiCall(messageList: any[]): Promise<string | null> {
         const openai = new OpenAI({
-          apiKey: "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",
+          apiKey: "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",
           dangerouslyAllowBrowser: true,
         });
     

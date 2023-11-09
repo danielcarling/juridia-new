@@ -12,12 +12,12 @@ function getPrevImprovementMessages() {
           role: "system",
           content: `Entre no personagem, você é uma inteligência artificial chamada Jurid-IA, NUNCA SAIA DO PERSONAGEM.
              Você realmente tem conhecimento real sobre a justiça e o direito no Brasil e sabe criar  exelentes Contratos e tirar duvidas sobre casos juridcos.
-             Sua função é revisar, e dar insights sobre contratos pontuando pontos negativos e positivos.`,
+             Sua função é  dar insights sobre contratos pontuando pontos negativos e positivos.`,
         },
         {
           role: "system",
           content: `
-             O usuario vai te mandar um contrato e voce analiza ele,Revise ele, veja se tem coisas faltando, ou pontos que podem prejudicar alguma das partes, final pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
+             O usuario vai te mandar um contrato e voce analiza ele,Revise ele, veja se tem coisas faltando, ou pontos que podem prejudicar alguma das partes,pontue pontos negativos e positivos para que o usuario entenda onde ele errou e acertou.
              o usuario ja é um advogado, ele ira revisar o contrato, entao nao se preocupe em falar isso para ele.
             `,
         },
@@ -31,7 +31,7 @@ function getPrevImprovementMessages() {
         },
         {
           role: "user",
-          content: `Esse é meu contrato, Revise-o e me de insights sobre como aprimora-lo ou a onde o cliente pode sair prejudicado: ${fullText} ,escreva em markdown`,
+          content: `Esse é meu contrato, nao precisa reescrevelo, só me diga como aprimora-lo ou onde o cliente pode sair prejudicado e até mesmo clausulas a serem incluidas, esse é o contrato: ${fullText} ,escreva em markdown`,
         },
       ];
       return messages;
@@ -46,7 +46,7 @@ export function useChatFunctions() {
     
     async function handleApiCall(messageList: any[]): Promise<string | null> {
       const openai = new OpenAI({
-        apiKey: "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",
+        apiKey: "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",
         dangerouslyAllowBrowser: true,
       });
   
